@@ -88,7 +88,7 @@ function PropertyAccessors(keys, ES) {
 
 /*¡ ES */
 
-const version = '1.0.1';
+const version = '1.0.2';
 
 const assign = Object.assign;
 
@@ -846,18 +846,18 @@ class Globals extends Set {
                         break;
                     case 'null.create':
                         tsd += trim `create;${eol}
-							${tab}function create<O extends {}, OO extends PropertyDescriptorMap> (proto? :null | O, descriptorMap? :OO) :( OO extends TypedPropertyDescriptorMap<infer O> ? O : {} ) & O;${eol}
+							${tab}function create<O extends object, OO extends PropertyDescriptorMap> (proto? :null | O, descriptorMap? :OO) :( OO extends TypedPropertyDescriptorMap<infer O> ? O : object ) & O;${eol}
 							${tab}type TypedPropertyDescriptorMap<O> = { [k in keyof O] :TypedPropertyDescriptor<O[k]> };${eol}`;
                         break;
                     case 'null.defineProperties':
                         tsd += trim `defineProperties;${eol}
-							${tab}function defineProperties<O extends {}, OO extends PropertyDescriptorMap> (object :O, descriptorMap :OO) :( OO extends TypedPropertyDescriptorMap<infer O> ? O : never ) & O;${eol}
+							${tab}function defineProperties<O extends object, OO extends PropertyDescriptorMap> (object :O, descriptorMap :OO) :( OO extends TypedPropertyDescriptorMap<infer O> ? O : never ) & O;${eol}
 							${tab}type TypedPropertyDescriptorMap<O> = { [k in keyof O] :TypedPropertyDescriptor<O[k]> };${eol}`;
                         break;
                     case 'null.defineProperty':
                         tsd += trim `defineProperty;${eol}
-							${tab}function defineProperty<O extends {}, K extends string | symbol, D extends PropertyDescriptor> (object :O, key :K, descriptor :D, useReflect? :false) :( D extends TypedPropertyDescriptor<infer V> ? { [key in K] :V } : never ) & O;${eol}
-							${tab}function defineProperty<O extends {}, K extends string | symbol, D extends PropertyDescriptor> (object :O, key :K, descriptor :D, useReflect :true) :boolean;${eol}`;
+							${tab}function defineProperty<O extends object, K extends string | symbol, D extends PropertyDescriptor> (object :O, key :K, descriptor :D, useReflect? :false) :( D extends TypedPropertyDescriptor<infer V> ? { [key in K] :V } : never ) & O;${eol}
+							${tab}function defineProperty<O extends object, K extends string | symbol, D extends PropertyDescriptor> (object :O, key :K, descriptor :D, useReflect :true) :boolean;${eol}`;
                         break;
                     case 'null.fromEntries':
                         tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<{ readonly 0: K, readonly 1: V }>) :{ [k in K] :V };${eol}`;
@@ -877,7 +877,7 @@ class Globals extends Set {
                         tsd += trim `NULL;${eol}
 							${tab}const NULL :{${eol}
 							${tab}${tab}new<ValueType extends any> () :NULL<ValueType>,${eol}
-							${tab}${tab}new () :{},${eol}
+							${tab}${tab}new () :object,${eol}
 							${tab}${tab}<_ extends never, Object extends object> (object :Object, define? :boolean) :Object,${eol}
 							${tab}${tab}<ValueType> (object :object, define? :boolean) :NULL<ValueType>,${eol}
 							${tab}};${eol}
