@@ -7,12 +7,16 @@ export default (
 		var GET = /*#__PURE__*/ create(null);
 		GET.value = Weak.prototype.get;
 		var SET = /*#__PURE__*/ create(null);
-		GET.value = Weak.prototype.set;
+		SET.value = Weak.prototype.set;
+		function add (weak, THIS) {
+			var _THIS = create(null);
+			weak.set(THIS, _THIS);
+			return _THIS;
+		}
 		return function Private () {
 			var weak = /*#__PURE__*/ defineProperty(/*#__PURE__*/ defineProperty(/*#__PURE__*/ new Weak, 'get', GET), 'set', SET);
 			return function _ (THIS) {
-				var _THIS;
-				return /*#__PURE__*/ weak.get(THIS) || ( /*#__PURE__*/ weak.set(THIS, _THIS = /*#__PURE__*/ create(null)), _THIS );
+				return /*#__PURE__*/ weak.get(THIS) || /*#__PURE__*/ add(weak, THIS);
 			};
 		};
 	}()

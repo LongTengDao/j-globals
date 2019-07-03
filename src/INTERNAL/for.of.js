@@ -21,7 +21,7 @@ export default (
 		}
 		
 		function tryFnValue_tryReturn_throw (callbackfn, value, iterable) {
-			try { callbackfn(value); }
+			try { return callbackfn(value); }
 			catch (error) {
 				tryReturn(iterable);
 				throw error;
@@ -43,25 +43,29 @@ export default (
 						throw TypeError('Iterator result '+step+' is not an object');
 					}
 					if ( step.done ) { break; }
-					tryFnValue_tryReturn_throw(callbackfn, step.value, arrayLike_iterable);
+					if ( tryFnValue_tryReturn_throw(callbackfn, step.value, arrayLike_iterable) ) { break; }
 				}
 				return;
 			}
 			if ( ES3 ) {
 				if ( typeof arrayLike_iterable==='string' ) {
-					for ( length = arrayLike_iterable.length, index = 0; index<length; ++index ) { callbackfn(arrayLike_iterable.charAt(index)); }
+					for ( length = arrayLike_iterable.length, index = 0; index<length; ++index ) {
+						if ( callbackfn(arrayLike_iterable.charAt(index)) ) { break; }
+					}
 					return;
 				}
 				if ( toString.call(arrayLike_iterable)==='[object String]' ) {
 					for ( length = arrayLike_iterable.length, index = 0; index<length; ++index ) {
 						var char = charAt.call(arrayLike_iterable, index);
 						if ( index in arrayLike_iterable && arrayLike_iterable[index]!==char ) { throw TypeError('stringObject[index] is not writable in ES3+ spec'); }
-						callbackfn(char);
+						if ( callbackfn(char) ) { break; }
 					}
 					return;
 				}
 			}
-			for ( length = parseInt(arrayLike_iterable.length), index = 0; index<length; ++index ) { callbackfn(arrayLike_iterable[index]); }
+			for ( length = parseInt(arrayLike_iterable.length), index = 0; index<length; ++index ) {
+				if ( callbackfn(arrayLike_iterable[index]) ) { break; }
+			}
 		};
 		
 	}()
