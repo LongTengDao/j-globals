@@ -9,8 +9,6 @@ export default (
 		
 		var string_noIndex = !'_'.hasOwnProperty(0);
 		
-		//var INDEX = /^(?:0|[1-9]\d*)$/;
-		
 		function __PURE__ (object) {
 			var entries = [], keys, length, index = 0, key;
 			switch ( typeof object ) {
@@ -22,7 +20,7 @@ export default (
 						}
 						for ( key in object ) {
 							if ( hasOwnProperty.call(object, key) ) {
-								if ( INDEX.test(key) && key<length ) {
+								if ( isIndex(key) && key<length ) {
 									if ( object[key]!==charAt.call(object, key) ) { throw TypeError('stringObject[index] is not writable in ES3+ spec'); }
 								}
 								else { defineIndexValue(entries, index++, [ key, object[key] ]); }

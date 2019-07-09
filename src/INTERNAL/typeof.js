@@ -1,6 +1,6 @@
 export default (
 	/*! j-globals: typeof (internal) */
-	function typeOf (value) {
+	function TYPEOF (value) {
 		return value===null ? 'null' : typeof value;
 	}
 	/*¡ j-globals: typeof (internal) */

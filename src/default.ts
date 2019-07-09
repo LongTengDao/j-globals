@@ -67,15 +67,19 @@ export default class Globals extends Set<string> {
 							${tab}function Default<Statics extends { readonly [key :string] :any, default? :ModuleFunction<Statics, Main> }, Main extends Callable | Newable | Callable & Newable> (main :Main, statics :Statics) :ModuleFunction<Statics, Main>;${eol}
 							${tab}type Module<Exports> = { readonly [key in keyof Exports] :Exports[key] } & { readonly default :Module<Exports> };${eol}
 							${tab}type ModuleFunction<Statics, Main> = { readonly [key in keyof Statics] :Statics[key] } & { readonly default :ModuleFunction<Statics, Main> } & Main;${eol}
-							${tab}type Callable = { (...args :any[]) :any };${eol}
+							${tab}type Callable = (...args :any[]) => any;${eol}
 							${tab}type Newable = { new (...args :any[]) :any };${eol}`;
 						break;
 					case 'private':
 						tsd += `Private;${eol}${tab}function Private () :<T extends {}> (THIS :T) => T;${eol}`;
 						break;
+					case 'for.of':
+						tsd += `of;${eol}${tab}function of<V extends any, T extends any> (arrayLike_iterable :Iterable<V>, callbackfn :(this :T, value :V) => void | boolean, thisArg? :T) :void;${eol}`;
+						break;
+					
 					case 'typeof':
-						tsd += `typeOf;${eol}
-							${tab}function typeOf (value :any) :${eol}
+						tsd += trim`TYPEOF;${eol}
+							${tab}function TYPEOF (value :any) :${eol}
 							${tab}${tab}typeof value extends undefined ? 'undefined' :${eol}
 							${tab}${tab}typeof value extends null ? 'null' :${eol}
 							${tab}${tab}typeof value extends boolean ? 'boolean' :${eol}
@@ -87,10 +91,54 @@ export default class Globals extends Set<string> {
 							${tab}${tab}//typeof value extends object ? 'object' | 'function' | 'undefined' : // typeof document.all==='undefined' // Chrome1~23, Safari?: typeof /RegExp/==='function' // Safari?: typeof .childNodes/children==='function'${eol}
 							${tab}${tab}Exclude<string, 'boolean' | 'number' | 'string'/* | 'undefined' | 'function' | 'symbol' | 'bigint' | 'null'*/>;// typeof ( /* xhr: */ new ActiveXObject("Msxml2.XMLHTTP") ).abort==='unknown'...'date'${eol}`;
 						break;
-					case 'for.of':
-						tsd += `of;${eol}${tab}function of<V extends any, T extends any> (arrayLike_iterable :Iterable<V>, callbackfn :(this :T, value :V) => void | boolean, thisArg? :T) :void;${eol}`;
+					
+					case 'class.isBoolean':
+						tsd += `isBoolean;${eol}${tab}function isBoolean (value :any) :value is Boolean;${eol}`;
 						break;
-						
+					case 'class.isNumber':
+						tsd += `isNumber;${eol}${tab}function isNumber (value :any) :value is Number;${eol}`;
+						break;
+					case 'class.isString':
+						tsd += `isString;${eol}${tab}function isString (value :any) :value is String;${eol}`;
+						break;
+					case 'class.isDate':
+						tsd += `isDate;${eol}${tab}function isDate (value :any) :value is Date;${eol}`;
+						break;
+					case 'class.isRegExp':
+						tsd += `isRegExp;${eol}${tab}function isRegExp (value :any) :value is RegExp;${eol}`;
+						break;
+					case 'class.isMap':
+						tsd += `isMap;${eol}${tab}function isMap (value :any) :value is Map;${eol}`;
+						break;
+					case 'class.isSet':
+						tsd += `isSet;${eol}${tab}function isSet (value :any) :value is Set;${eol}`;
+						break;
+					case 'class.isWeakMap':
+						tsd += `isWeakMap;${eol}${tab}function isWeakMap (value :any) :value is WeakMap;${eol}`;
+						break;
+					case 'class.isWeakSet':
+						tsd += `isWeakSet;${eol}${tab}function isWeakSet (value :any) :value is WeakSet;${eol}`;
+						break;
+					case 'class.isPromise':
+						tsd += `isPromise;${eol}${tab}function isPromise (value :any) :value is Promise<any>;${eol}`;
+						break;
+					case 'class.isSymbol':
+						tsd += `isSymbol;${eol}${tab}function isSymbol (value :any) :value is Symbol;${eol}`;
+						break;
+					case 'class.isBigInt':
+						tsd += `isBigInt;${eol}${tab}function isBigInt (value :any) :value is BigInt;${eol}`;
+						break;
+					case 'class':
+						for ( const node of [
+							'isBoolean', 'isNumber', 'isString', 'isDate', 'isRegExp',
+							'isMap', 'isSet', 'isWeakMap', 'isWeakSet',
+							'isPromise', 'isSymbol',
+							'isBigInt',
+						] ) {
+							tsd += `${tab}export { default as ${node} } from '${pre}${chain}.${node}${sur}';${eol}`;
+						}
+						break;
+					
 					case 'null.assign':
 						tsd += `assign;${eol}${tab}function assign<O extends {}> (target :null | O, firstSource :O, ...restSources :O[]) :O;${eol}`;
 						break;
@@ -187,6 +235,25 @@ export default class Globals extends Set<string> {
 						tsd += `${chain.replace('.', '')};${eol}${tab}function ${chain.replace('.', '')} (message? :string) :never;${eol}`;
 						break;
 						
+					case 'Object':
+						tsd += trim`Object;${eol}
+							${tab}const Object :{
+							${tab}${tab}<T extends object> (value :T) :T;${eol}
+							${tab}${tab}(value? :undefined | null) :object;${eol}
+							${tab}${tab}(value :boolean) :Boolean & object;${eol}
+							${tab}${tab}(value :number) :Number & object;${eol}
+							${tab}${tab}(value :string) :String & object;${eol}
+							${tab}${tab}(value :symbol) :Symbol & object;${eol}
+							${tab}${tab}(value :bigint) :BigInt & object;${eol}
+							${tab}${tab}new<T extends object> (value :T) :T;${eol}
+							${tab}${tab}new (value? :undefined | null) :object;${eol}
+							${tab}${tab}new (value :boolean) :Boolean & object;${eol}
+							${tab}${tab}new (value :number) :Number & object;${eol}
+							${tab}${tab}new (value :string) :String & object;${eol}
+							${tab}${tab}new (value :symbol) :Symbol & object;${eol}
+							${tab}${tab}new (value :bigint) :BigInt & object;${eol}
+							${tab}};${eol}`;
+						break;
 					//case 'Object.create':
 					//	tsd += id==='Object.create?='
 					//		? `create;${eol}${tab}function create (o :object | null, properties? :undefined) :any;${eol}`
@@ -204,13 +271,19 @@ export default class Globals extends Set<string> {
 					case 'Object.values':
 						tsd += `values;${eol}${tab}function values<T extends object> (object :T) :T[Extract<string, keyof T>][];${eol}`;
 						break;
+						
 					case 'Reflect.ownKeys':
 						tsd += `ownKeys;${eol}${tab}function ownKeys<T extends object> (object :T) :Extract<string | symbol, keyof T>[];${eol}`;
+						break;
+						
+					case 'Array.isArray':
+						tsd += `isArray;${eol}${tab}function isArray (value :any) :value is any[] | readonly any[];${eol}`;
 						break;
 						
 					case 'native':
 						tsd += `NATIVE; const NATIVE :never; `;
 						break;
+						
 					default:
 						tsd += `${chain}; `;
 						

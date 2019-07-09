@@ -13,6 +13,7 @@ import String_prototype from '.String.prototype';
 import SyntaxError_prototype from '.SyntaxError.prototype';
 import TypeError_prototype from '.TypeError.prototype';
 import URIError_prototype from '.URIError.prototype';
+import { isIndex } from '.native';
 export default (
 	/*! j-globals: Object.keys (polyfill) */
 	/*#__PURE__*/ function () {
@@ -88,8 +89,6 @@ export default (
 			};
 		}
 		
-		var INDEX = /^(?:0|[1-9]\d*)$/;
-		
 		function __PURE__ (object) {
 			
 			if ( object==null ) { throw TypeError('Cannot convert undefined or null to object'); }
@@ -105,11 +104,11 @@ export default (
 					if ( toString.call(object)==='[object String]' ) {
 						throw TypeError('stringObject\'s index keys have bug in ES3');
 						//for ( length = object.length; index<length; ++index ) { keys[index] = ''+index; }
-						//for ( key in object ) { if ( hasOwnProperty.call(object, key) && ( !INDEX.test(key) || key>=length ) ) { keys[index++] = key; } }
+						//for ( key in object ) { if ( hasOwnProperty.call(object, key) && ( !isIndex(key) || key>=length ) ) { keys[index++] = key; } }
 					}
 					else if ( hasOwnProperty.call(object, 'length') && !propertyIsEnumerable.call(object, 'length') || hasOwnProperty.call(object, 'callee') && !propertyIsEnumerable.call(object, 'callee') ) {
 						for ( length = object.length; index<length; ++index ) { if ( hasOwnProperty.call(object, index) ) { keys[index] = ''+index; } }
-						for ( key in object ) { if ( hasOwnProperty.call(object, key) && ( !INDEX.test(key) || key>=length ) ) { keys[index++] = key; } }
+						for ( key in object ) { if ( hasOwnProperty.call(object, key) && ( !isIndex(key) || key>=length ) ) { keys[index++] = key; } }
 					}
 					else {
 						for ( key in object ) { if ( hasOwnProperty.call(object, key) ) { keys[index++] = key; } }

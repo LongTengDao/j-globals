@@ -3,9 +3,25 @@ import create from '.Object.create';
 
 import Default from './INTERNAL/default?text';
 import Private from './INTERNAL/private?text';
-import typeOf from './INTERNAL/typeof?text';
 import of from './INTERNAL/for.of?text';
 
+import TYPEOF from './INTERNAL/typeof?text';
+
+import CLASS from './INTERNAL/class?text';
+import class_isBoolean from './INTERNAL/class.isBoolean?text';
+import class_isNumber from './INTERNAL/class.isNumber?text';
+import class_isString from './INTERNAL/class.isString?text';
+import class_isDate from './INTERNAL/class.isDate?text';
+import class_isRegExp from './INTERNAL/class.isRegExp?text';
+import class_isMap from './INTERNAL/class.isMap?text';
+import class_isSet from './INTERNAL/class.isSet?text';
+import class_isWeakMap from './INTERNAL/class.isWeakMap?text';
+import class_isWeakSet from './INTERNAL/class.isWeakSet?text';
+import class_isPromise from './INTERNAL/class.isPromise?text';
+import class_isSymbol from './INTERNAL/class.isSymbol?text';
+import class_isBigInt from './INTERNAL/class.isBigInt?text';
+
+import NULL from './INTERNAL/null?text';
 import NULL_assign from './INTERNAL/null.assign?text';
 import NULL_create from './INTERNAL/null.create?text';
 import NULL_defineProperties from './INTERNAL/null.defineProperties?text';
@@ -14,7 +30,6 @@ import NULL_fromEntries from './INTERNAL/null.fromEntries?text';
 import NULL_getOwnPropertyDescriptor from './INTERNAL/null.getOwnPropertyDescriptor?text';
 import NULL_getOwnPropertyDescriptors from './INTERNAL/null.getOwnPropertyDescriptors?text';
 import NULL_PropertyDescriptor from './INTERNAL/null.PropertyDescriptor?text';
-import NULL from './INTERNAL/null?text';
 
 import RETURN from './INTERNAL/return?text';
 import return_true from './INTERNAL/return.true?text';
@@ -38,8 +53,23 @@ const INTERNAL = /*#__PURE__*/ assign(create(null), {
 	
 	'default': Default,
 	'private': Private,
-	'typeof': typeOf,
 	'for.of': of,
+	
+	'typeof': TYPEOF,
+	
+	'class': CLASS,
+	'class.isBoolean': class_isBoolean,
+	'class.isNumber': class_isNumber,
+	'class.isString': class_isString,
+	'class.isDate': class_isDate,
+	'class.isRegExp': class_isRegExp,
+	'class.isMap': class_isMap,
+	'class.isSet': class_isSet,
+	'class.isWeakMap': class_isWeakMap,
+	'class.isWeakSet': class_isWeakSet,
+	'class.isPromise': class_isPromise,
+	'class.isSymbol': class_isSymbol,
+	'class.isBigInt': class_isBigInt,
 	
 	'null': NULL,
 	'null.assign': NULL_assign,

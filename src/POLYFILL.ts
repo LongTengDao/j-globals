@@ -1,7 +1,10 @@
 import assign from '.Object.assign';
 import create from '.Object.create';
 
+import _Default from './POLYFILL/default?text';
+
 import _Reflect_ownKeys from './POLYFILL/Reflect.ownKeys?text';
+import _Reflect_apply from './POLYFILL/Reflect.apply?text';
 
 import _Object_create from './POLYFILL/Object.create?text';
 import _Object_keys from './POLYFILL/Object.keys?text';
@@ -17,6 +20,8 @@ import _Array_of from './POLYFILL/Array.of?text';
 import _Array_from from './POLYFILL/Array.from?text';
 import _Array_isArray from './POLYFILL/Array.isArray?text';
 import _Array_prototype_map from './POLYFILL/Array.prototype.map?text';
+import _Array_prototype_flat from './POLYFILL/Array.prototype.flat?text';
+import _Array_prototype_flatMap from './POLYFILL/Array.prototype.flatMap?text';
 
 import _globalThis from './POLYFILL/globalThis?text';
 
@@ -28,8 +33,12 @@ import _undefined from './POLYFILL/undefined?text';
 import _Infinity from './POLYFILL/Infinity?text';
 import _NaN from './POLYFILL/NaN?text';
 
-import _Number_maxSafeInteger from './POLYFILL/Number.MAX_SAFE_INTEGER?text';
-import _Number_minSafeInteger from './POLYFILL/Number.MIN_SAFE_INTEGER?text';
+import _Number_MAX_SAFE_INTEGER from './POLYFILL/Number.MAX_SAFE_INTEGER?text';
+import _Number_MIN_SAFE_INTEGER from './POLYFILL/Number.MIN_SAFE_INTEGER?text';
+import _Number_isSafeInteger from './POLYFILL/Number.isSafeInteger?text';
+import _Number_isInteger from './POLYFILL/Number.isInteger?text';
+import _Number_isFinite from './POLYFILL/Number.isFinite?text';
+import _Number_isNaN from './POLYFILL/Number.isNaN?text';
 import _Number_EPSILON from './POLYFILL/Number.EPSILON?text';
 
 import _Buffer_isBuffer from './POLYFILL/Buffer.isBuffer?text';
@@ -49,6 +58,7 @@ import _NULL from './POLYFILL/null?text';
 import _Map from './POLYFILL/Map?text';
 import _Set from './POLYFILL/Set?text';
 
+import _String_raw from './POLYFILL/String.raw?text';
 import _String_fromCodePoint from './POLYFILL/String.fromCodePoint?text';
 import _String_prototype_codePointAt from './POLYFILL/String.prototype.codePointAt?text';
 
@@ -56,6 +66,9 @@ import _document_head from './POLYFILL/document.head?text';
 
 const POLYFILL = /*#__PURE__*/ assign(create(null), {
 	
+	'default': _Default,
+	
+	'String.raw': _String_raw,
 	'String.fromCodePoint': _String_fromCodePoint,
 	'String.prototype.codePointAt': _String_prototype_codePointAt,
 	
@@ -68,6 +81,7 @@ const POLYFILL = /*#__PURE__*/ assign(create(null), {
 	'throw.Error': _throwError,
 	
 	'Reflect.ownKeys': _Reflect_ownKeys,
+	'Reflect.apply': _Reflect_apply,
 	
 	'Object.assign': _Object_assign,
 	'Object.create': _Object_create,
@@ -94,6 +108,8 @@ const POLYFILL = /*#__PURE__*/ assign(create(null), {
 	//'Array.prototype.indexOf': ,
 	//'Array.prototype.lastIndexOf': ,
 	//'Array.prototype.includes': ,
+	'Array.prototype.flat': _Array_prototype_flat,
+	'Array.prototype.flatMap': _Array_prototype_flatMap,
 	
 	'globalThis': _globalThis,
 	
@@ -105,9 +121,12 @@ const POLYFILL = /*#__PURE__*/ assign(create(null), {
 	'Infinity': _Infinity,
 	'NaN': _NaN,
 	
-	'Number.MAX_SAFE_INTEGER': _Number_maxSafeInteger,
-	'Number.MIN_SAFE_INTEGER': _Number_minSafeInteger,
-	//'Number.isSafeInteger': ,
+	'Number.MAX_SAFE_INTEGER': _Number_MAX_SAFE_INTEGER,
+	'Number.MIN_SAFE_INTEGER': _Number_MIN_SAFE_INTEGER,
+	'Number.isSafeInteger': _Number_isSafeInteger,
+	'Number.isInteger': _Number_isInteger,
+	'Number.isFinite': _Number_isFinite,
+	'Number.isNaN': _Number_isNaN,
 	'Number.EPSILON': _Number_EPSILON,
 	
 	//'JSON': ,

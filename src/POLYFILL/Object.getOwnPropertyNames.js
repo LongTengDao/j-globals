@@ -1,6 +1,7 @@
 import hasOwnProperty from '.Object.prototype.hasOwnProperty';
 import propertyIsEnumerable from '.Object.prototype.propertyIsEnumerable';
 import toString from '.Object.prototype.toString';
+import { isIndex } from '.native';
 export default (
 	/*! j-globals: Object.getOwnPropertyNames (polyfill) */
 	/*#__PURE__*/ function () {
@@ -28,8 +29,6 @@ export default (
 			};
 		}
 		
-		var INDEX = /^(?:0|[1-9]\d*)$/;
-		
 		function __PURE__ (object) {
 			
 			if ( object==null ) { throw TypeError('Cannot convert undefined or null to object'); }
@@ -44,16 +43,16 @@ export default (
 				case 'object':
 					if ( hasOwnProperty.call(object, 'length') && !propertyIsEnumerable.call(object, 'length') ) {
 						if ( toString.call(object)==='[object Array]' ) {
-							for ( name in object ) { if ( hasOwnProperty.call(object, name) && INDEX.test(name) ) { names[index++] = name; } }
+							for ( name in object ) { if ( hasOwnProperty.call(object, name) && isIndex(name) ) { names[index++] = name; } }
 						}
 						else {
 							if ( string_noIndex && toString.call(object)==='[object String]' ) { throw TypeError('stringObject\'s index keys have bug in ES3'); }
 							for ( length = object.length; index<length; ++index ) { if ( hasOwnProperty.call(object, index) ) { names[index] = ''+index; } }
-							for ( name in object ) { if ( hasOwnProperty.call(object, name) && INDEX.test(name) && name>=length ) { names[index++] = name; } }
+							for ( name in object ) { if ( hasOwnProperty.call(object, name) && isIndex(name) && name>=length ) { names[index++] = name; } }
 							if ( hasOwnProperty.call(object, 'callee') && !propertyIsEnumerable.call(object, 'callee') ) { names[index++] = 'callee'; }
 						}
 						names[index++] = 'length';
-						for ( name in object ) { if ( hasOwnProperty.call(object, name) && !INDEX.test(name) ) { names[index++] = name; } }
+						for ( name in object ) { if ( hasOwnProperty.call(object, name) && !isIndex(name) ) { names[index++] = name; } }
 					}
 					else {
 						for ( name in object ) { if ( hasOwnProperty.call(object, name) ) { names[index++] = name; } }
@@ -61,12 +60,12 @@ export default (
 					break;
 				
 				case 'function':
-					for ( name in object ) { if ( hasOwnProperty.call(object, name) && INDEX.test(name) ) { names[index++] = name; } }
+					for ( name in object ) { if ( hasOwnProperty.call(object, name) && isIndex(name) ) { names[index++] = name; } }
 					if ( hasOwnProperty.call(object, 'prototype') && !propertyIsEnumerable.call(object, 'prototype') ) { names[index++] = 'prototype'; }
 					if ( hasOwnProperty.call(object, 'caller') && !propertyIsEnumerable.call(object, 'caller') ) { names[index++] = 'caller'; }
 					if ( hasOwnProperty.call(object, 'arguments') && !propertyIsEnumerable.call(object, 'arguments') ) { names[index++] = 'arguments'; }
 					if ( hasOwnProperty.call(object, 'length') && !propertyIsEnumerable.call(object, 'length') ) { names[index++] = 'length'; }
-					for ( name in object ) { if ( hasOwnProperty.call(object, name) && !INDEX.test(name) ) { names[index++] = name; } }
+					for ( name in object ) { if ( hasOwnProperty.call(object, name) && !isIndex(name) ) { names[index++] = name; } }
 					break;
 				
 				case 'string':

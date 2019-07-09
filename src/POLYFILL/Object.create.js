@@ -43,7 +43,7 @@ export default Object.create || (
 		}
 		return function create (o, properties) {
 			return /*#__PURE__*/ __PURE__(o, properties);
-		}
+		};
 	}()
 	/*¡ j-globals: Object.create (polyfill) */
 );

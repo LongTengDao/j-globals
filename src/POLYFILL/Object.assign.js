@@ -8,8 +8,6 @@ export default (
 		
 		var string_noIndex = !'_'.hasOwnProperty(0);
 		
-		//var INDEX = /^(?:0|[1-9]\d*)$/;
-		
 		return function assign (target, firstSource) {
 			if ( target==null ) { throw TypeError('Cannot convert undefined or null to object'); }
 			target = Object(target);
@@ -27,7 +25,7 @@ export default (
 									}
 									for ( key in source ) {
 										if ( hasOwnProperty.call(source, key) ) {
-											if ( INDEX.test(key) && key<length ) {
+											if ( isIndex(key) && key<length ) {
 												if ( source[key]!==charAt.call(source, key) ) { throw TypeError('source stringObject[index] is not writable in ES3+ spec'); }
 											}
 											else { target[key] = source[key]; }

@@ -10,15 +10,15 @@ export default (
 		
 		return function map (callbackfn/*, thisArg*/) {
 			var O = ToObject(this, 'Array.prototype.map called on null or undefined');
-			var len = ToLength(O.length);
-			assertArrayFn(callbackfn);
-			if ( arguments.length>1 ) { callbackfn = createBound(callbackfn, arguments[1]); }
-			var A = ArraySpeciesCreate(this, len);
 			if ( string_noIndex && O instanceof String ) {
 				throw TypeError('stringObject\'s index keys have bug in ES3');
 				//if ( toString.call(O)==='[object String]' ) { O = split.call(O); }
 				//else { throw TypeError('There is no way in ES 3 to read the index of an object, which is instanceof String, but not [object String]'); }
 			}
+			var len = ToLength(O.length);
+			assertArrayFn(callbackfn);
+			if ( arguments.length>1 ) { callbackfn = createBound(callbackfn, arguments[1]); }
+			var A = ArraySpeciesCreate(this, len);
 			for ( var k = 0; k<len; ++k ) {
 				var Pk = ToString(k);
 				if ( Pk in O ) {
