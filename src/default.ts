@@ -65,7 +65,7 @@ export default class Globals extends Set<string> {
 						tsd += trim`Default;${eol}
 							${tab}function Default<Exports extends Readonly<{ [key :string] :any, default? :Module<Exports> }>> (exports :Exports) :Module<Exports>;${eol}
 							${tab}function Default<Statics extends Readonly<{ [key :string] :any, default? :ModuleFunction<Statics, Main> }>, Main extends Callable | Newable | Callable & Newable> (main :Main, statics :Statics) :ModuleFunction<Statics, Main>;${eol}
-							${tab}type Module<Exports> = Readonly<{ Exports & { default :Module<Exports> }>;${eol}
+							${tab}type Module<Exports> = Readonly<Exports & { default :Module<Exports> }>;${eol}
 							${tab}type ModuleFunction<Statics, Main> = Readonly<Statics & { default :ModuleFunction<Statics, Main> } & Main>;${eol}
 							${tab}type Callable = (...args :any[]) => any;${eol}
 							${tab}type Newable = { new (...args :any[]) :any };${eol}`;
