@@ -19,6 +19,7 @@ export default (
 			}
 			exports['default'] = exports;
 			if ( freeze ) {
+				typeof exports==='function' && exports.prototype && freeze(exports.prototype);
 				if ( toStringTag ) {
 					var descriptor = create(null);
 					descriptor.value = 'Module';

@@ -12,6 +12,7 @@ export default (
 			if ( assign ) { assign(exports, addOnOrigin); }
 			else { for ( var key in addOnOrigin ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } } }
 			exports['default'] = exports;
+			typeof exports==='function' && exports.prototype && freeze(exports.prototype);
 			if ( toStringTag ) {
 				var descriptor = create(null);
 				descriptor.value = 'Module';
