@@ -5,7 +5,7 @@ export default (
 		try {
 			return this// IE9- (IE8-: self!==window)
 				||
-				(0, eval)('this');// (IE8- not global) // Function // function(){}.constructor
+				Function('return this')();// (0, eval) (IE8- not global) (also writable) // function(){}.constructor
 		}
 		
 		catch (error) {// !CSP (e.g. Google Chrome Apps)
