@@ -4,6 +4,7 @@ import hasOwnProperty from '.Object.prototype.hasOwnProperty';
 import toStringTag from '.Symbol.toStringTag?';
 import defineProperty from '.Object.defineProperty';
 import freeze from '.Object.freeze';
+import seal from '.Object.seal';
 export default (
 	/*! j-globals: default (internal) */
 	function Default (exports, addOnOrigin) {
@@ -18,8 +19,8 @@ export default (
 				}
 			}
 			exports['default'] = exports;
-			if ( freeze ) {
-				typeof exports==='function' && exports.prototype && freeze(exports.prototype);
+			if ( seal ) {
+				typeof exports==='function' && exports.prototype && seal(exports.prototype);
 				if ( toStringTag ) {
 					var descriptor = create(null);
 					descriptor.value = 'Module';
