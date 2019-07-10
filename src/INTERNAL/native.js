@@ -8,7 +8,7 @@ import undefined from '.undefined';
 import create from '.Object.create';
 import defineProperty from '.Object.defineProperty';
 import PropertyDescriptor from '.null.PropertyDescriptor';
-import Array_prototype from '.Array.prototype;';
+import Array_prototype from '.Array.prototype';
 import Object_prototype from '.Object.prototype';
 import toString from '.Object.prototype.toString';
 

@@ -1,6 +1,6 @@
 export default (
 	/*! j-globals: return.true (internal) */
-	function RETURN () {
+	function return_true () {
 		return true;
 	}
 	/*¡ j-globals: return.true (internal) */
