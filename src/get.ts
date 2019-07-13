@@ -1,7 +1,7 @@
 import Error from '.Error';
 import SyntaxError from '.SyntaxError';
 
-import { PropertyAccessors } from '@ltd/j-es';
+import { PropertyAccessors, isReservedWord } from '@ltd/j-es';
 
 import MULTI_EXPORT from './MULTI_EXPORT';
 import INTERNAL from './INTERNAL';
@@ -29,10 +29,19 @@ function * Chunk ([ chain, fallback, polyfill, exp, along ] :chain_fallback_poly
 	if ( !fallback ) {
 		if ( chain in MULTI_EXPORT ) {
 			yield `export default ${chain};${eol}${eol}`;
+			const identifiers :string[] = [];
 			for ( const node of MULTI_EXPORT[chain] ) {
-				yield `export { ${node} }; import ${node} from '${pre}${chain}.${node}${sur}';${eol}`;
+				if ( isReservedWord(node) ) {
+					const NODE :string = node.toUpperCase();
+					yield `import ${NODE} from '${pre}${chain}.${node}${sur}'; export { ${NODE} as ${node} };${eol}`;
+					identifiers.push(NODE);
+				}
+				else {
+					yield `import ${node} from '${pre}${chain}.${node}${sur}'; export { ${node} };${eol}`;
+					identifiers.push(node);
+				}
 			}
-			yield `${eol}[ ${MULTI_EXPORT[chain].join(', ')} ];`;
+			yield `${eol}[ ${identifiers.join(', ')} ];`;
 		}
 		else if ( chain in INTERNAL ) {
 			yield pre==='.' && sur==='' && tab==='\t' && eol==='\n'
@@ -43,7 +52,12 @@ function * Chunk ([ chain, fallback, polyfill, exp, along ] :chain_fallback_poly
 			yield IN_GLOBAL.test(chain)
 				? /*globalThis*/ `import globalThis from '${pre}globalThis?=${sur}';${eol}`
 				: '';
-			yield `export default ${chain==='undefined' ? 'void 0' : chain==='Infinity' ? '1/0' : chain==='NaN' ? '0/0' : ES3Chain(chain)};`;
+			yield `export default ${
+				chain==='undefined' ? 'void 0' :
+					chain==='Infinity' ? '1/0' :
+						chain==='NaN' ? '0/0' :
+							ES3Chain(chain)
+			};`;
 		}
 	}
 	
@@ -83,12 +97,21 @@ function * Chunk ([ chain, fallback, polyfill, exp, along ] :chain_fallback_poly
 		}
 		else if ( chain in MULTI_EXPORT ) {
 			yield `export default ${chain};${eol}${eol}`;
+			const identifiers :string[] = [];
 			for ( const node of MULTI_EXPORT[chain] ) {
 				let id :string = `${chain}.${node}`;
 				if ( id in POLYFILL ) { id += '?='; }
-				yield `import ${node} from '${pre}${id}${sur}'; export { ${node} };${eol}`;
+				if ( isReservedWord(node) ) {
+					const NODE :string = node.toUpperCase();
+					yield `import ${NODE} from '${pre}${id}${sur}'; export { ${NODE} as ${node} };${eol}`;
+					identifiers.push(NODE);
+				}
+				else {
+					yield `import ${node} from '${pre}${id}${sur}'; export { ${node} };${eol}`;
+					identifiers.push(node);
+				}
 			}
-			yield `${eol}var $= [ ${MULTI_EXPORT[chain].join(', ')} ];${eol}`;
+			yield `${eol}var $= [ ${identifiers.join(', ')} ];${eol}`;
 		}
 		else { throw Error(`@ltd/j-globals 没有为 ${chain} 准备内置的 polyfill`); }
 	}

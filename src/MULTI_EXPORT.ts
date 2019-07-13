@@ -276,19 +276,19 @@ export default /*#__PURE__*/ assign(create(null), {
 	],
 	'Proxy': [ 'revocable' ],
 	/*'Map': [ 'prototype' ],*/
-	'Map.prototype': [ 'clear', /*'delete',*/ 'entries', 'forEach', 'has', 'keys', 'get', 'set', 'size', 'values' ],
+	'Map.prototype': [ 'clear', 'delete', 'entries', 'forEach', 'has', 'keys', 'get', 'set', 'size', 'values' ],
 	/*'Set': [ 'prototype' ],*/
-	'Set.prototype': [ 'add', 'clear', /*'delete',*/ 'entries', 'forEach', 'has', 'keys', 'size', 'values' ],
+	'Set.prototype': [ 'add', 'clear', 'delete', 'entries', 'forEach', 'has', 'keys', 'size', 'values' ],
 	/*'WeakMap': [ 'prototype' ],*/
-	'WeakMap.prototype': [ /*'delete',*/ 'has', 'get', 'set' ],
+	'WeakMap.prototype': [ 'delete', 'has', 'get', 'set' ],
 	/*'WeakSet': [ 'prototype' ],*/
-	'WeakSet.prototype': [ 'add', /*'delete',*/ 'has' ],
+	'WeakSet.prototype': [ 'add', 'delete', 'has' ],
 	
 	'Promise': [ /*'prototype',*/ 'all', 'race', 'reject', 'resolve' ],
-	'Promise.prototype': [ 'then' /*, 'catch', 'finally'*/ ],
+	'Promise.prototype': [ 'then' , 'catch', 'finally' ],
 	'Symbol': [ /*'prototype',*/
 		'asyncIterator',
-		/*'for',*/
+		'for',
 		'hasInstance',
 		'isConcatSpreadable',
 		'iterator',

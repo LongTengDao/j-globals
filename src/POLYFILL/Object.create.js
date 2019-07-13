@@ -14,7 +14,7 @@ export default Object.create || (
 		}
 		else {
 			dom = document.createElement('iframe');
-			dom.style.display = 'none';
+			dom.setAttribute('style', 'display:none !important;_display:none;');//dom.style.display = 'none';
 			var parent = document.body || document.documentElement;
 			parent.appendChild(dom);
 			dom.src = 'javascript:';
