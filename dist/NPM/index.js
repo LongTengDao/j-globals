@@ -533,8 +533,6 @@ const INTERNAL = /*#__PURE__*/ assign(create(null), {
 
 const _Buffer_from_ = 'import hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nimport undefined from \'.undefined\';\nexport default (\n	/*! j-globals: Buffer.from (fallback) */\n	typeof Buffer===\'function\' && /*#__PURE__*/ hasOwnProperty.call(Buffer, \'from\') ? Buffer.from : undefined\n	/*¡ j-globals: Buffer.from (fallback) */\n);';
 
-const _Buffer_isBuffer = 'export default (\n	/*! j-globals: Buffer.isBuffer (polyfill) */\n	typeof Buffer===\'function\' ? Buffer.isBuffer : function isBuffer (b) {\n		return b instanceof Buffer;\n	}\n	/*¡ j-globals: Buffer.isBuffer (polyfill) */\n);';
-
 const _Object_keys_ = 'export default (\n	/*! j-globals: Object.keys (fallback) */\n	/*#__PURE__*/ function () {\n		var keys = Object.keys;\n		if ( keys ) {\n			try {\n				keys(0);\n				return keys;\n			}\n			catch (error) { }\n		}\n	}()\n	/*¡ j-globals: Object.keys (fallback) */\n)';
 
 const _Object_defineProperty_ = 'export default (\n	/*! j-globals: Object.defineProperty (fallback) */\n	/*#__PURE__*/ function () {\n		var defineProperty = Object.defineProperty;\n		if ( defineProperty ) {\n			try {\n				var descriptor = Object.create(null);\n				descriptor.get = function () {};\n				descriptor.configurable = false;\n				defineProperty({}, 0, descriptor);\n				return defineProperty;\n			}\n			catch (error) { }\n		}\n	}()\n	/*¡ j-globals: Object.defineProperty (fallback) */\n)';
@@ -542,7 +540,6 @@ const _Object_defineProperty_ = 'export default (\n	/*! j-globals: Object.define
 const FALLBACK = /*#__PURE__*/ assign(create(null), {
     'Object.assign': _Object_defineProperty_,
     'Object.entries': _Object_keys_,
-    'Buffer.isBuffer': _Buffer_isBuffer,
     'Buffer.from': _Buffer_from_,
 });
 
@@ -605,6 +602,8 @@ const _Number_isFinite = 'import Infinity from \'.Infinity\';\nexport default (\
 const _Number_isNaN = 'export default (\n	/*! j-globals: Number.isNaN (polyfill) */\n	Number.isNaN || function isNaN (number) {\n		return number!==number;\n	}\n	/*¡ j-globals: Number.isNaN (polyfill) */\n);';
 
 const _Number_EPSILON = 'export default (\n	/*! j-globals: Number.EPSILON (polyfill) */\n	Number.EPSILON || 2.220446049250313e-16\n	/*¡ j-globals: Number.EPSILON (polyfill) */\n);';
+
+const _Buffer_isBuffer = 'export default (\n	/*! j-globals: Buffer.isBuffer (polyfill) */\n	typeof Buffer===\'function\' ? Buffer.isBuffer : function isBuffer (b) {\n		return b instanceof Buffer;\n	}\n	/*¡ j-globals: Buffer.isBuffer (polyfill) */\n);';
 
 const _Buffer_from = 'import hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nimport Uint8Array from \'.Uint8Array?\';\nimport toPrimitive from \'.Symbol.toPrimitive?\';\nimport undefined from \'.undefined\';\nexport default (\n	/*! j-globals: Buffer.from (polyfill) */\n	typeof Buffer===\'function\' && /*#__PURE__*/ hasOwnProperty.call(Buffer, \'from\') ? Buffer.from : function from (value, encodingOrOffset, length) {\n		if ( typeof value===\'string\' ) { return /*#__PURE__*/ new Buffer(value, encodingOrOffset); }\n		if ( Uint8Array ? value instanceof Uint8Array : value instanceof Buffer ) { return /*#__PURE__*/ new Buffer(value); }\n		if ( /*#__PURE__*/ toString.call(value)===\'[object Array]\' || value instanceof Array ) { return /*#__PURE__*/ new Buffer(value); }\n		if ( typeof value.valueOf===\'function\' ) {\n			var valued = /*#__PURE__*/ value.valueOf();\n			if ( valued!=null && valued!==value ) { return /*#__PURE__*/ from(valued, encodingOrOffset, length); }\n		}\n		if ( typeof toPrimitive!==undefined && typeof value[toPrimitive]===\'function\' ) { return /*#__PURE__*/ from(/*#__PURE__*/ value[toPrimitive](\'string\'), encodingOrOffset, length); }\n		return /*#__PURE__*/ new Buffer(value, encodingOrOffset, length);\n	}\n	/*¡ j-globals: Buffer.from (polyfill) */\n);';
 
