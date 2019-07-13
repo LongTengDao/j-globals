@@ -38,12 +38,12 @@ export default (
 				if ( Type(arrayLike_iterable)!==TheObjectType ) { throw TypeError('Result of the Symbol.iterator method is not an object'); }
 				for ( index = 0; ; ++index ) {
 					var step = arrayLike_iterable.next();
-					if ( Type(step)!==TheObjectType ) {
-						tryReturn(arrayLike_iterable);
-						throw TypeError('Iterator result '+step+' is not an object');
-					}
+					if ( Type(step)!==TheObjectType ) { throw TypeError('Iterator result '+step+' is not an object'); }
 					if ( step.done ) { break; }
-					if ( tryFnValue_tryReturn_throw(callbackfn, step.value, arrayLike_iterable) ) { break; }
+					if ( tryFnValue_tryReturn_throw(callbackfn, step.value, arrayLike_iterable) ) {
+						tryReturn(arrayLike_iterable);
+						break;
+					}
 				}
 				return;
 			}
