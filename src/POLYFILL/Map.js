@@ -9,8 +9,8 @@ import { defineIndexValue, createBound } from '.native';
 export default (
 	/*! j-globals: Map (polyfill) */
 	typeof Map==='function' && Map.prototype && /*#__PURE__*/ function () {
-		var map = new Map([ [-0, 0] ]);
-		return map.keys && 1/map.keys().next().value>0 && map.set(0, 0)===map && map.size===1;
+		var map = new Map;
+		return map.keys && map.set(-0, 0)===map && 1/map.keys().next().value>0;
 	}() ? Map : /*#__PURE__*/ function () { 'use strict';
 		
 		var DELETED = {};

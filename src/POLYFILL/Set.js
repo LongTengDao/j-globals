@@ -9,8 +9,8 @@ import { defineIndexValue, createBound } from '.native';
 export default (
 	/*! j-globals: Set (polyfill) */
 	typeof Set==='function' && Set.prototype && /*#__PURE__*/ function () {
-		var set = new Set([ -0 ]);
-		return set.keys && 1/set.keys().next().value>0 && set.add(0)===set && set.size===1;
+		var set = new Set;
+		return set.keys && set.add(-0)===set && 1/set.keys().next().value>0;
 	}() ? Set : /*#__PURE__*/ function () { 'use strict';
 		
 		var DELETED = {};
