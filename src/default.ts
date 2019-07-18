@@ -285,10 +285,11 @@ export default class Globals extends Set<string> {
 	shakingMap (this :Globals) :Map<string, string> {
 		const map :Map<string, string> = new Map;
 		const all :Set<string> = collectAll(this);
-		for ( const polyfill of all ) {
-			if ( polyfill.includes('?=') ) {
-				const origin :string = polyfill.slice(0, polyfill.indexOf('?'));
-				all.has(origin) && map.set(polyfill, origin);
+		for ( const fallback of all ) {
+			const index :number = fallback.indexOf('?');
+			if ( index>=0 ) {
+				const origin :string = fallback.slice(0, index);
+				all.has(origin) && map.set(fallback, origin);
 			}
 		}
 		return map;

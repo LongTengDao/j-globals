@@ -92,7 +92,7 @@ function PropertyAccessors(keys, ES) {
 
 /*¡ ES */
 
-const version = '4.2.0';
+const version = '4.3.0';
 
 const assign = Object.assign;
 
@@ -1111,10 +1111,11 @@ class Globals extends Set {
     shakingMap() {
         const map = new Map;
         const all = collectAll(this);
-        for (const polyfill of all) {
-            if (polyfill.includes('?=')) {
-                const origin = polyfill.slice(0, polyfill.indexOf('?'));
-                all.has(origin) && map.set(polyfill, origin);
+        for (const fallback of all) {
+            const index = fallback.indexOf('?');
+            if (index >= 0) {
+                const origin = fallback.slice(0, index);
+                all.has(origin) && map.set(fallback, origin);
             }
         }
         return map;
