@@ -1,5 +1,6 @@
-import Set from '.Set';
 import Error from '.Error';
+import Set from '.Set';
+import Map from '.Map';
 
 import { StringLiteral } from '@ltd/j-es';
 
@@ -20,7 +21,7 @@ export default class Globals extends Set<string> {
 	
 	static get = get;
 	
-	get (id :string, options :OPTIONS = OPTIONS) :string {
+	get (this :Globals, id :string, options :OPTIONS = OPTIONS) :string {
 		const got :string = get(id, options);
 		this.add(id);
 		return got;
@@ -28,23 +29,10 @@ export default class Globals extends Set<string> {
 	
 	//add
 	
-	collect () :string[] {
-		const collection :Set<string> = new Set;
-		for ( const id of this ) {
-			collection.add(id);
-			const chain :string = fetchChain(id);
-			if ( chain in MULTI_EXPORT ) {
-				collection.add(chain);
-				for ( const node of MULTI_EXPORT[chain] ) { collection.add(`${chain}.${node}`); }
-			}
-		}
-		return [...collection].sort();
-	}
-	
-	toTSD ({ bom = false, tab = '\t', eol = '\n', pre = '.', sur = '' } :OPTIONS = OPTIONS) :string {
+	toTSD (this :Globals, { bom = false, tab = '\t', eol = '\n', pre = '.', sur = '' } :OPTIONS = OPTIONS) :string {
 		let tsd :string = '';
 		let previous :string = '';
-		for ( const id of this.collect() ) {
+		for ( const id of [...collectAll(this)].sort() ) {
 			const chain :string = fetchChain(id);
 			const current :string = fetchFirst(chain);
 			if ( current!==previous ) {
@@ -294,8 +282,33 @@ export default class Globals extends Set<string> {
 		return ( bom ? '\uFEFF' : '' )+tsd;
 	}
 	
+	shakingMap (this :Globals) :Map<string, string> {
+		const map :Map<string, string> = new Map;
+		const all :Set<string> = collectAll(this);
+		for ( const polyfill of all ) {
+			if ( polyfill.includes('?=') ) {
+				const origin :string = polyfill.slice(0, polyfill.indexOf('?'));
+				all.has(origin) && map.set(polyfill, origin);
+			}
+		}
+		return map;
+	}
+	
 	static default = Globals;
 	
+}
+
+function collectAll (globals :Globals) :Set<string> {
+	const collection :Set<string> = new Set;
+	for ( const id of globals ) {
+		collection.add(id);
+		const chain :string = fetchChain(id);
+		if ( chain in MULTI_EXPORT ) {
+			collection.add(chain);
+			for ( const node of MULTI_EXPORT[chain] ) { collection.add(`${chain}.${node}`); }
+		}
+	}
+	return collection;
 }
 
 function fetchChain (id :string) :string {

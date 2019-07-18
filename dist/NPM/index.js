@@ -92,7 +92,7 @@ function PropertyAccessors(keys, ES) {
 
 /*¡ ES */
 
-const version = '4.1.1';
+const version = '4.2.0';
 
 const assign = Object.assign;
 
@@ -868,24 +868,10 @@ class Globals extends Set {
         return got;
     }
     //add
-    collect() {
-        const collection = new Set;
-        for (const id of this) {
-            collection.add(id);
-            const chain = fetchChain(id);
-            if (chain in MULTI_EXPORT) {
-                collection.add(chain);
-                for (const node of MULTI_EXPORT[chain]) {
-                    collection.add(`${chain}.${node}`);
-                }
-            }
-        }
-        return [...collection].sort();
-    }
     toTSD({ bom = false, tab = '\t', eol = '\n', pre = '.', sur = '' } = OPTIONS) {
         let tsd = '';
         let previous = '';
-        for (const id of this.collect()) {
+        for (const id of [...collectAll(this)].sort()) {
             const chain = fetchChain(id);
             const current = fetchFirst(chain);
             if (current !== previous) {
@@ -1122,11 +1108,36 @@ class Globals extends Set {
         }
         return (bom ? '\uFEFF' : '') + tsd;
     }
+    shakingMap() {
+        const map = new Map;
+        const all = collectAll(this);
+        for (const polyfill of all) {
+            if (polyfill.includes('?=')) {
+                const origin = polyfill.slice(0, polyfill.indexOf('?'));
+                all.has(origin) && map.set(polyfill, origin);
+            }
+        }
+        return map;
+    }
 }
 Globals.version = version;
 Globals.Globals = Globals;
 Globals.get = get;
 Globals.default = Globals;
+function collectAll(globals) {
+    const collection = new Set;
+    for (const id of globals) {
+        collection.add(id);
+        const chain = fetchChain(id);
+        if (chain in MULTI_EXPORT) {
+            collection.add(chain);
+            for (const node of MULTI_EXPORT[chain]) {
+                collection.add(`${chain}.${node}`);
+            }
+        }
+    }
+    return collection;
+}
 function fetchChain(id) {
     const index = id.indexOf('?');
     return index < 0 ? id : id.slice(0, index);
