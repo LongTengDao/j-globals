@@ -1,7 +1,7 @@
 import create from '.Object.create';
 export default (
 	/*! j-globals: null.PropertyDescriptor (internal) */
-	/*#__PURE__*/ function () {
+	function () {
 		function __PURE__ (value_get, set_writable, enumerable, configurable) {
 			var propertyDescriptor = create(null);
 			if ( set_writable===true ) {

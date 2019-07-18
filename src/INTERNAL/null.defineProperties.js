@@ -6,8 +6,7 @@ import hasOwnProperty from '.Object.prototype.hasOwnProperty';
 import Object_defineProperties from '.Object.defineProperties';
 export default (
 	/*! j-globals: null.defineProperties (internal) */
-	create && /*#__PURE__*/ function () {
-		
+	function () {
 		function Descriptor (source) {
 			var target = create(null);
 			if ( hasOwnProperty.call(source, 'value') ) { target.value = source.value; }
@@ -18,7 +17,6 @@ export default (
 			if ( hasOwnProperty.call(source, 'configurable') ) { target.configurable = source.configurable; }
 			return target;
 		}
-		
 		return function defineProperties (object, descriptorMap) {
 			var created = create(null);
 			var names = keys(descriptorMap);
@@ -35,7 +33,6 @@ export default (
 			}
 			return Object_defineProperties(object, created);
 		};
-		
 	}()
 	/*¡ j-globals: null.defineProperties (internal) */
 );
