@@ -247,19 +247,24 @@ export default class Globals extends Set<string> {
 					//		? `create;${eol}${tab}function create (o :object | null, properties? :undefined) :any;${eol}`
 					//		: `${chain}; `;
 					//	break;
-					case 'Object.entries':
-						tsd += `entries;${eol}${tab}function entries<T extends object> (object :T) :[Extract<string, keyof T>, T[Extract<string, keyof T>]][];${eol}`;
-						break;
 					case 'Object.fromEntries':
 						tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<{ readonly 0: K, readonly 1: V }>) :{ [k in K] :V };${eol}`;
 						break;
-					case 'Object.keys':
-						tsd += `keys;${eol}${tab}function keys<T extends object> (object :T) :Extract<string, keyof T>[];${eol}`;
+					case 'Object.entries':
+						tsd += `entries;${eol}${tab}function entries<T extends object> (object :T) :[Extract<string, keyof T>, T[Extract<string, keyof T>]][];${eol}`;
 						break;
 					case 'Object.values':
 						tsd += `values;${eol}${tab}function values<T extends object> (object :T) :T[Extract<string, keyof T>][];${eol}`;
 						break;
-						
+					case 'Object.keys':
+						tsd += `keys;${eol}${tab}function keys<T extends object> (object :T) :Extract<string, keyof T>[];${eol}`;
+						break;
+					case 'Object.getOwnPropertyNames':
+						tsd += `getOwnPropertyNames;${eol}${tab}function getOwnPropertyNames<T extends object> (object :T) :Extract<string, keyof T>[];${eol}`;
+						break;
+					case 'Object.getOwnPropertySymbols':
+						tsd += `getOwnPropertySymbols;${eol}${tab}function getOwnPropertySymbols<T extends object> (object :T) :Extract<symbol, keyof T>[];${eol}`;
+						break;
 					case 'Reflect.ownKeys':
 						tsd += `ownKeys;${eol}${tab}function ownKeys<T extends object> (object :T) :Extract<string | symbol, keyof T>[];${eol}`;
 						break;
