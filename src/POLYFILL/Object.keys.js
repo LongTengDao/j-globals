@@ -1,4 +1,4 @@
-import Array_prototype from '.Array.prototype';
+var Array_prototype = Array.prototype;
 import Boolean_prototype from '.Boolean.prototype';
 import Date_prototype from '.Date.prototype';
 import Error_prototype from '.Error.prototype';

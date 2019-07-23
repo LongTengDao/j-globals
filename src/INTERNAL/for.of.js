@@ -3,7 +3,7 @@ import Symbol_iterator from '.Symbol.iterator?';
 import toString from '.Object.prototype.toString';
 import charAt from '.String.prototype.charAt';
 import return_false from '.return.false';
-import String_prototype from '.String.prototype';
+import String_prototype from 'String.prototype';
 import { createBound, Type, TheObjectType } from '.native';
 export default (
 	/*! j-globals: for.of (internal) */
