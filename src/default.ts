@@ -32,15 +32,15 @@ export default class Globals extends Set<string> {
 	toTSD (this :Globals, { bom = false, tab = '\t', eol = '\n', pre = '.', sur = '' } :OPTIONS = OPTIONS) :string {
 		let tsd :string = '';
 		let previous :string = '';
-		for ( const id of [...collectAll(this)].sort() ) {
-			const chain :string = fetchChain(id);
+		for ( const id of [ ...collectAll(this) ].sort() ) {
+			const [ chain, multi ] :chain_multi = fetchChain(id);
 			const current :string = fetchFirst(chain);
 			if ( current!==previous ) {
 				previous = current;
 				tsd += eol;
 			}
 			tsd += `declare module '${pre}${StringLiteral(id).slice(1, -1)}${sur}' { export default `;
-			if ( chain in MULTI_EXPORT ) {
+			if ( multi ) {
 				tsd += `${chain};${eol}`;
 				for ( const node of MULTI_EXPORT[chain] ) {
 					tsd += `${tab}export { default as ${node} } from '${pre}${chain}.${node}${sur}';${eol}`;
@@ -116,16 +116,6 @@ export default class Globals extends Set<string> {
 					case 'class.isBigInt':
 						tsd += `isBigInt;${eol}${tab}function isBigInt (value :any) :value is BigInt;${eol}`;
 						break;
-					case 'class':
-						for ( const node of [
-							'isBoolean', 'isNumber', 'isString', 'isDate', 'isRegExp',
-							'isMap', 'isSet', 'isWeakMap', 'isWeakSet',
-							'isPromise', 'isSymbol',
-							'isBigInt',
-						] ) {
-							tsd += `${tab}export { default as ${node} } from '${pre}${chain}.${node}${sur}';${eol}`;
-						}
-						break;
 					
 					case 'null.assign':
 						tsd += `assign;${eol}${tab}function assign<O extends {}> (target :null | O, firstSource :O, ...restSources :O[]) :O;${eol}`;
@@ -182,18 +172,6 @@ export default class Globals extends Set<string> {
 							${tab}${tab}__proto__? :ValueType,${eol}
 							${tab}${tab}constructor? :ValueType,${eol}
 							${tab}};${eol}`;
-						for ( const node of [
-							'assign',
-							'create',
-							'defineProperties',
-							'defineProperty',
-							'fromEntries',
-							'getOwnPropertyDescriptor',
-							'getOwnPropertyDescriptors',
-							'PropertyDescriptor',
-						] ) {
-							tsd += `${tab}export { default as ${node} } from '${pre}${chain}.${node}${sur}';${eol}`;
-						}
 						break;
 					
 					case 'return':
@@ -209,9 +187,6 @@ export default class Globals extends Set<string> {
 					
 					case 'throw':
 						tsd += `THROW;${eol}${tab}function THROW (error :Error) :never;${eol}`;
-						for ( const $ of [ '', 'Eval', 'Range', 'Reference', 'Syntax', 'Type', 'URI' ] ) {
-							tsd += `${tab}export { default as throw${$}Error } from '${pre}${chain}.${$}Error${sur}';${eol}`;
-						}
 						break;
 					case 'throw.Error':
 					case 'throw.EvalError':
@@ -274,7 +249,8 @@ export default class Globals extends Set<string> {
 						break;
 						
 					case 'native':
-						tsd += `NATIVE; const NATIVE :never; `;
+					case 'class':
+						tsd += `_; const _ :never; `;
 						break;
 						
 					default:
@@ -308,8 +284,8 @@ function collectAll (globals :Globals) :Set<string> {
 	const collection :Set<string> = new Set;
 	for ( const id of globals ) {
 		collection.add(id);
-		const chain :string = fetchChain(id);
-		if ( chain in MULTI_EXPORT ) {
+		const [ chain, multi ] :chain_multi = fetchChain(id);
+		if ( multi ) {
 			collection.add(chain);
 			for ( const node of MULTI_EXPORT[chain] ) { collection.add(`${chain}.${node}`); }
 		}
@@ -317,9 +293,14 @@ function collectAll (globals :Globals) :Set<string> {
 	return collection;
 }
 
-function fetchChain (id :string) :string {
+type chain_multi = [ string, string ];
+
+function fetchChain (id :string) :chain_multi {
 	const index :number = id.indexOf('?');
-	return index<0 ? id : id.slice(0, index);
+	const chain_ :string = index<0 ? id : id.slice(0, index);
+	return chain_.endsWith('.')
+		? [ chain_.slice(0, -1), '.' ]
+		: [ chain_, '' ];
 }
 
 function fetchFirst (chain :string) :string {

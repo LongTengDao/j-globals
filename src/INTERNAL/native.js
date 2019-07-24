@@ -5,6 +5,9 @@ import Symbol_species from '.Symbol.species?';
 import undefined from '.undefined';
 import toString from '.Object.prototype.toString';
 import Object_prototype from '.Object.prototype';
+import Array_prototype from '.Array.prototype';
+import fromCharCode from '.String.fromCharCode';
+import ArrayCreate from '.Array';
 
 //                 18446744073709551615 // 0xFFFFFFFFFFFFFFFF //                                                         // 0b1777777777777777777777 // 2**64-1
 //                  9223372036854775807 // 0x7FFFFFFFFFFFFFFF //                                                         // 0b0777777777777777777777 // 2**63-1
@@ -37,7 +40,6 @@ export function RequireObjectCoercible (argument, _message) {
 }
 export function UTF16Decode (lead, trail) { return ( lead-0xD800 )*1024+( trail-0xDC00 )+0x10000; }
 
-var fromCharCode = String.fromCharCode;
 export function UTF16Encoding (cp) {
 	if ( cp<=0xFFFF ) { return fromCharCode(cp); }
 	cp -= 0x10000;
@@ -100,7 +102,7 @@ export function ArraySpeciesCreate (originalArray, length) {
 			if ( C===null ) { C = undefined; }
 		}
 	}
-	if ( C===undefined ) { return Array/*Create*/(length); }
+	if ( C===undefined ) { return ArrayCreate(length); }
 	if ( !IsConstructor(C) ) { throw TypeError('object.constructor[Symbol.species] is not a constructor'); }
 	return new C(length);
 }
@@ -114,7 +116,6 @@ var descriptor = Object.create && /*#__PURE__*/ function () {
 	return descriptor;
 }();
 var defineProperty = Object.defineProperty;
-var Array_prototype = Array.prototype;
 export var defineIndexValue = Object.create
 	? function CreateDataProperty (array, index, value) {
 		index in Array_prototype && defineProperty(array, index, descriptor);

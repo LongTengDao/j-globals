@@ -1,11 +1,14 @@
-var Array_prototype = Array.prototype;
+import Array_prototype from '.Array.prototype';
 import Boolean_prototype from '.Boolean.prototype';
 import Date_prototype from '.Date.prototype';
 import Error_prototype from '.Error.prototype';
 import EvalError_prototype from '.EvalError.prototype';
 import Function_prototype from '.Function.prototype';
 import Number_prototype from '.Number.prototype';
-import Object_prototype, { hasOwnProperty, propertyIsEnumerable, toString } from '.Object.prototype';
+import Object_prototype from '.Object.prototype';
+import hasOwnProperty from '.Object.prototype.hasOwnProperty';
+import propertyIsEnumerable from '.Object.prototype.propertyIsEnumerable';
+import toString from '.Object.prototype.toString';
 import RangeError_prototype from '.RangeError.prototype';
 import ReferenceError_prototype from '.ReferenceError.prototype';
 import RegExp_prototype from '.RegExp.prototype';

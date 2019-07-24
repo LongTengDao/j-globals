@@ -47,9 +47,6 @@ import _Buffer_alloc from './POLYFILL/Buffer.alloc?text';
 import _Buffer_allocUnsafe from './POLYFILL/Buffer.allocUnsafe?text';
 import _Buffer_allocUnsafeSlow from './POLYFILL/Buffer.allocUnsafeSlow?text';
 
-import _throw from './POLYFILL/throw?text';
-import _throwError from './POLYFILL/throw.Error?text';
-
 import _NULL_assign from './POLYFILL/null.assign?text';
 import _NULL_create from './POLYFILL/null.create?text';
 import _NULL_fromEntries from './POLYFILL/null.fromEntries?text';
@@ -76,9 +73,6 @@ const POLYFILL = /*#__PURE__*/ assign(create(null), {
 	'null.create': _NULL_create,
 	'null.fromEntries': _NULL_fromEntries,
 	'null': _NULL,
-	
-	'throw': _throw,
-	'throw.Error': _throwError,
 	
 	'Reflect.ownKeys': _Reflect_ownKeys,
 	'Reflect.apply': _Reflect_apply,

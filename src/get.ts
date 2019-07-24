@@ -20,14 +20,14 @@ export default function get (id :string, { bom = false, tab = '\t', eol = '\n', 
 	return code;
 }
 
-function * Chunk ([ chain, fallback, polyfill, exp, along ] :chain_fallback_polyfill_exp_along, bom :boolean, tab :string, eol :string, pre :string, sur :string) :IterableIterator<string> {
+function * Chunk ([ chain, multi, fallback, polyfill, exp, along ] :chain_multi_fallback_polyfill_exp_along, bom :boolean, tab :string, eol :string, pre :string, sur :string) :IterableIterator<string> {
 	
 	if ( NON_GLOBAL.test(chain) ) { throw Error(`${chain} 不是全局变量`); }
 	
 	if ( bom ) { yield '\uFEFF'; }
 	
 	if ( !fallback ) {
-		if ( chain in MULTI_EXPORT ) {
+		if ( multi ) {
 			yield `export default ${chain};${eol}${eol}`;
 			const identifiers :string[] = [];
 			for ( const node of MULTI_EXPORT[chain] ) {
@@ -62,6 +62,7 @@ function * Chunk ([ chain, fallback, polyfill, exp, along ] :chain_fallback_poly
 	}
 	
 	else if ( !polyfill ) {
+		if ( multi ) { throw Error('暂不支持“.?”'); }
 		if ( chain in FALLBACK ) {
 			yield pre==='.' && sur==='' && tab==='\t' && eol==='\n'
 				? FALLBACK[chain]
@@ -82,21 +83,10 @@ function * Chunk ([ chain, fallback, polyfill, exp, along ] :chain_fallback_poly
 	}
 	
 	else if ( !exp ) {
-		if ( chain in POLYFILL ) {
-			yield pre==='.' && sur==='' && tab==='\t' && eol==='\n'
-				? POLYFILL[chain]
-				: POLYFILL[chain].replace(MODULE_ID, replacer).split('\n').join(eol).split('\t').join(tab);
-		}
-		else if ( chain.startsWith('Map.') ) {
-			yield `import Map from '${pre}Map?=${sur}';${eol}`;
-			yield `export default ${ES3Chain(chain)}`;
-		}
-		else if ( chain.startsWith('Set.') ) {
-			yield `import Set from '${pre}Set?=${sur}';${eol}`;
-			yield `export default ${ES3Chain(chain)}`;
-		}
-		else if ( chain in MULTI_EXPORT ) {
-			yield `export default ${chain};${eol}${eol}`;
+		if ( multi ) {
+			yield chain in POLYFILL
+				? `export { default } from '${pre}${chain}?=${sur}';${eol}${eol}`
+				: `export default ${chain};${eol}${eol}`;
 			const identifiers :string[] = [];
 			for ( const node of MULTI_EXPORT[chain] ) {
 				let id :string = `${chain}.${node}`;
@@ -113,10 +103,18 @@ function * Chunk ([ chain, fallback, polyfill, exp, along ] :chain_fallback_poly
 			}
 			yield `${eol}var $= [ ${identifiers.join(', ')} ];${eol}`;
 		}
-		else { throw Error(`@ltd/j-globals 没有为 ${chain} 准备内置的 polyfill`); }
+		else {
+			if ( chain in POLYFILL ) {
+				yield pre==='.' && sur==='' && tab==='\t' && eol==='\n'
+					? POLYFILL[chain]
+					: POLYFILL[chain].replace(MODULE_ID, replacer).split('\n').join(eol).split('\t').join(tab);
+			}
+			else { throw Error(`@ltd/j-globals 没有为 ${chain} 准备内置的 polyfill`); }
+		}
 	}
 	
 	else {
+		if ( multi ) { throw Error('不支持“.?=*”'); }
 		if ( along ) {
 			yield IN_GLOBAL.test(chain)
 				? /*globalThis*/ `import globalThis from '${pre}globalThis?=${sur}';${eol}`
@@ -135,20 +133,40 @@ function * Chunk ([ chain, fallback, polyfill, exp, along ] :chain_fallback_poly
 	
 }
 
-function parseID (id :string) :chain_fallback_polyfill_exp_along {
+type chain_multi_fallback_polyfill_exp_along = [ string, string, string, string, string, string ];
+
+function parseID (id :string) :chain_multi_fallback_polyfill_exp_along {
+	let chain :string;
+	let multi :string;
 	const index = id.indexOf('?=');
 	if ( index>=0 ) {
 		let chain :string = id.slice(0, index);
-		return [ chain, '?', '=', id.slice(index+2), Along(chain, -0) ];
+		if ( chain.endsWith('.') ) {
+			chain = chain.slice(0, -1);
+			multi = '.';
+		}
+		else { multi = ''; }
+		return [ chain, multi, '?', '=', id.slice(index+2), Along(chain, -0) ];
 	}
 	if ( id.endsWith('?') ) {
 		let chain :string = id.slice(0, -1);
-		return [ chain, '?', '', '', Along(chain, -1) ];
+		if ( chain.endsWith('.') ) {
+			chain = chain.slice(0, -1);
+			multi = '.';
+		}
+		else { multi = ''; }
+		return [ chain, multi, '?', '', '', Along(chain, -1) ];
 	}
-	return [ id, '', '', '', '' ];
+	if ( id.endsWith('.') ) {
+		chain = id.slice(0, -1);
+		multi = '.';
+	}
+	else {
+		chain = id;
+		multi = '';
+	}
+	return [ chain, multi, '', '', '', '' ];
 }
-
-type chain_fallback_polyfill_exp_along = [ string, string, string, string, string ];
 
 function Along (chain :string, end :number) :string {
 	const rest :string[] = [];

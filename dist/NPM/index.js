@@ -92,14 +92,14 @@ function PropertyAccessors(keys, ES) {
 
 /*¡ ES */
 
-const version = '4.3.2';
+const version = '5.0.0';
 
 const assign = Object.assign;
 
 const create = Object.create;
 
 const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
-    'Array': [/*'prototype',*/ 'from', 'isArray', 'of'],
+    'Array': ['prototype', 'from', 'isArray', 'of'],
     'Array.prototype': [
         'concat',
         'copyWithin',
@@ -133,9 +133,9 @@ const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
         'unshift',
         'values',
     ],
-    /*'Boolean': [ 'prototype' ],*/
+    'Boolean': ['prototype'],
     'Boolean.prototype': ['toString', 'valueOf'],
-    'Date': [/*'prototype',*/ 'UTC', 'now', 'parse'],
+    'Date': ['prototype', 'UTC', 'now', 'parse'],
     'Date.prototype': [
         'getDate',
         'getDay',
@@ -184,11 +184,11 @@ const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
         'toUTCString',
         'valueOf',
     ],
-    /*'Error': [ 'prototype' ],*/
+    'Error': ['prototype'],
     'Error.prototype': ['toString'],
-    /*'EvalError': [ 'prototype' ],*/
+    'EvalError': ['prototype'],
     'EvalError.prototype': ['toString'],
-    /*'Function': [ 'prototype' ],*/
+    'Function': ['prototype'],
     'Function.prototype': ['apply', 'bind', 'call', 'toString'],
     'Math': [
         'E',
@@ -236,6 +236,7 @@ const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
         'trunc',
     ],
     'Number': [
+        'prototype',
         'isFinite',
         'isInteger',
         'isNaN',
@@ -253,6 +254,7 @@ const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
     ],
     'Number.prototype': ['toExponential', 'toFixed', 'toLocaleString', 'toPrecision', 'toString', 'valueOf'],
     'Object': [
+        'prototype',
         'assign',
         'create',
         'defineProperties',
@@ -276,13 +278,13 @@ const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
         'values',
     ],
     'Object.prototype': [/*'__defineGetter__', '__defineSetter__', '__lookupGetter__', '__lookupSetter__',*/ 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf'],
-    /*'RangeError': [ 'prototype' ],*/
+    'RangeError': ['prototype'],
     'RangeError.prototype': ['toString'],
-    /*'ReferenceError': [ 'prototype' ],*/
+    'ReferenceError': ['prototype'],
     'ReferenceError.prototype': ['toString'],
-    /*'RegExp': [ 'prototype' ],*/
+    'RegExp': ['prototype'],
     'RegExp.prototype': ['compile', 'exec', 'source', 'test', 'toString'],
-    'String': [/*'prototype',*/ 'fromCharCode', 'fromCodePoint', 'raw'],
+    'String': ['prototype', 'fromCharCode', 'fromCodePoint', 'raw'],
     'String.prototype': [
         'charAt',
         'charCodeAt',
@@ -319,11 +321,11 @@ const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
         'trimStart',
         'valueOf',
     ],
-    /*'SyntaxError': [ 'prototype' ],*/
+    'SyntaxError': ['prototype'],
     'SyntaxError.prototype': ['toString'],
-    /*'TypeError': [ 'prototype' ],*/
+    'TypeError': ['prototype'],
     'TypeError.prototype': ['toString'],
-    /*'URIError': [ 'prototype' ],*/
+    'URIError': ['prototype'],
     'URIError.prototype': ['toString'],
     'console': [
         'assert',
@@ -369,17 +371,17 @@ const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
         'setPrototypeOf',
     ],
     'Proxy': ['revocable'],
-    /*'Map': [ 'prototype' ],*/
+    'Map': ['prototype'],
     'Map.prototype': ['clear', 'delete', 'entries', 'forEach', 'has', 'keys', 'get', 'set', 'size', 'values'],
-    /*'Set': [ 'prototype' ],*/
+    'Set': ['prototype'],
     'Set.prototype': ['add', 'clear', 'delete', 'entries', 'forEach', 'has', 'keys', 'size', 'values'],
-    /*'WeakMap': [ 'prototype' ],*/
+    'WeakMap': ['prototype'],
     'WeakMap.prototype': ['delete', 'has', 'get', 'set'],
-    /*'WeakSet': [ 'prototype' ],*/
+    'WeakSet': ['prototype'],
     'WeakSet.prototype': ['add', 'delete', 'has'],
-    'Promise': [/*'prototype',*/ 'all', 'race', 'reject', 'resolve'],
+    'Promise': ['prototype', 'all', 'race', 'reject', 'resolve'],
     'Promise.prototype': ['then', 'catch', 'finally'],
-    'Symbol': [
+    'Symbol': ['prototype',
         'asyncIterator',
         'for',
         'hasInstance',
@@ -397,8 +399,65 @@ const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
         'unscopables',
     ],
     'Symbol.prototype': ['toString', 'valueOf'],
-    'BigInt': [/*'prototype',*/ 'asIntN', 'asUintN'],
+    'BigInt': ['prototype', 'asIntN', 'asUintN'],
     'BigInt.prototype': ['toLocaleString', 'toString', 'valueOf'],
+    /*
+    'globalThis': [// SharedArrayBuffer ArrayBuffer **Array DataView Intl?
+        'parseFloat',
+        'parseInt',
+        'Infinity',
+        'NaN',
+        'undefined',
+        'decodeURI',
+        'decodeURIComponent',
+        'encodeURI',
+        'encodeURIComponent',
+        'escape',
+        'unescape',
+        'isFinite',
+        'isNaN',
+        'process',
+        'Buffer',
+        'cancelAnimationFrame',
+        'clearImmediate',
+        'clearInterval',
+        'clearTimeout',
+        'requestAnimationFrame',
+        'setImmediate',
+        'setInterval',
+        'setTimeout',
+    ],
+    */
+    'null': [
+        'assign',
+        'create',
+        'defineProperties',
+        'defineProperty',
+        'fromEntries',
+        'getOwnPropertyDescriptor',
+        'getOwnPropertyDescriptors',
+        'PropertyDescriptor',
+    ],
+    'throw': [
+        'Error',
+        'EvalError',
+        'RangeError',
+        'ReferenceError',
+        'SyntaxError',
+        'TypeError',
+        'URIError',
+    ],
+    'class': [
+        'isBoolean', 'isNumber', 'isString', 'isDate', 'isRegExp',
+        'isMap', 'isSet', 'isWeakMap', 'isWeakSet',
+        'isPromise', 'isSymbol',
+        'isBigInt',
+    ],
+    'return': [
+        'true',
+        'false',
+        'sideeffects',
+    ],
 });
 
 const OPTIONS = 
@@ -418,8 +477,6 @@ const Private = 'import create from \'.Object.create\';\nimport defineProperty f
 const of = 'import undefined from \'.undefined\';\nimport Symbol_iterator from \'.Symbol.iterator?\';\nimport toString from \'.Object.prototype.toString\';\nimport charAt from \'.String.prototype.charAt\';\nimport return_false from \'.return.false\';\nimport String_prototype from \'String.prototype\';\nimport { createBound, Type, TheObjectType } from \'.native\';\nexport default (\n	/*! j-globals: for.of (internal) */\n	/*#__PURE__*/ function () { \'use strict\';\n		\n		var ES3 = this!==undefined;\n		\n		var isIterable = Symbol_iterator===undefined\n			? return_false\n			: function isIterable (value) { return Symbol_iterator in ( typeof value===\'string\' ? String_prototype : Object(value) ); };\n		\n		function tryReturn (iterable) {\n			try { iterable[\'return\'](); }\n			catch (error) {}\n		}\n		\n		function tryFnValue_tryReturn_throw (callbackfn, value, iterable) {\n			try { return callbackfn(value); }\n			catch (error) {\n				tryReturn(iterable);\n				throw error;\n			}\n		}\n		\n		return function of (arrayLike_iterable, callbackfn/*, thisArg*/) {\n			if ( typeof callbackfn!==\'function\' ) { throw TypeError(typeof callbackfn+\' is not a function\'); }\n			if ( arguments.length>2 ) { callbackfn = createBound(callbackfn, arguments[2]); }\n			if ( arrayLike_iterable==null ) { throw TypeError(\'Cannot convert undefined or null to object\'); }\n			var length, index;\n			if ( isIterable(arrayLike_iterable) ) {\n				arrayLike_iterable = arrayLike_iterable[Symbol_iterator]();\n				if ( Type(arrayLike_iterable)!==TheObjectType ) { throw TypeError(\'Result of the Symbol.iterator method is not an object\'); }\n				for ( index = 0; ; ++index ) {\n					var step = arrayLike_iterable.next();\n					if ( Type(step)!==TheObjectType ) { throw TypeError(\'Iterator result \'+step+\' is not an object\'); }\n					if ( step.done ) { break; }\n					if ( tryFnValue_tryReturn_throw(callbackfn, step.value, arrayLike_iterable) ) {\n						tryReturn(arrayLike_iterable);\n						break;\n					}\n				}\n				return;\n			}\n			if ( ES3 ) {\n				if ( typeof arrayLike_iterable===\'string\' ) {\n					for ( length = arrayLike_iterable.length, index = 0; index<length; ++index ) {\n						if ( callbackfn(arrayLike_iterable.charAt(index)) ) { break; }\n					}\n					return;\n				}\n				if ( toString.call(arrayLike_iterable)===\'[object String]\' ) {\n					for ( length = arrayLike_iterable.length, index = 0; index<length; ++index ) {\n						var char = charAt.call(arrayLike_iterable, index);\n						if ( index in arrayLike_iterable && arrayLike_iterable[index]!==char ) { throw TypeError(\'stringObject[index] is not writable in ES3+ spec\'); }\n						if ( callbackfn(char) ) { break; }\n					}\n					return;\n				}\n			}\n			for ( length = parseInt(arrayLike_iterable.length), index = 0; index<length; ++index ) {\n				if ( callbackfn(arrayLike_iterable[index]) ) { break; }\n			}\n		};\n		\n	}()\n	/*¡ j-globals: for.of (internal) */\n);';
 
 const TYPEOF = 'export default (\n	/*! j-globals: typeof (internal) */\n	function TYPEOF (value) {\n		return value===null ? \'null\' : typeof value;\n	}\n	/*¡ j-globals: typeof (internal) */\n);';
-
-const CLASS = 'export { isBoolean }; import isBoolean from \'.class.isBoolean\';\nexport { isNumber }; import isNumber from \'.class.isNumber\';\nexport { isString }; import isString from \'.class.isString\';\nexport { isDate }; import isDate from \'.class.isDate\';\nexport { isRegExp }; import isRegExp from \'.class.isRegExp\';\n\nexport { isPromise }; import isPromise from \'.class.isPromise\';\nexport { isSymbol }; import isSymbol from \'.class.isSymbol\';\n\nexport { isBigInt }; import isBigInt from \'.class.isBigInt\';\n\n[\n	isBoolean, isNumber, isString, isDate, isRegExp,\n	isPromise, isSymbol,\n	isBigInt\n];';
 
 const class_isBoolean = 'import valueOf from \'.Boolean.prototype.valueOf\';\nexport default (\n	/*! j-globals: class.isBoolean (internal) */\n	function isBoolean (value) {\n		try { valueOf.call(value); }\n		catch (error) { return false; }\n		return true;\n	}\n	/*¡ j-globals: class.isBoolean (internal) */\n);';
 
@@ -445,7 +502,7 @@ const class_isSymbol = 'import valueOf from \'.Symbol.prototype.valueOf?\';\nexp
 
 const class_isBigInt = 'import valueOf from \'.BigInt.prototype.valueOf?\';\nexport default (\n	/*! j-globals: class.isBigInt (internal) */\n	valueOf\n		? function isBigInt (value) {\n		try { valueOf.call(value); }\n			catch (error) { return false; }\n			return true;\n		}\n		: function isBigInt () { return false; }\n	/*¡ j-globals: class.isBigInt (internal) */\n);';
 
-const NULL = 'import Object_assign from \'.Object.assign\';\nimport Object_create from \'.Object.create\';\nimport Object_freeze from \'.Object.freeze\';\nexport default (\n	/*! j-globals: null (internal) */\n	/*#__PURE__*/ function () {\n		\'use strict\';\n		var NULL = function (object, define) {\n			if ( object ) {\n				return define\n					? /*#__PURE__*/ Object_create(null, /*#__PURE__*/getOwnPropertyDescriptors(object))\n					: /*#__PURE__*/ Object_assign(/*#__PURE__*/ Object_create(null), object);\n			}\n		};\n		delete NULL.name;\n		//try { delete NULL.length; } catch (error) {}\n		NULL.prototype = null;\n		Object_freeze && Object_freeze(NULL);\n		return NULL;\n	}()\n	/*¡ j-globals: null (internal) */\n);\n\nexport { assign }; import assign from \'.null.assign\';\nexport { create }; import create from \'.null.create\';\nexport { defineProperties }; import defineProperties from \'.null.defineProperties\';\nexport { defineProperty }; import defineProperty from \'.null.defineProperty\';\nexport { fromEntries }; import fromEntries from \'.null.fromEntries\';\nexport { getOwnPropertyDescriptor }; import getOwnPropertyDescriptor from \'.null.getOwnPropertyDescriptor\';\nexport { getOwnPropertyDescriptors }; import getOwnPropertyDescriptors from \'.null.getOwnPropertyDescriptors\';\nexport { PropertyDescriptor }; import PropertyDescriptor from \'.null.PropertyDescriptor\';\n\n[ assign, create, defineProperties, defineProperty, fromEntries, getOwnPropertyDescriptor, getOwnPropertyDescriptors, PropertyDescriptor ];';
+const NULL = 'import Object_assign from \'.Object.assign\';\nimport Object_create from \'.Object.create\';\nimport Object_freeze from \'.Object.freeze\';\nimport getOwnPropertyDescriptors from \'.null.getOwnPropertyDescriptors\';\nexport default (\n	/*! j-globals: null (internal) */\n	/*#__PURE__*/ function () {\n		\'use strict\';\n		var NULL = function (object, define) {\n			if ( object ) {\n				return define\n					? /*#__PURE__*/ Object_create(null, /*#__PURE__*/getOwnPropertyDescriptors(object))\n					: /*#__PURE__*/ Object_assign(/*#__PURE__*/ Object_create(null), object);\n			}\n		};\n		delete NULL.name;\n		//try { delete NULL.length; } catch (error) {}\n		NULL.prototype = null;\n		Object_freeze && Object_freeze(NULL);\n		return NULL;\n	}()\n	/*¡ j-globals: null (internal) */\n);';
 
 const NULL_assign = 'import Object_assign from \'.Object.assign\';\nimport create from \'.Object.create\';\nexport default (\n	/*! j-globals: null.assign (internal) */\n	function assign (target, firstSource) {\n		if ( arguments.length>2 ) {\n			if ( target===null ) { arguments[0] = create(null); }\n			return Object_assign.apply(null, arguments);\n		}\n		else {\n			return Object_assign(target===null ? create(null) : target, firstSource);\n		}\n	}\n	/*¡ j-globals: null.assign (internal) */\n);';
 
@@ -475,7 +532,7 @@ const throwError = 'import Error0 from \'.Error?=\';\nexport default (\n	/*! j-g
 
 const throwEvalError = 'export default (\n	/*! j-globals: throw.EvalError (internal) */\n	function throwEvalError (message) {\n		throw EvalError(message);\n	}\n	/*¡ j-globals: throw.EvalError (internal) */\n);';
 
-const THROW = 'export default (\n	/*! j-globals: throw (internal) */\n	function THROW (error) {\n		throw error;\n	}\n	/*¡ j-globals: throw (internal) */\n);\n\nexport { throwError }; import throwError from \'.throw.Error\';\nexport { throwEvalError }; import throwEvalError from \'.throw.EvalError\';\nexport { throwRangeError }; import throwRangeError from \'.throw.RangeError\';\nexport { throwReferenceError }; import throwReferenceError from \'.throw.ReferenceError\';\nexport { throwSyntaxError }; import throwSyntaxError from \'.throw.SyntaxError\';\nexport { throwTypeError }; import throwTypeError from \'.throw.TypeError\';\nexport { throwURIError }; import throwURIError from \'.throw.URIError\';\n\n[ throwError, throwEvalError, throwRangeError, throwReferenceError, throwSyntaxError, throwTypeError, throwURIError ];';
+const THROW = 'export default (\n	/*! j-globals: throw (internal) */\n	function THROW (error) {\n		throw error;\n	}\n	/*¡ j-globals: throw (internal) */\n);';
 
 const throwRangeError = 'export default (\n	/*! j-globals: throw.RangeError (internal) */\n	function throwRangeError (message) {\n		throw RangeError(message);\n	}\n	/*¡ j-globals: throw.RangeError (internal) */\n);';
 
@@ -487,7 +544,7 @@ const throwTypeError = 'export default (\n	/*! j-globals: throw.TypeError (inter
 
 const throwURIError = 'export default (\n	/*! j-globals: throw.URIError (internal) */\n	function throwURIError (message) {\n		throw URIError(message);\n	}\n	/*¡ j-globals: throw.URIError (internal) */\n);';
 
-const NATIVE = 'import floor from \'.Math.floor\';\nimport IsArray from \'.Array.isArray?=\';\nimport Infinity from \'.Infinity\';\nimport Symbol_species from \'.Symbol.species?\';\nimport undefined from \'.undefined\';\nimport toString from \'.Object.prototype.toString\';\nimport Object_prototype from \'.Object.prototype\';\n\n//                 18446744073709551615 // 0xFFFFFFFFFFFFFFFF //                                                         // 0b1777777777777777777777 // 2**64-1\n//                  9223372036854775807 // 0x7FFFFFFFFFFFFFFF //                                                         // 0b0777777777777777777777 // 2**63-1\nvar MAX_SAFE_INTEGER = 9007199254740991;// 0x001FFFFFFFFFFFFF // 0b11111111111111111111111111111111111111111111111111111 // 0o0000377777777777777777 // 2**53-1\nvar MAX_ARRAY_LENGTH =       4294967295;// 0x00000000FFFFFFFF // 0b00000000000000000000011111111111111111111111111111111 // 0o0000000000037777777777 // 2**32-1\n//                                      // 0x000000003FFFFFFF // 0b00000000000000000000000111111111111111111111111111111 // 0o0000000000007777777777 // 2**30-1\n//var MAX_STRING_LENGTH =    1073741799;// 0x000000003FFFFFE7 // 0b00000000000000000000000111111111111111111111111100111 // 0o0000000000007777777747 // 2**30-1-24\nvar LIKE_SAFE_INTEGER = /^(?:0|[1-9]\\d{0,15})$/;\nvar LIKE_ARRAY_INDEX = /^(?:0|[1-4]\\d{0,9}|[5-9]\\d{0,8})$/;\nfunction isIntegerIndex (key) {\n	return LIKE_SAFE_INTEGER.test(key) && key<=MAX_SAFE_INTEGER;\n}\nfunction isArrayIndex (key) {\n	return LIKE_ARRAY_INDEX.test(key) && key<MAX_ARRAY_LENGTH;\n}\nexport { isArrayIndex as isIndex };\n\nexport function ToObject (argument, _message) { return Object(/*#__PURE__*/ RequireObjectCoercible(argument, _message)); }\nexport function ToString (argument) { return \'\'+argument; }\nexport function ToNumber (argument) { return +argument; }// Number(): bigint?\nexport function ToInteger (argument) {\n	argument = ToNumber(argument);\n	if ( argument!==argument ) { return 0; }\n	if ( argument===0 || argument===Infinity || argument===-Infinity ) { return argument; }\n	return argument>0 ? floor(argument) : -floor(-argument);\n}\nexport function RequireObjectCoercible (argument, _message) {\n	if ( argument==null ) { throw TypeError(_message); }\n	return argument;\n}\nexport function UTF16Decode (lead, trail) { return ( lead-0xD800 )*1024+( trail-0xDC00 )+0x10000; }\n\nvar fromCharCode = String.fromCharCode;\nexport function UTF16Encoding (cp) {\n	if ( cp<=0xFFFF ) { return fromCharCode(cp); }\n	cp -= 0x10000;\n	return fromCharCode(floor(cp/1024)+0xD800, cp%1024+0xDC00);\n}\n\nexport function ToLength (argument) {// [v] ES 6: start number only could has use in ES 6 class species\n	var len = ToNumber(argument);\n	if ( len>0 ) { return len>MAX_SAFE_INTEGER ? MAX_SAFE_INTEGER : floor(len); }\n	return 0;\n}\nexport function ToUint32 (argument) {// ES 5\n	return argument>>>0;\n	//var number = ToNumber(argument);\n	//if ( !number || number===Infinity || number===-Infinity ) { return 0; }\n	//var posInt = number>0 ? floor(number) : -floor(-number);\n	//var int32bit = posInt%4294967296;// 2**32 // MAX_ARRAY_LENGTH+1\n	//return int32bit<0 ? int32bit+4294967296 : int32bit;\n}\n\nfunction IsConstructor (argument) { return typeof argument===\'function\'; }\n//function notThisRealm_and_isBuiltInArrayConstructorOfItsRealm (originalArray_constructor) { }\nexport var TheUndefinedType = 1;\nexport var TheNullType = 2;\nexport var TheBooleanType = 3;\nexport var TheStringType = 4;\nexport var TheSymbolType = 5;\nexport var TheNumberType = 6;\nexport var TheObjectType = 7;\nexport var TheBigIntType = 0;\nexport function Type (argument) {\n	switch ( typeof argument ) {\n		case \'function\':\n			return TheObjectType;\n		case \'object\':\n			return argument ? TheObjectType : TheNullType;// null\n		case \'undefined\':\n			return argument===undefined ? TheUndefinedType : TheObjectType;// document.all\n		case \'boolean\':\n			return TheBooleanType;\n		case \'string\':\n			return TheStringType;\n		case \'symbol\':\n			return TheSymbolType;\n		case \'number\':\n			return TheNumberType;\n		case \'bigint\':\n			return TheBigIntType;\n		default:\n			return TheObjectType;// unknown date ...\n	}\n}\nexport function ArraySpeciesCreate (originalArray, length) {\n	var C;\n	if ( IsArray(originalArray) ) {\n		C = originalArray.constructor;\n		//if ( IsConstructor(C) && notThisRealm_and_isBuiltInArrayConstructorOfItsRealm(C) ) { C = undefined; }\n		if ( Type(C)===TheObjectType ) {\n			C = Symbol_species===undefined ? undefined : C[Symbol_species];\n			if ( C===null ) { C = undefined; }\n		}\n	}\n	if ( C===undefined ) { return Array/*Create*/(length); }\n	if ( !IsConstructor(C) ) { throw TypeError(\'object.constructor[Symbol.species] is not a constructor\'); }\n	return new C(length);\n}\n\nvar descriptor = Object.create && /*#__PURE__*/ function () {\n	var descriptor = Object.create(null);\n	descriptor.value = undefined;\n	descriptor.writable = true;\n	descriptor.enumerable = true;\n	descriptor.configurable = true;\n	return descriptor;\n}();\nvar defineProperty = Object.defineProperty;\nvar Array_prototype = Array.prototype;\nexport var defineIndexValue = Object.create\n	? function CreateDataProperty (array, index, value) {\n		index in Array_prototype && defineProperty(array, index, descriptor);\n		array[index] = value;\n	}\n	: function CreateDataProperty (array, index, value) {\n		array[index] = value;\n	};\nexport var defineKeyValue = Object.create\n	? typeof Symbol===\'function\'\n		? function CreateDataProperty (object, key, value) {\n			if ( typeof key!==\'symbol\' ) { key = \'\'+key; }\n			key in Object_prototype && defineProperty(object, key, descriptor);\n			object[key] = value;\n		}\n		: function CreateDataProperty (object, key, value) {\n			key = \'\'+key;\n			key in Object_prototype && defineProperty(object, key, descriptor);\n			object[key] = value;\n		}\n	: function CreateDataProperty (object, key, value) {\n		object[key] = value;\n	};\n\nexport var createBound = function () { \'use strict\'; return this===undefined; }()\n	? function createBound (fn, thisArg) {\n		if ( thisArg==null ) { throw TypeError(\'undefined or null cannot become this in ES3\'); }\n		return function bound () {\n			return apply.call(fn, thisArg, arguments);\n		};\n	}\n	: function createBound (fn, thisArg) {\n		return thisArg===undefined ? fn : function bound () {\n			return apply.call(fn, thisArg, arguments);\n		};\n	};\nexport function assertArrayFn (fn) {\n	switch ( typeof fn ) {\n		case \'function\':\n			return;\n		case \'object\':\n			throw TypeError(( fn ? toString.call(fn) : fn )+\' is not a function\');\n		default:\n			throw TypeError(String(fn)+\' is not a function\');\n	}\n}\n\nexport function FlattenIntoArray (target, source, sourceLen, start, depth, mapperFunction) {\n	var targetIndex = start;\n	for ( var sourceIndex = 0; sourceIndex<sourceLen; ++sourceIndex ) {\n		if ( sourceIndex in source ) {\n			var element = source[sourceIndex];\n			if ( mapperFunction ) { element = mapperFunction(element, sourceIndex, source); }\n			if ( depth>0 && IsArray(element) ) {\n				targetIndex = FlattenIntoArray(target, element, ToLength(element.length), targetIndex, depth-1);\n			}\n			else {\n				if ( targetIndex>=9007199254740991 ) { throw TypeError(\'Invalid index\'); }// Number.MAX_SAFE_INTEGER // 2**53-1\n				defineIndexValue(target, targetIndex, element);\n				++targetIndex;\n			}\n		}\n	}\n	return targetIndex;\n}\n';
+const NATIVE = 'import floor from \'.Math.floor\';\nimport IsArray from \'.Array.isArray?=\';\nimport Infinity from \'.Infinity\';\nimport Symbol_species from \'.Symbol.species?\';\nimport undefined from \'.undefined\';\nimport toString from \'.Object.prototype.toString\';\nimport Object_prototype from \'.Object.prototype\';\nimport Array_prototype from \'.Array.prototype\';\nimport fromCharCode from \'.String.fromCharCode\';\nimport ArrayCreate from \'.Array\';\n\n//                 18446744073709551615 // 0xFFFFFFFFFFFFFFFF //                                                         // 0b1777777777777777777777 // 2**64-1\n//                  9223372036854775807 // 0x7FFFFFFFFFFFFFFF //                                                         // 0b0777777777777777777777 // 2**63-1\nvar MAX_SAFE_INTEGER = 9007199254740991;// 0x001FFFFFFFFFFFFF // 0b11111111111111111111111111111111111111111111111111111 // 0o0000377777777777777777 // 2**53-1\nvar MAX_ARRAY_LENGTH =       4294967295;// 0x00000000FFFFFFFF // 0b00000000000000000000011111111111111111111111111111111 // 0o0000000000037777777777 // 2**32-1\n//                                      // 0x000000003FFFFFFF // 0b00000000000000000000000111111111111111111111111111111 // 0o0000000000007777777777 // 2**30-1\n//var MAX_STRING_LENGTH =    1073741799;// 0x000000003FFFFFE7 // 0b00000000000000000000000111111111111111111111111100111 // 0o0000000000007777777747 // 2**30-1-24\nvar LIKE_SAFE_INTEGER = /^(?:0|[1-9]\\d{0,15})$/;\nvar LIKE_ARRAY_INDEX = /^(?:0|[1-4]\\d{0,9}|[5-9]\\d{0,8})$/;\nfunction isIntegerIndex (key) {\n	return LIKE_SAFE_INTEGER.test(key) && key<=MAX_SAFE_INTEGER;\n}\nfunction isArrayIndex (key) {\n	return LIKE_ARRAY_INDEX.test(key) && key<MAX_ARRAY_LENGTH;\n}\nexport { isArrayIndex as isIndex };\n\nexport function ToObject (argument, _message) { return Object(/*#__PURE__*/ RequireObjectCoercible(argument, _message)); }\nexport function ToString (argument) { return \'\'+argument; }\nexport function ToNumber (argument) { return +argument; }// Number(): bigint?\nexport function ToInteger (argument) {\n	argument = ToNumber(argument);\n	if ( argument!==argument ) { return 0; }\n	if ( argument===0 || argument===Infinity || argument===-Infinity ) { return argument; }\n	return argument>0 ? floor(argument) : -floor(-argument);\n}\nexport function RequireObjectCoercible (argument, _message) {\n	if ( argument==null ) { throw TypeError(_message); }\n	return argument;\n}\nexport function UTF16Decode (lead, trail) { return ( lead-0xD800 )*1024+( trail-0xDC00 )+0x10000; }\n\nexport function UTF16Encoding (cp) {\n	if ( cp<=0xFFFF ) { return fromCharCode(cp); }\n	cp -= 0x10000;\n	return fromCharCode(floor(cp/1024)+0xD800, cp%1024+0xDC00);\n}\n\nexport function ToLength (argument) {// [v] ES 6: start number only could has use in ES 6 class species\n	var len = ToNumber(argument);\n	if ( len>0 ) { return len>MAX_SAFE_INTEGER ? MAX_SAFE_INTEGER : floor(len); }\n	return 0;\n}\nexport function ToUint32 (argument) {// ES 5\n	return argument>>>0;\n	//var number = ToNumber(argument);\n	//if ( !number || number===Infinity || number===-Infinity ) { return 0; }\n	//var posInt = number>0 ? floor(number) : -floor(-number);\n	//var int32bit = posInt%4294967296;// 2**32 // MAX_ARRAY_LENGTH+1\n	//return int32bit<0 ? int32bit+4294967296 : int32bit;\n}\n\nfunction IsConstructor (argument) { return typeof argument===\'function\'; }\n//function notThisRealm_and_isBuiltInArrayConstructorOfItsRealm (originalArray_constructor) { }\nexport var TheUndefinedType = 1;\nexport var TheNullType = 2;\nexport var TheBooleanType = 3;\nexport var TheStringType = 4;\nexport var TheSymbolType = 5;\nexport var TheNumberType = 6;\nexport var TheObjectType = 7;\nexport var TheBigIntType = 0;\nexport function Type (argument) {\n	switch ( typeof argument ) {\n		case \'function\':\n			return TheObjectType;\n		case \'object\':\n			return argument ? TheObjectType : TheNullType;// null\n		case \'undefined\':\n			return argument===undefined ? TheUndefinedType : TheObjectType;// document.all\n		case \'boolean\':\n			return TheBooleanType;\n		case \'string\':\n			return TheStringType;\n		case \'symbol\':\n			return TheSymbolType;\n		case \'number\':\n			return TheNumberType;\n		case \'bigint\':\n			return TheBigIntType;\n		default:\n			return TheObjectType;// unknown date ...\n	}\n}\nexport function ArraySpeciesCreate (originalArray, length) {\n	var C;\n	if ( IsArray(originalArray) ) {\n		C = originalArray.constructor;\n		//if ( IsConstructor(C) && notThisRealm_and_isBuiltInArrayConstructorOfItsRealm(C) ) { C = undefined; }\n		if ( Type(C)===TheObjectType ) {\n			C = Symbol_species===undefined ? undefined : C[Symbol_species];\n			if ( C===null ) { C = undefined; }\n		}\n	}\n	if ( C===undefined ) { return ArrayCreate(length); }\n	if ( !IsConstructor(C) ) { throw TypeError(\'object.constructor[Symbol.species] is not a constructor\'); }\n	return new C(length);\n}\n\nvar descriptor = Object.create && /*#__PURE__*/ function () {\n	var descriptor = Object.create(null);\n	descriptor.value = undefined;\n	descriptor.writable = true;\n	descriptor.enumerable = true;\n	descriptor.configurable = true;\n	return descriptor;\n}();\nvar defineProperty = Object.defineProperty;\nexport var defineIndexValue = Object.create\n	? function CreateDataProperty (array, index, value) {\n		index in Array_prototype && defineProperty(array, index, descriptor);\n		array[index] = value;\n	}\n	: function CreateDataProperty (array, index, value) {\n		array[index] = value;\n	};\nexport var defineKeyValue = Object.create\n	? typeof Symbol===\'function\'\n		? function CreateDataProperty (object, key, value) {\n			if ( typeof key!==\'symbol\' ) { key = \'\'+key; }\n			key in Object_prototype && defineProperty(object, key, descriptor);\n			object[key] = value;\n		}\n		: function CreateDataProperty (object, key, value) {\n			key = \'\'+key;\n			key in Object_prototype && defineProperty(object, key, descriptor);\n			object[key] = value;\n		}\n	: function CreateDataProperty (object, key, value) {\n		object[key] = value;\n	};\n\nexport var createBound = function () { \'use strict\'; return this===undefined; }()\n	? function createBound (fn, thisArg) {\n		if ( thisArg==null ) { throw TypeError(\'undefined or null cannot become this in ES3\'); }\n		return function bound () {\n			return apply.call(fn, thisArg, arguments);\n		};\n	}\n	: function createBound (fn, thisArg) {\n		return thisArg===undefined ? fn : function bound () {\n			return apply.call(fn, thisArg, arguments);\n		};\n	};\nexport function assertArrayFn (fn) {\n	switch ( typeof fn ) {\n		case \'function\':\n			return;\n		case \'object\':\n			throw TypeError(( fn ? toString.call(fn) : fn )+\' is not a function\');\n		default:\n			throw TypeError(String(fn)+\' is not a function\');\n	}\n}\n\nexport function FlattenIntoArray (target, source, sourceLen, start, depth, mapperFunction) {\n	var targetIndex = start;\n	for ( var sourceIndex = 0; sourceIndex<sourceLen; ++sourceIndex ) {\n		if ( sourceIndex in source ) {\n			var element = source[sourceIndex];\n			if ( mapperFunction ) { element = mapperFunction(element, sourceIndex, source); }\n			if ( depth>0 && IsArray(element) ) {\n				targetIndex = FlattenIntoArray(target, element, ToLength(element.length), targetIndex, depth-1);\n			}\n			else {\n				if ( targetIndex>=9007199254740991 ) { throw TypeError(\'Invalid index\'); }// Number.MAX_SAFE_INTEGER // 2**53-1\n				defineIndexValue(target, targetIndex, element);\n				++targetIndex;\n			}\n		}\n	}\n	return targetIndex;\n}\n';
 
 const INTERNAL = /*#__PURE__*/ assign(create(null), {
     'native': NATIVE,
@@ -495,7 +552,6 @@ const INTERNAL = /*#__PURE__*/ assign(create(null), {
     'private': Private,
     'for.of': of,
     'typeof': TYPEOF,
-    'class': CLASS,
     'class.isBoolean': class_isBoolean,
     'class.isNumber': class_isNumber,
     'class.isString': class_isString,
@@ -551,7 +607,7 @@ const _Reflect_apply = 'import Function_prototype_apply from \'.Function.prototy
 
 const _Object_create = 'import undefined from \'.undefined\';\nexport default Object.create || (\n	/*! j-globals: Object.create (polyfill) */\n	/*#__PURE__*/ function () {\n		var NULL;\n		if ( document.domain ) {\n			try { dom = new ActiveXObject(\'htmlfile\'); }\n			catch (error) { }\n		}\n		if ( dom ) {\n			dom.write(\'<script><\\/script>\');\n			dom.close();\n			NULL = dom.parentWindow.Object.prototype;\n		}\n		else {\n			dom = document.createElement(\'iframe\');\n			dom.setAttribute(\'style\', \'display:none !important;_display:none;\');//dom.style.display = \'none\';\n			var parent = document.body || document.documentElement;\n			parent.appendChild(dom);\n			dom.src = \'javascript:\';\n			NULL = dom.contentWindow.Object.prototype;\n			parent.removeChild(dom);\n		}\n		var dom = null;\n		delete NULL.constructor;\n		delete NULL.hasOwnProperty;\n		delete NULL.isPrototypeOf;\n		delete NULL.propertyIsEnumerable;\n		delete NULL.toLocaleString;\n		delete NULL.toString;\n		delete NULL.valueOf;\n		var Null = function () {};\n		Null.prototype = NULL;\n		var constructor = function () {};\n		function __PURE__ (o, properties) {\n			if ( properties!==undefined ) { throw TypeError(\'CAN NOT defineProperties in ES 3 Object.create polyfill\'); }\n			if ( o===null ) { return new Null; }\n			if ( typeof o!==\'object\' && typeof o!==\'function\' ) { throw TypeError(\'Object prototype may only be an Object or null: \'+o); }\n			constructor.prototype = o;\n			var created = new constructor;\n			constructor.prototype = NULL;\n			return created;\n		}\n		return function create (o, properties) {\n			return /*#__PURE__*/ __PURE__(o, properties);\n		};\n	}()\n	/*¡ j-globals: Object.create (polyfill) */\n);';
 
-const _Object_keys = 'var Array_prototype = Array.prototype;\nimport Boolean_prototype from \'.Boolean.prototype\';\nimport Date_prototype from \'.Date.prototype\';\nimport Error_prototype from \'.Error.prototype\';\nimport EvalError_prototype from \'.EvalError.prototype\';\nimport Function_prototype from \'.Function.prototype\';\nimport Number_prototype from \'.Number.prototype\';\nimport Object_prototype, { hasOwnProperty, propertyIsEnumerable, toString } from \'.Object.prototype\';\nimport RangeError_prototype from \'.RangeError.prototype\';\nimport ReferenceError_prototype from \'.ReferenceError.prototype\';\nimport RegExp_prototype from \'.RegExp.prototype\';\nimport String_prototype from \'.String.prototype\';\nimport SyntaxError_prototype from \'.SyntaxError.prototype\';\nimport TypeError_prototype from \'.TypeError.prototype\';\nimport URIError_prototype from \'.URIError.prototype\';\nimport { isIndex } from \'.native\';\nexport default (\n	/*! j-globals: Object.keys (polyfill) */\n	/*#__PURE__*/ function () {\n		\n		var Object_keys = Object.keys;\n		if ( Object_keys ) {\n			try {\n				Object_keys(0);\n				return Object_keys;\n			}\n			catch (error) { }\n			return function keys (object) {\n				return Object_keys(object==null ? object : Object(object));\n			};\n		}\n		\n		var function_prototypeIsEnumerable = function () {}.propertyIsEnumerable(\'prototype\');\n		if ( !{ \'toString\': null }.propertyIsEnumerable(\'toString\') ) {\n			var hasNotEnumOwnButNotNativePrototypeBug = function hasNotEnumOwnButNotNativePrototypeBug (object, key, keys) {\n				if ( hasOwnProperty.call(object, key) ) {\n					switch ( key ) {\n						case \'toString\':\n						case \'constructor\':\n							switch ( object ) {\n								case Object_prototype:\n								case Number_prototype:\n								case Date_prototype:\n								case String_prototype:\n								case Boolean_prototype:\n								case Array_prototype:\n								case Function_prototype:\n								case RegExp_prototype:\n								case Error_prototype:\n								case SyntaxError_prototype:\n								case RangeError_prototype:\n								case EvalError_prototype:\n								case ReferenceError_prototype:\n								case TypeError_prototype:\n								case URIError_prototype:\n									return;\n							}\n							break;\n						case \'toLocaleString\':\n							switch ( object ) {\n								case Object_prototype:\n								case Number_prototype:\n								case Date_prototype:\n								case Array_prototype:\n									return;\n							}\n							break;\n						case \'valueOf\':\n							switch ( object ) {\n								case Object_prototype:\n								case Number_prototype:\n								case Date_prototype:\n								case String_prototype:\n								case Boolean_prototype:\n									return;\n							}\n							break;\n						case \'hasOwnProperty\':\n						case \'isPrototypeOf\':\n						case \'propertyIsEnumerable\':\n							if ( object===Object_prototype ) { return; }\n							break;\n					}\n					for ( var index = keys.length; index--; ) {\n						if ( keys[index]===key ) { return; }\n					}\n					return true;\n				}\n			};\n		}\n		\n		function __PURE__ (object) {\n			\n			if ( object==null ) { throw TypeError(\'Cannot convert undefined or null to object\'); }\n			\n			var length,\n				index = 0,\n				key,\n				keys = [];\n			\n			switch ( typeof object ) {\n				\n				case \'object\':\n					if ( toString.call(object)===\'[object String]\' ) {\n						throw TypeError(\'stringObject\\\'s index keys have bug in ES3\');\n						//for ( length = object.length; index<length; ++index ) { keys[index] = \'\'+index; }\n						//for ( key in object ) { if ( hasOwnProperty.call(object, key) && ( !isIndex(key) || key>=length ) ) { keys[index++] = key; } }\n					}\n					else if ( hasOwnProperty.call(object, \'length\') && !propertyIsEnumerable.call(object, \'length\') || hasOwnProperty.call(object, \'callee\') && !propertyIsEnumerable.call(object, \'callee\') ) {\n						for ( length = object.length; index<length; ++index ) { if ( hasOwnProperty.call(object, index) ) { keys[index] = \'\'+index; } }\n						for ( key in object ) { if ( hasOwnProperty.call(object, key) && ( !isIndex(key) || key>=length ) ) { keys[index++] = key; } }\n					}\n					else {\n						for ( key in object ) { if ( hasOwnProperty.call(object, key) ) { keys[index++] = key; } }\n					}\n					break;\n					\n				case \'function\':\n					if ( function_prototypeIsEnumerable ) {\n						throw TypeError(\'function\\\'s prototype key has enum bug\');\n						//for ( key in object ) { if ( hasOwnProperty.call(object, key) && key!==\'prototype\' ) { keys[index++] = key; } }\n					}\n					else {\n						for ( key in object ) { if ( hasOwnProperty.call(object, key) ) { keys[index++] = key; } }\n					}\n					break;\n					\n				case \'string\':\n					throw TypeError(\'string[index] keys have bug in ES3\');\n				//	for ( length = object.length; index<length; ++index ) { keys[index] = \'\'+index; }\n				//	return keys;\n					\n				default:\n					for ( key in object = Object(object) ) {\n						if ( hasOwnProperty.call(object, key) ) {\n							keys[index++] = key;\n						}\n					}\n					return keys;\n					\n			}\n			\n			if ( hasNotEnumOwnButNotNativePrototypeBug ) {\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'toString\', keys) ) { keys[index++] = \'toString\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'toLocaleString\', keys) ) { keys[index++] = \'toLocaleString\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'valueOf\', keys) ) { keys[index++] = \'valueOf\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'hasOwnProperty\', keys) ) { keys[index++] = \'hasOwnProperty\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'isPrototypeOf\', keys) ) { keys[index++] = \'isPrototypeOf\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'propertyIsEnumerable\', keys) ) { keys[index++] = \'propertyIsEnumerable\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'constructor\', keys) ) { keys[index] = \'constructor\'; }\n			}\n			\n			return keys;\n			\n		}\n		\n		return function keys (object) {\n			return /*#__PURE__*/ __PURE__(object);\n		};\n		\n	}()\n	/*¡ j-globals: Object.keys (polyfill) */\n);';
+const _Object_keys = 'import Array_prototype from \'.Array.prototype\';\nimport Boolean_prototype from \'.Boolean.prototype\';\nimport Date_prototype from \'.Date.prototype\';\nimport Error_prototype from \'.Error.prototype\';\nimport EvalError_prototype from \'.EvalError.prototype\';\nimport Function_prototype from \'.Function.prototype\';\nimport Number_prototype from \'.Number.prototype\';\nimport Object_prototype from \'.Object.prototype\';\nimport hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nimport propertyIsEnumerable from \'.Object.prototype.propertyIsEnumerable\';\nimport toString from \'.Object.prototype.toString\';\nimport RangeError_prototype from \'.RangeError.prototype\';\nimport ReferenceError_prototype from \'.ReferenceError.prototype\';\nimport RegExp_prototype from \'.RegExp.prototype\';\nimport String_prototype from \'.String.prototype\';\nimport SyntaxError_prototype from \'.SyntaxError.prototype\';\nimport TypeError_prototype from \'.TypeError.prototype\';\nimport URIError_prototype from \'.URIError.prototype\';\nimport { isIndex } from \'.native\';\nexport default (\n	/*! j-globals: Object.keys (polyfill) */\n	/*#__PURE__*/ function () {\n		\n		var Object_keys = Object.keys;\n		if ( Object_keys ) {\n			try {\n				Object_keys(0);\n				return Object_keys;\n			}\n			catch (error) { }\n			return function keys (object) {\n				return Object_keys(object==null ? object : Object(object));\n			};\n		}\n		\n		var function_prototypeIsEnumerable = function () {}.propertyIsEnumerable(\'prototype\');\n		if ( !{ \'toString\': null }.propertyIsEnumerable(\'toString\') ) {\n			var hasNotEnumOwnButNotNativePrototypeBug = function hasNotEnumOwnButNotNativePrototypeBug (object, key, keys) {\n				if ( hasOwnProperty.call(object, key) ) {\n					switch ( key ) {\n						case \'toString\':\n						case \'constructor\':\n							switch ( object ) {\n								case Object_prototype:\n								case Number_prototype:\n								case Date_prototype:\n								case String_prototype:\n								case Boolean_prototype:\n								case Array_prototype:\n								case Function_prototype:\n								case RegExp_prototype:\n								case Error_prototype:\n								case SyntaxError_prototype:\n								case RangeError_prototype:\n								case EvalError_prototype:\n								case ReferenceError_prototype:\n								case TypeError_prototype:\n								case URIError_prototype:\n									return;\n							}\n							break;\n						case \'toLocaleString\':\n							switch ( object ) {\n								case Object_prototype:\n								case Number_prototype:\n								case Date_prototype:\n								case Array_prototype:\n									return;\n							}\n							break;\n						case \'valueOf\':\n							switch ( object ) {\n								case Object_prototype:\n								case Number_prototype:\n								case Date_prototype:\n								case String_prototype:\n								case Boolean_prototype:\n									return;\n							}\n							break;\n						case \'hasOwnProperty\':\n						case \'isPrototypeOf\':\n						case \'propertyIsEnumerable\':\n							if ( object===Object_prototype ) { return; }\n							break;\n					}\n					for ( var index = keys.length; index--; ) {\n						if ( keys[index]===key ) { return; }\n					}\n					return true;\n				}\n			};\n		}\n		\n		function __PURE__ (object) {\n			\n			if ( object==null ) { throw TypeError(\'Cannot convert undefined or null to object\'); }\n			\n			var length,\n				index = 0,\n				key,\n				keys = [];\n			\n			switch ( typeof object ) {\n				\n				case \'object\':\n					if ( toString.call(object)===\'[object String]\' ) {\n						throw TypeError(\'stringObject\\\'s index keys have bug in ES3\');\n						//for ( length = object.length; index<length; ++index ) { keys[index] = \'\'+index; }\n						//for ( key in object ) { if ( hasOwnProperty.call(object, key) && ( !isIndex(key) || key>=length ) ) { keys[index++] = key; } }\n					}\n					else if ( hasOwnProperty.call(object, \'length\') && !propertyIsEnumerable.call(object, \'length\') || hasOwnProperty.call(object, \'callee\') && !propertyIsEnumerable.call(object, \'callee\') ) {\n						for ( length = object.length; index<length; ++index ) { if ( hasOwnProperty.call(object, index) ) { keys[index] = \'\'+index; } }\n						for ( key in object ) { if ( hasOwnProperty.call(object, key) && ( !isIndex(key) || key>=length ) ) { keys[index++] = key; } }\n					}\n					else {\n						for ( key in object ) { if ( hasOwnProperty.call(object, key) ) { keys[index++] = key; } }\n					}\n					break;\n					\n				case \'function\':\n					if ( function_prototypeIsEnumerable ) {\n						throw TypeError(\'function\\\'s prototype key has enum bug\');\n						//for ( key in object ) { if ( hasOwnProperty.call(object, key) && key!==\'prototype\' ) { keys[index++] = key; } }\n					}\n					else {\n						for ( key in object ) { if ( hasOwnProperty.call(object, key) ) { keys[index++] = key; } }\n					}\n					break;\n					\n				case \'string\':\n					throw TypeError(\'string[index] keys have bug in ES3\');\n				//	for ( length = object.length; index<length; ++index ) { keys[index] = \'\'+index; }\n				//	return keys;\n					\n				default:\n					for ( key in object = Object(object) ) {\n						if ( hasOwnProperty.call(object, key) ) {\n							keys[index++] = key;\n						}\n					}\n					return keys;\n					\n			}\n			\n			if ( hasNotEnumOwnButNotNativePrototypeBug ) {\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'toString\', keys) ) { keys[index++] = \'toString\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'toLocaleString\', keys) ) { keys[index++] = \'toLocaleString\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'valueOf\', keys) ) { keys[index++] = \'valueOf\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'hasOwnProperty\', keys) ) { keys[index++] = \'hasOwnProperty\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'isPrototypeOf\', keys) ) { keys[index++] = \'isPrototypeOf\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'propertyIsEnumerable\', keys) ) { keys[index++] = \'propertyIsEnumerable\'; }\n				if ( hasNotEnumOwnButNotNativePrototypeBug(object, \'constructor\', keys) ) { keys[index] = \'constructor\'; }\n			}\n			\n			return keys;\n			\n		}\n		\n		return function keys (object) {\n			return /*#__PURE__*/ __PURE__(object);\n		};\n		\n	}()\n	/*¡ j-globals: Object.keys (polyfill) */\n);';
 
 const _Object_values = 'import toString from \'.Object.prototype.toString\';\n//import hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nimport Object_keys from \'.Object.keys?=\';\nimport { defineIndexValue } from \'.native\';\nexport default Object.values || (\n	/*! j-globals: Object.values (polyfill) */\n	/*#__PURE__*/ function () {\n		\n		var string_noIndex = !\'_\'.hasOwnProperty(0);\n		\n		function __PURE__ (object) {\n			var values, keys, length, index;\n			switch ( typeof object ) {\n				case \'object\':\n					if ( string_noIndex && toString.call(object)===\'[object String]\' ) {\n						throw TypeError(\'stringObject\\\'s index keys have bug in ES3\');/*\n						values = split.call(object, \'\');\n						length = index = values.length;\n						for ( var key in object ) {\n							if ( hasOwnProperty.call(object, key) ) {\n								if ( isIndex(key) && key<length ) {\n									if ( object[key]!==values[key] ) { throw TypeError(\'stringObject[index] is not writable in ES3+ spec\'); }\n								}\n								else { values[index++] = object[key]; }\n							}\n						}\n						return values;*/\n					}\n					break;\n				case \'function\':\n					break;\n				case \'string\':\n					if ( string_noIndex ) { throw TypeError(\'string[index] keys have bug in ES3\'); }\n					return object.split(\'\');\n				default:\n					object = Object(object);\n					break;\n			}\n			values = [];\n			for ( keys = Object_keys(object), length = keys.length, index = 0; index<length; ++index ) {\n				defineIndexValue(values, index, object[keys[index]]);\n			}\n			return values;\n		}\n		\n		return function values (object) {\n			return /*#__PURE__*/ __PURE__(object);\n		};\n		\n	}()\n	/*¡ j-globals: Object.values (polyfill) */\n);';
 
@@ -581,7 +637,7 @@ const _Array_prototype_flatMap = '//import split from \'.String.prototype.split\
 
 const _globalThis = 'export default (\n	/*! j-globals: globalThis (polyfill) */\n	/*#__PURE__*/ function GlobalThis () {\n		\n		try {\n			return this// IE9- (IE8-: self!==window)\n				||\n				Function(\'return this\')();// (0, eval) (IE8- not global) (also writable) // function(){}.constructor\n		}\n		\n		catch (error) {// !CSP (e.g. Google Chrome Apps)\n			\n			if ( typeof window===\'object\' && typeof document===\'object\' ) { return window; }// Browser (window document IE9+ readonly) // frames !Worker & !readonly too\n			\n			if ( typeof self===\'object\' ) { return self; }// Worker !readonly\n			\n			//if ( typeof global===\'object\' && typeof process===\'object\' && typeof require===\'function\' ) { return global; }// Node.js\n			\n			//if ( typeof globalThis===\'object\' ) { return globalThis; }\n			\n			/*\n			var __global_this_access_key__ = \'__\\u5168\\u5C40_\\u5BF9\\u8C61_\\u8BBF\\u95EE_\\u952E\\u540D__\';\n			if ( !( __global_this_access_key__ in {} ) ) {\n				try { __\\u5168\\u5C40_\\u5BF9\\u8C61_\\u8BBF\\u95EE_\\u952E\\u540D__; }\n				catch (error) {\n					var d = Object.create(null);\n					d.get = function () { return this; };\n					d.configurable = true;\n					try {\n						Object.defineProperty(Object.prototype, __global_this_access_key__, d);// catch !extensible Object.prototype || !configurable globalObject get throw\n						try { return __\\u5168\\u5C40_\\u5BF9\\u8C61_\\u8BBF\\u95EE_\\u952E\\u540D__; }// IE11+ (IE10-: window !instanceof Object)\n						finally { delete Object.prototype[__global_this_access_key__]; }\n					}\n					catch (error) { }\n				}\n			}\n			*/\n			\n			//throw error;\n			\n		}\n		\n	}()\n	/*¡ j-globals: globalThis (polyfill) */\n);';
 
-const _Error = 'export default (\n	/*! j-globals: Error (polyfill) */\n	/*# __PURE__*/ Error(\'0\').message ? Error : /*#__PURE__*/ function () {\n		function Error0 (message) {\n			return /*#__PURE__*/ Error(0, message);\n		}\n		Error0.prototype = Error.prototype;\n		return Error0;\n	}()\n	/*¡ j-globals: Error (polyfill) */\n);';
+const _Error = 'export default (\n	/*! j-globals: Error (polyfill) */\n	/*# __PURE__*/ Error(\'0\').message ? Error : /*#__PURE__*/ function () {\n		function Error0 (message) {\n			return Error(0, message);\n		}\n		Error0.prototype = Error.prototype;\n		return Error0;\n	}()\n	/*¡ j-globals: Error (polyfill) */\n);';
 
 const _undefined = 'export default (\n	/*! j-globals: undefined (polyfill) */\n	void 0\n	/*¡ j-globals: undefined (polyfill) */\n);';
 
@@ -613,17 +669,13 @@ const _Buffer_allocUnsafe = 'export default (\n	/*! j-globals: Buffer.allocUnsaf
 
 const _Buffer_allocUnsafeSlow = 'export default (\n	/*! j-globals: Buffer.allocUnsafeSlow (polyfill) */\n	typeof Buffer===\'function\' && Buffer.allocUnsafeSlow || function allocUnsafeSlow (size) {\n		return /*#__PURE__*/ new Buffer(size);\n	}\n	/*¡ j-globals: Buffer.allocUnsafeSlow (polyfill) */\n);';
 
-const _throw = '';
-
-const _throwError = '';
-
 const _NULL_assign = 'import Object_assign from \'.Object.assign?=\';\nimport create from \'.Object.create?=\';\nexport default (\n	/*! j-globals: null.assign (polyfill) */\n	function assign (target, firstSource) {\n		if ( arguments.length>2 ) {\n			if ( target===null ) { arguments[0] = create(null); }\n			return Object_assign.apply(null, arguments);\n		}\n		else {\n			return Object_assign(target===null ? create(null) : target, firstSource);\n		}\n	}\n	/*¡ j-globals: null.assign (polyfill) */\n);';
 
 const _NULL_create = 'import undefined from \'.undefined\';\nimport Object_create from \'.Object.create?=\';\nimport defineProperties from \'.null.defineProperties\';\nexport default (\n	/*! j-globals: null.create (polyfill) */\n	function create (proto, descriptorMap) {\n		return descriptorMap===undefined\n			? /*#__PURE__*/ Object_create(proto===undefined ? null : proto)\n			: /*#__PURE__*/ defineProperties(/*#__PURE__*/ Object_create(proto), descriptorMap);\n	}\n	/*¡ j-globals: null.create (polyfill) */\n);';
 
 const _NULL_fromEntries = 'import Object_fromEntries from \'.Object.fromEntries\';\nimport TypeError from \'.TypeError\';\nimport create from \'.Object.create?=\';\nimport of from \'.for.of\';\nimport assign from \'.Object.assign\';\nexport default (\n	/*! j-globals: null.fromEntries (polyfill) */\n	Object_fromEntries\n		\n		? function fromEntries (entries) {\n			return /*#__PURE__*/ assign(/*#__PURE__*/ create(null), /*#__PURE__*/ Object_fromEntries(entries));\n		}\n		\n		: /*#__PURE__*/ function () {\n			\n			function __PURE__ (entries) {\n				if ( entries==null ) { throw TypeError(\'undefined is not iterable\'); }\n				var object = create(null);\n				of(entries, function (entry) {\n					if ( typeof entry!==\'object\' && typeof entry!==\'function\' || entry===null ) { throw TypeError(\'Iterator value \'+( entry && entry.toString() )+\' is not an entry object\'); }\n					object[entry[0]] = entry[1];\n				});\n				return assign ? assign(create(null), object) : object;\n			}\n			\n			return function fromEntries (entries) {\n				return /*#__PURE__*/ __PURE__(entries);\n			};\n			\n		}()\n	\n	/*¡ j-globals: null.fromEntries (polyfill) */\n);';
 
-const _NULL = 'import Object_assign from \'.Object.assign\';\nimport Object_create from \'.Object.create?=\';\nimport Object_freeze from \'.Object.freeze\';\nimport hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nexport default (\n	/*! j-globals: null (polyfill) */\n	/*#__PURE__*/ function () {\n		\'use strict\';\n		var assign = Object_assign || function assign (target, source) {\n				for ( var key in source ) {\n					if ( hasOwnProperty.call(source, key) ) { target[key] = source[key]; }\n				}\n				if ( hasOwnProperty.call(source, \'toString\') ) { target.toString = source.toString; }\n				if ( hasOwnProperty.call(source, \'toLocaleString\') ) { target.toLocaleString = source.toLocaleString; }\n				if ( hasOwnProperty.call(source, \'valueOf\') ) { target.valueOf = source.valueOf; }\n				if ( hasOwnProperty.call(source, \'hasOwnProperty\') ) { target.hasOwnProperty = source.hasOwnProperty; }\n				if ( hasOwnProperty.call(source, \'isPrototypeOf\') ) { target.isPrototypeOf = source.isPrototypeOf; }\n				if ( hasOwnProperty.call(source, \'propertyIsEnumerable\') ) { target.propertyIsEnumerable = source.propertyIsEnumerable; }\n				if ( hasOwnProperty.call(source, \'constructor\') ) { target.constructor = source.constructor; }\n				return target;\n			};\n		var NULL = function (object, define) {\n			if ( object ) {\n				return define\n					? /*#__PURE__*/ Object_create(null, /*#__PURE__*/getOwnPropertyDescriptors(object))\n					: /*#__PURE__*/ assign(/*#__PURE__*/ Object_create(null), object);\n			}\n		};\n		delete NULL.name;\n		//try { delete NULL.length; } catch (error) {}\n		NULL.prototype = null;\n		Object_freeze && Object_freeze(NULL);\n		return NULL;\n	}()\n	/*¡ j-globals: null (polyfill) */\n);\n\nexport { assign }; import assign from \'.null.assign?=\';\nexport { create }; import create from \'.null.create?=\';\nexport { defineProperties }; import defineProperties from \'.null.defineProperties\';\nexport { defineProperty }; import defineProperty from \'.null.defineProperty\';\nexport { fromEntries }; import fromEntries from \'.null.fromEntries?=\';\nexport { getOwnPropertyDescriptor }; import getOwnPropertyDescriptor from \'.null.getOwnPropertyDescriptor\';\nexport { getOwnPropertyDescriptors }; import getOwnPropertyDescriptors from \'.null.getOwnPropertyDescriptors\';\nexport { PropertyDescriptor }; import PropertyDescriptor from \'.null.PropertyDescriptor\';\n\n[ assign, create, defineProperties, defineProperty, fromEntries, getOwnPropertyDescriptor, getOwnPropertyDescriptors, PropertyDescriptor ];';
+const _NULL = 'import Object_assign from \'.Object.assign\';\nimport Object_create from \'.Object.create?=\';\nimport Object_freeze from \'.Object.freeze\';\nimport hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nimport getOwnPropertyDescriptors from \'.null.getOwnPropertyDescriptors\';\nexport default (\n	/*! j-globals: null (polyfill) */\n	/*#__PURE__*/ function () {\n		\'use strict\';\n		var assign = Object_assign || function assign (target, source) {\n				for ( var key in source ) {\n					if ( hasOwnProperty.call(source, key) ) { target[key] = source[key]; }\n				}\n				if ( hasOwnProperty.call(source, \'toString\') ) { target.toString = source.toString; }\n				if ( hasOwnProperty.call(source, \'toLocaleString\') ) { target.toLocaleString = source.toLocaleString; }\n				if ( hasOwnProperty.call(source, \'valueOf\') ) { target.valueOf = source.valueOf; }\n				if ( hasOwnProperty.call(source, \'hasOwnProperty\') ) { target.hasOwnProperty = source.hasOwnProperty; }\n				if ( hasOwnProperty.call(source, \'isPrototypeOf\') ) { target.isPrototypeOf = source.isPrototypeOf; }\n				if ( hasOwnProperty.call(source, \'propertyIsEnumerable\') ) { target.propertyIsEnumerable = source.propertyIsEnumerable; }\n				if ( hasOwnProperty.call(source, \'constructor\') ) { target.constructor = source.constructor; }\n				return target;\n			};\n		var NULL = function (object, define) {\n			if ( object ) {\n				return define\n					? /*#__PURE__*/ Object_create(null, /*#__PURE__*/getOwnPropertyDescriptors(object))\n					: /*#__PURE__*/ assign(/*#__PURE__*/ Object_create(null), object);\n			}\n		};\n		delete NULL.name;\n		//try { delete NULL.length; } catch (error) {}\n		NULL.prototype = null;\n		Object_freeze && Object_freeze(NULL);\n		return NULL;\n	}()\n	/*¡ j-globals: null (polyfill) */\n);';
 
 const _Map = 'import Symbol_iterator from \'.Symbol.iterator?\';\nimport undefined from \'.undefined\';\nimport TypeError from \'.TypeError\';\nimport defineProperty from \'.null.defineProperty\';\nimport Object_defineProperty from \'.Object.defineProperty\';\nimport of from \'.for.of\';\nimport PropertyDescriptor from \'.null.PropertyDescriptor\';\nimport { defineIndexValue, createBound } from \'.native\';\nexport default (\n	/*! j-globals: Map (polyfill) */\n	typeof Map===\'function\' && Map.prototype && /*#__PURE__*/ function () {\n		var map = new Map;\n		return map.keys && map.set(-0, 0)===map && 1/map.keys().next().value>0;\n	}() ? Map : /*#__PURE__*/ function () { \'use strict\';\n		\n		var DELETED = {};\n		\n		function Map (entries) {\n			this.size = 0;\n			this._keys = [];\n			this._values = [];\n			if ( entries==null ) { return; }\n			var map = this;\n			return /*#__PURE__*/ of(entries, function (entry) {\n				if ( typeof entry!==\'object\' && typeof entry!==\'function\' || entry===null ) { throw TypeError(\'Iterator value \'+( entry && entry.toString() )+\' is not an entry object\'); }\n				map.set(entry[0], entry[1]);\n			});\n		}\n		\n		function get (key) {\n			var _keys = this._keys;\n			var index = _keys.length;\n			if ( key===key ) { while ( index-- ) { if ( key===_keys[index] ) { return this._values[index]; } } }\n			else { while ( index-- ) { if ( _keys[index]!==_keys[index] ) { return this._values[index]; } } }\n		}\n		\n		function set (key, value) {\n			var _keys = this._keys;\n			var length = _keys.length;\n			var index = length;\n			if ( key===key ) {\n				while ( index-- ) {\n					if ( key===_keys[index] ) {\n						this._values[index] = value;\n						return this;\n					}\n				}\n			}\n			else {\n				while ( index-- ) {\n					if ( _keys[index]!==_keys[index] ) {\n						this._values[index] = value;\n						return this;\n					}\n				}\n			}\n			defineIndexValue(_keys, length, key===0 ? 0 : key);\n			defineIndexValue(this._values, length, value);\n			++this.size;\n			return this;\n		}\n		\n		function has (key) {\n			var _keys = this._keys;\n			var index = _keys.length;\n			if ( key===key ) { while ( index-- ) { if ( key===_keys[index] ) { return true; } } }\n			else { while ( index-- ) { if ( _keys[index]!==_keys[index] ) { return true; } } }\n			return false;\n		}\n		\n		function delete$ (key) {\n			var _keys = this._keys;\n			var index = _keys.length;\n			if ( key===key ) {\n				while ( index-- ) {\n					if ( key===_keys[index] ) {\n						_keys[index] = DELETED;\n						this._values[index] = DELETED;\n						--this.size;\n						return true;\n					}\n				}\n			}\n			else {\n				while ( index-- ) {\n					if ( _keys[index]!==_keys[index] ) {\n						_keys[index] = DELETED;\n						this._values[index] = DELETED;\n						--this.size;\n						return true;\n					}\n				}\n			}\n			return false;\n		}\n		\n		function clear () {\n			this.size = 0;\n			var _keys = this._keys;\n			var _values = this._values;\n			var index = _keys.length;\n			while ( index-- ) {\n				_keys[index] = DELETED;\n				_values[index] = DELETED;\n			}\n		}\n		\n		function entries () { return new MapIterator(this, \'entries\'); }\n		\n		function forEach (callback/*, thisArg*/) {\n			switch ( typeof callback ) {\n				case \'function\':\n					break;\n				case \'undefined\':\n					throw TypeError(\'undefined is not a function\');\n				case \'string\':\n					throw TypeError(\'string "\'+callback+\'" is not a function\');\n				case \'number\':\n					throw TypeError(\'number \'+callback+\' is not a function\');\n				case \'boolean\':\n					throw TypeError(\'boolean \'+callback+\' is not a function\');\n				case \'object\':\n					throw TypeError(\'object \'+( callback ? \'\' : \'null \' )+\'is not a function\');\n				default:\n					throw TypeError(typeof callback+\' is not a function\');\n			}\n			if ( arguments.length>1 ) { callback = createBound(callback, arguments[1]); }\n			for ( var _keys = this._keys, _values = this._values, index = 0; index<_keys.length; ++index ) {\n				var key = _keys[index];\n				key===DELETED || callback(_values[index], key, this);\n			}\n		}\n		\n		function keys () { return new MapIterator(this, \'keys\'); }\n		\n		function size () { throw TypeError(\'Method get Map.prototype.size called on incompatible receiver #<Map>\'); }\n		\n		function values () { return new MapIterator(this, \'values\'); }\n		\n		if ( Object_defineProperty ) {\n			defineProperty(Map, \'prototype\', { configurable: false, enumerable: false, writable: false, value: Map.prototype });\n			defineProperty(Map.prototype, \'constructor\', { configurable: true, enumerable: false, writable: true, value: Map });\n			defineProperty(Map.prototype, \'get\', { configurable: true, enumerable: false, writable: true, value: get });\n			defineProperty(Map.prototype, \'set\', { configurable: true, enumerable: false, writable: true, value: set });\n			defineProperty(Map.prototype, \'has\', { configurable: true, enumerable: false, writable: true, value: has });\n			defineProperty(Map.prototype, \'delete\', { configurable: true, enumerable: false, writable: true, value: delete$ });\n			defineProperty(Map.prototype, \'clear\', { configurable: true, enumerable: false, writable: true, value: clear });\n			defineProperty(Map.prototype, \'entries\', { configurable: true, enumerable: false, writable: true, value: entries });\n			defineProperty(Map.prototype, \'forEach\', { configurable: true, enumerable: false, writable: true, value: forEach });\n			defineProperty(Map.prototype, \'keys\', { configurable: true, enumerable: false, writable: true, value: keys });\n			var SIZE = PropertyDescriptor(0, true, false, false);\n			defineProperty(Map.prototype, \'size\', { configurable: true, enumerable: false, get: size, set: function size (value) { Object_defineProperty(this, \'size\', SIZE); } });\n			defineProperty(Map.prototype, \'values\', { configurable: true, enumerable: false, writable: true, value: values });\n			defineProperty(Map.prototype, \'toString\', { configurable: true, enumerable: false, writable: true, value: function toString () { return \'[object Map]\'; } });\n			defineProperty(Map.prototype, \'_keys\', {\n				configurable: false, enumerable: false, get: undefined,\n				set: function _keys (value) { Object_defineProperty(this, \'_keys\', PropertyDescriptor(value, false, false, false)); }\n			});\n			defineProperty(Map.prototype, \'_values\', {\n				configurable: false, enumerable: false, get: undefined,\n				set: function _values (value) { Object_defineProperty(this, \'_values\', PropertyDescriptor(value, false, false, false)); }\n			});\n			if ( Symbol_iterator!==undefined ) {\n				defineProperty(Map.prototype, Symbol_iterator, { configurable: true, enumerable: false, writable: true, value: entries });\n			}\n		}\n		else {\n			var Size = Object(0/0);\n			Size.valueOf = Size.toString = size;\n			Map.prototype = {\n				constructor: Map,\n				get: get,\n				set: set,\n				has: has,\n				\'delete\': delete$,\n				clear: clear,\n				entries: entries,\n				forEach: forEach,\n				keys: keys,\n				size: Size,\n				values: values,\n				toString: function toString () { return \'[object Map]\'; },\n				_keys: [],\n				_values: []\n			};\n			if ( Symbol_iterator!==undefined ) { Map.prototype[Symbol_iterator] = entries; }\n		}\n		\n		function MapIterator (set, kind) {\n			this._index = 0;\n			this._kind = kind;\n			this._keys = set._keys;\n			this._values = set._values;\n		}\n		\n		MapIterator.prototype = {\n			\n			constructor: MapIterator,\n			\n			next: function next () {\n				var _index = this._index;\n				var _keys = this._keys;\n				var length = _keys.length;\n				if ( _index<length ) {\n					do {\n						var key = _keys[_index];\n						if ( key===DELETED ) { continue; }\n						this._index = _index+1;\n						return {\n							value:\n								this._kind===\'entries\' ? [key, this._values[_index]] :\n									this._kind===\'values\' ? this._values[_index] :\n										key,\n							done: false\n						};\n					}\n					while ( ++_index<length );\n					this._index = _index;\n				}\n				return { value: undefined, done: true };\n			},\n			\n			toString: function toString () { return \'[object Map Iterator]\'; }\n			\n		};\n		\n		if ( Symbol_iterator!==undefined ) {\n			MapIterator.prototype[Symbol_iterator] = function iterator () { return this; };\n		}\n		\n		return Map;\n		\n	}()\n	/*¡ j-globals: Map (polyfill) */\n);';
 
@@ -646,8 +698,6 @@ const POLYFILL = /*#__PURE__*/ assign(create(null), {
     'null.create': _NULL_create,
     'null.fromEntries': _NULL_fromEntries,
     'null': _NULL,
-    'throw': _throw,
-    'throw.Error': _throwError,
     'Reflect.ownKeys': _Reflect_ownKeys,
     'Reflect.apply': _Reflect_apply,
     'Object.assign': _Object_assign,
@@ -713,7 +763,7 @@ function get(id, { bom = false, tab = '\t', eol = '\n', pre = '.', sur = '' } = 
     }
     return code;
 }
-function* Chunk([chain, fallback, polyfill, exp, along], bom, tab, eol, pre, sur) {
+function* Chunk([chain, multi, fallback, polyfill, exp, along], bom, tab, eol, pre, sur) {
     if (NON_GLOBAL.test(chain)) {
         throw Error(`${chain} 不是全局变量`);
     }
@@ -721,7 +771,7 @@ function* Chunk([chain, fallback, polyfill, exp, along], bom, tab, eol, pre, sur
         yield '\uFEFF';
     }
     if (!fallback) {
-        if (chain in MULTI_EXPORT) {
+        if (multi) {
             yield `export default ${chain};${eol}${eol}`;
             const identifiers = [];
             for (const node of MULTI_EXPORT[chain]) {
@@ -753,6 +803,9 @@ function* Chunk([chain, fallback, polyfill, exp, along], bom, tab, eol, pre, sur
         }
     }
     else if (!polyfill) {
+        if (multi) {
+            throw Error('暂不支持“.?”');
+        }
         if (chain in FALLBACK) {
             yield pre === '.' && sur === '' && tab === '\t' && eol === '\n'
                 ? FALLBACK[chain]
@@ -772,21 +825,10 @@ function* Chunk([chain, fallback, polyfill, exp, along], bom, tab, eol, pre, sur
         }
     }
     else if (!exp) {
-        if (chain in POLYFILL) {
-            yield pre === '.' && sur === '' && tab === '\t' && eol === '\n'
-                ? POLYFILL[chain]
-                : POLYFILL[chain].replace(MODULE_ID, replacer).split('\n').join(eol).split('\t').join(tab);
-        }
-        else if (chain.startsWith('Map.')) {
-            yield `import Map from '${pre}Map?=${sur}';${eol}`;
-            yield `export default ${ES3Chain(chain)}`;
-        }
-        else if (chain.startsWith('Set.')) {
-            yield `import Set from '${pre}Set?=${sur}';${eol}`;
-            yield `export default ${ES3Chain(chain)}`;
-        }
-        else if (chain in MULTI_EXPORT) {
-            yield `export default ${chain};${eol}${eol}`;
+        if (multi) {
+            yield chain in POLYFILL
+                ? `export { default } from '${pre}${chain}?=${sur}';${eol}${eol}`
+                : `export default ${chain};${eol}${eol}`;
             const identifiers = [];
             for (const node of MULTI_EXPORT[chain]) {
                 let id = `${chain}.${node}`;
@@ -806,10 +848,20 @@ function* Chunk([chain, fallback, polyfill, exp, along], bom, tab, eol, pre, sur
             yield `${eol}var $= [ ${identifiers.join(', ')} ];${eol}`;
         }
         else {
-            throw Error(`@ltd/j-globals 没有为 ${chain} 准备内置的 polyfill`);
+            if (chain in POLYFILL) {
+                yield pre === '.' && sur === '' && tab === '\t' && eol === '\n'
+                    ? POLYFILL[chain]
+                    : POLYFILL[chain].replace(MODULE_ID, replacer).split('\n').join(eol).split('\t').join(tab);
+            }
+            else {
+                throw Error(`@ltd/j-globals 没有为 ${chain} 准备内置的 polyfill`);
+            }
         }
     }
     else {
+        if (multi) {
+            throw Error('不支持“.?=*”');
+        }
         if (along) {
             yield IN_GLOBAL.test(chain)
                 ? /*globalThis*/ `import globalThis from '${pre}globalThis?=${sur}';${eol}`
@@ -826,16 +878,40 @@ function* Chunk([chain, fallback, polyfill, exp, along], bom, tab, eol, pre, sur
     function replacer(id, chain) { return pre + chain + sur; }
 }
 function parseID(id) {
+    let chain;
+    let multi;
     const index = id.indexOf('?=');
     if (index >= 0) {
         let chain = id.slice(0, index);
-        return [chain, '?', '=', id.slice(index + 2), Along(chain, -0)];
+        if (chain.endsWith('.')) {
+            chain = chain.slice(0, -1);
+            multi = '.';
+        }
+        else {
+            multi = '';
+        }
+        return [chain, multi, '?', '=', id.slice(index + 2), Along(chain, -0)];
     }
     if (id.endsWith('?')) {
         let chain = id.slice(0, -1);
-        return [chain, '?', '', '', Along(chain, -1)];
+        if (chain.endsWith('.')) {
+            chain = chain.slice(0, -1);
+            multi = '.';
+        }
+        else {
+            multi = '';
+        }
+        return [chain, multi, '?', '', '', Along(chain, -1)];
     }
-    return [id, '', '', '', ''];
+    if (id.endsWith('.')) {
+        chain = id.slice(0, -1);
+        multi = '.';
+    }
+    else {
+        chain = id;
+        multi = '';
+    }
+    return [chain, multi, '', '', '', ''];
 }
 function Along(chain, end) {
     const rest = [];
@@ -872,14 +948,14 @@ class Globals extends Set {
         let tsd = '';
         let previous = '';
         for (const id of [...collectAll(this)].sort()) {
-            const chain = fetchChain(id);
+            const [chain, multi] = fetchChain(id);
             const current = fetchFirst(chain);
             if (current !== previous) {
                 previous = current;
                 tsd += eol;
             }
             tsd += `declare module '${pre}${StringLiteral(id).slice(1, -1)}${sur}' { export default `;
-            if (chain in MULTI_EXPORT) {
+            if (multi) {
                 tsd += `${chain};${eol}`;
                 for (const node of MULTI_EXPORT[chain]) {
                     tsd += `${tab}export { default as ${node} } from '${pre}${chain}.${node}${sur}';${eol}`;
@@ -952,16 +1028,6 @@ class Globals extends Set {
                     case 'class.isBigInt':
                         tsd += `isBigInt;${eol}${tab}function isBigInt (value :any) :value is BigInt;${eol}`;
                         break;
-                    case 'class':
-                        for (const node of [
-                            'isBoolean', 'isNumber', 'isString', 'isDate', 'isRegExp',
-                            'isMap', 'isSet', 'isWeakMap', 'isWeakSet',
-                            'isPromise', 'isSymbol',
-                            'isBigInt',
-                        ]) {
-                            tsd += `${tab}export { default as ${node} } from '${pre}${chain}.${node}${sur}';${eol}`;
-                        }
-                        break;
                     case 'null.assign':
                         tsd += `assign;${eol}${tab}function assign<O extends {}> (target :null | O, firstSource :O, ...restSources :O[]) :O;${eol}`;
                         break;
@@ -1017,18 +1083,6 @@ class Globals extends Set {
 							${tab}${tab}__proto__? :ValueType,${eol}
 							${tab}${tab}constructor? :ValueType,${eol}
 							${tab}};${eol}`;
-                        for (const node of [
-                            'assign',
-                            'create',
-                            'defineProperties',
-                            'defineProperty',
-                            'fromEntries',
-                            'getOwnPropertyDescriptor',
-                            'getOwnPropertyDescriptors',
-                            'PropertyDescriptor',
-                        ]) {
-                            tsd += `${tab}export { default as ${node} } from '${pre}${chain}.${node}${sur}';${eol}`;
-                        }
                         break;
                     case 'return':
                     case 'return.sideeffects':
@@ -1042,9 +1096,6 @@ class Globals extends Set {
                         break;
                     case 'throw':
                         tsd += `THROW;${eol}${tab}function THROW (error :Error) :never;${eol}`;
-                        for (const $ of ['', 'Eval', 'Range', 'Reference', 'Syntax', 'Type', 'URI']) {
-                            tsd += `${tab}export { default as throw${$}Error } from '${pre}${chain}.${$}Error${sur}';${eol}`;
-                        }
                         break;
                     case 'throw.Error':
                     case 'throw.EvalError':
@@ -1104,7 +1155,8 @@ class Globals extends Set {
                         tsd += `isArray;${eol}${tab}function isArray (value :any) :value is any[] | readonly any[];${eol}`;
                         break;
                     case 'native':
-                        tsd += `NATIVE; const NATIVE :never; `;
+                    case 'class':
+                        tsd += `_; const _ :never; `;
                         break;
                     default:
                         tsd += `${chain}; `;
@@ -1135,8 +1187,8 @@ function collectAll(globals) {
     const collection = new Set;
     for (const id of globals) {
         collection.add(id);
-        const chain = fetchChain(id);
-        if (chain in MULTI_EXPORT) {
+        const [chain, multi] = fetchChain(id);
+        if (multi) {
             collection.add(chain);
             for (const node of MULTI_EXPORT[chain]) {
                 collection.add(`${chain}.${node}`);
@@ -1147,7 +1199,10 @@ function collectAll(globals) {
 }
 function fetchChain(id) {
     const index = id.indexOf('?');
-    return index < 0 ? id : id.slice(0, index);
+    const chain_ = index < 0 ? id : id.slice(0, index);
+    return chain_.endsWith('.')
+        ? [chain_.slice(0, -1), '.']
+        : [chain_, ''];
 }
 function fetchFirst(chain) {
     const index = chain.indexOf('.');

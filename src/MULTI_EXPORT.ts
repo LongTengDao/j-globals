@@ -3,7 +3,7 @@ import create from '.Object.create';
 
 export default /*#__PURE__*/ assign(create(null), {
 	
-	'Array': [ /*'prototype',*/ 'from', 'isArray', 'of' ],
+	'Array': [ 'prototype', 'from', 'isArray', 'of' ],
 	'Array.prototype': [
 		'concat',
 		'copyWithin',
@@ -37,9 +37,9 @@ export default /*#__PURE__*/ assign(create(null), {
 		'unshift',
 		'values',
 	],
-	/*'Boolean': [ 'prototype' ],*/
+	'Boolean': [ 'prototype' ],
 	'Boolean.prototype': [ 'toString', 'valueOf' ],
-	'Date': [ /*'prototype',*/ 'UTC', 'now', 'parse' ],
+	'Date': [ 'prototype', 'UTC', 'now', 'parse' ],
 	'Date.prototype': [
 		'getDate',
 		'getDay',
@@ -88,11 +88,11 @@ export default /*#__PURE__*/ assign(create(null), {
 		'toUTCString',
 		'valueOf',
 	],
-	/*'Error': [ 'prototype' ],*/
+	'Error': [ 'prototype' ],
 	'Error.prototype': [ 'toString' ],
-	/*'EvalError': [ 'prototype' ],*/
+	'EvalError': [ 'prototype' ],
 	'EvalError.prototype': [ 'toString' ],
-	/*'Function': [ 'prototype' ],*/
+	'Function': [ 'prototype' ],
 	'Function.prototype': [ 'apply', 'bind', 'call', 'toString' ],
 	'Math': [
 		'E',
@@ -139,7 +139,8 @@ export default /*#__PURE__*/ assign(create(null), {
 		'tanh',
 		'trunc',
 	],
-	'Number': [ /*'prototype',*/
+	'Number': [
+		'prototype',
 		'isFinite',
 		'isInteger',
 		'isNaN',
@@ -156,7 +157,8 @@ export default /*#__PURE__*/ assign(create(null), {
 		'POSITIVE_INFINITY',
 	],
 	'Number.prototype': [ 'toExponential', 'toFixed', 'toLocaleString', 'toPrecision', 'toString', 'valueOf' ],
-	'Object': [ /*'prototype',*/
+	'Object': [
+		'prototype',
 		'assign',
 		'create',
 		'defineProperties',
@@ -180,13 +182,13 @@ export default /*#__PURE__*/ assign(create(null), {
 		'values',
 	],
 	'Object.prototype': [ /*'__defineGetter__', '__defineSetter__', '__lookupGetter__', '__lookupSetter__',*/ 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf' ],
-	/*'RangeError': [ 'prototype' ],*/
+	'RangeError': [ 'prototype' ],
 	'RangeError.prototype': [ 'toString' ],
-	/*'ReferenceError': [ 'prototype' ],*/
+	'ReferenceError': [ 'prototype' ],
 	'ReferenceError.prototype': [ 'toString' ],
-	/*'RegExp': [ 'prototype' ],*/
+	'RegExp': [ 'prototype' ],
 	'RegExp.prototype': [ 'compile', 'exec', 'source', 'test', 'toString' ],
-	'String': [ /*'prototype',*/ 'fromCharCode', 'fromCodePoint', 'raw' ],
+	'String': [ 'prototype', 'fromCharCode', 'fromCodePoint', 'raw' ],
 	'String.prototype': [
 		'charAt',
 		'charCodeAt',
@@ -223,11 +225,11 @@ export default /*#__PURE__*/ assign(create(null), {
 		'trimStart',
 		'valueOf',
 	],
-	/*'SyntaxError': [ 'prototype' ],*/
+	'SyntaxError': [ 'prototype' ],
 	'SyntaxError.prototype': [ 'toString' ],
-	/*'TypeError': [ 'prototype' ],*/
+	'TypeError': [ 'prototype' ],
 	'TypeError.prototype': [ 'toString' ],
-	/*'URIError': [ 'prototype' ],*/
+	'URIError': [ 'prototype' ],
 	'URIError.prototype': [ 'toString' ],
 	
 	'console': [
@@ -275,18 +277,18 @@ export default /*#__PURE__*/ assign(create(null), {
 		'setPrototypeOf',
 	],
 	'Proxy': [ 'revocable' ],
-	/*'Map': [ 'prototype' ],*/
+	'Map': [ 'prototype' ],
 	'Map.prototype': [ 'clear', 'delete', 'entries', 'forEach', 'has', 'keys', 'get', 'set', 'size', 'values' ],
-	/*'Set': [ 'prototype' ],*/
+	'Set': [ 'prototype' ],
 	'Set.prototype': [ 'add', 'clear', 'delete', 'entries', 'forEach', 'has', 'keys', 'size', 'values' ],
-	/*'WeakMap': [ 'prototype' ],*/
+	'WeakMap': [ 'prototype' ],
 	'WeakMap.prototype': [ 'delete', 'has', 'get', 'set' ],
-	/*'WeakSet': [ 'prototype' ],*/
+	'WeakSet': [ 'prototype' ],
 	'WeakSet.prototype': [ 'add', 'delete', 'has' ],
 	
-	'Promise': [ /*'prototype',*/ 'all', 'race', 'reject', 'resolve' ],
+	'Promise': [ 'prototype', 'all', 'race', 'reject', 'resolve' ],
 	'Promise.prototype': [ 'then' , 'catch', 'finally' ],
-	'Symbol': [ /*'prototype',*/
+	'Symbol': [ 'prototype',
 		'asyncIterator',
 		'for',
 		'hasInstance',
@@ -304,7 +306,7 @@ export default /*#__PURE__*/ assign(create(null), {
 		'unscopables',
 	],
 	'Symbol.prototype': [ 'toString', 'valueOf' ],
-	'BigInt': [ /*'prototype',*/ 'asIntN', 'asUintN' ],
+	'BigInt': [ 'prototype', 'asIntN', 'asUintN' ],
 	'BigInt.prototype': [ 'toLocaleString', 'toString', 'valueOf' ],
 	
 	/*
@@ -334,5 +336,39 @@ export default /*#__PURE__*/ assign(create(null), {
 		'setTimeout',
 	],
 	*/
+	
+	'null': [
+		'assign',
+		'create',
+		'defineProperties',
+		'defineProperty',
+		'fromEntries',
+		'getOwnPropertyDescriptor',
+		'getOwnPropertyDescriptors',
+		'PropertyDescriptor',
+	],
+	
+	'throw': [
+		'Error',
+		'EvalError',
+		'RangeError',
+		'ReferenceError',
+		'SyntaxError',
+		'TypeError',
+		'URIError',
+	],
+	
+	'class': [
+		'isBoolean', 'isNumber', 'isString', 'isDate', 'isRegExp',
+		'isMap', 'isSet', 'isWeakMap', 'isWeakSet',
+		'isPromise', 'isSymbol',
+		'isBigInt',
+	],
+	
+	'return': [
+		'true',
+		'false',
+		'sideeffects',
+	],
 	
 }) as { [chain :string] :string[] };

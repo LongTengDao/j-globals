@@ -7,7 +7,6 @@ import of from './INTERNAL/for.of?text';
 
 import TYPEOF from './INTERNAL/typeof?text';
 
-import CLASS from './INTERNAL/class?text';
 import class_isBoolean from './INTERNAL/class.isBoolean?text';
 import class_isNumber from './INTERNAL/class.isNumber?text';
 import class_isString from './INTERNAL/class.isString?text';
@@ -57,7 +56,6 @@ const INTERNAL = /*#__PURE__*/ assign(create(null), {
 	
 	'typeof': TYPEOF,
 	
-	'class': CLASS,
 	'class.isBoolean': class_isBoolean,
 	'class.isNumber': class_isNumber,
 	'class.isString': class_isString,
