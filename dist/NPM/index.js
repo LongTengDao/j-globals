@@ -1,5 +1,7 @@
 ﻿'use strict';
 
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+
 /*!
  * 模块名称：ES
  * 模块功能：ECMAScript 语法相关共享实用程序。从属于“简计划”。
@@ -21,454 +23,457 @@ var IDENTIFIER_NAME_ES5 = /^[\$A-Z_a-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\
 var IDENTIFIER_NAME_ES3 = /^[\$A-Z_a-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u0860-\u086A\u08A0-\u08B4\u08B6-\u08BD\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u09FC\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C60\u0C61\u0C80\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D54-\u0D56\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1C80-\u1C88\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312E\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FEA\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6EF\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AE\uA7B0-\uA7B7\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC][\$0-9A-Z_a-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0300-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u0483-\u0487\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u05D0-\u05EA\u05F0-\u05F2\u0610-\u061A\u0620-\u0669\u066E-\u06D3\u06D5-\u06DC\u06DF-\u06E8\u06EA-\u06FC\u06FF\u0710-\u074A\u074D-\u07B1\u07C0-\u07F5\u07FA\u0800-\u082D\u0840-\u085B\u0860-\u086A\u08A0-\u08B4\u08B6-\u08BD\u08D4-\u08E1\u08E3-\u0963\u0966-\u096F\u0971-\u0983\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BC-\u09C4\u09C7\u09C8\u09CB-\u09CE\u09D7\u09DC\u09DD\u09DF-\u09E3\u09E6-\u09F1\u09FC\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A75\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABC-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AEF\u0AF9-\u0AFF\u0B01-\u0B03\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3C-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B5C\u0B5D\u0B5F-\u0B63\u0B66-\u0B6F\u0B71\u0B82\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD0\u0BD7\u0BE6-\u0BEF\u0C00-\u0C03\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C58-\u0C5A\u0C60-\u0C63\u0C66-\u0C6F\u0C80-\u0C83\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBC-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CDE\u0CE0-\u0CE3\u0CE6-\u0CEF\u0CF1\u0CF2\u0D00-\u0D03\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D44\u0D46-\u0D48\u0D4A-\u0D4E\u0D54-\u0D57\u0D5F-\u0D63\u0D66-\u0D6F\u0D7A-\u0D7F\u0D82\u0D83\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DE6-\u0DEF\u0DF2\u0DF3\u0E01-\u0E3A\u0E40-\u0E4E\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB9\u0EBB-\u0EBD\u0EC0-\u0EC4\u0EC6\u0EC8-\u0ECD\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F18\u0F19\u0F20-\u0F29\u0F35\u0F37\u0F39\u0F3E-\u0F47\u0F49-\u0F6C\u0F71-\u0F84\u0F86-\u0F97\u0F99-\u0FBC\u0FC6\u1000-\u1049\u1050-\u109D\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u135D-\u135F\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1714\u1720-\u1734\u1740-\u1753\u1760-\u176C\u176E-\u1770\u1772\u1773\u1780-\u17D3\u17D7\u17DC\u17DD\u17E0-\u17E9\u180B-\u180D\u1810-\u1819\u1820-\u1877\u1880-\u18AA\u18B0-\u18F5\u1900-\u191E\u1920-\u192B\u1930-\u193B\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19D9\u1A00-\u1A1B\u1A20-\u1A5E\u1A60-\u1A7C\u1A7F-\u1A89\u1A90-\u1A99\u1AA7\u1AB0-\u1ABD\u1B00-\u1B4B\u1B50-\u1B59\u1B6B-\u1B73\u1B80-\u1BF3\u1C00-\u1C37\u1C40-\u1C49\u1C4D-\u1C7D\u1C80-\u1C88\u1CD0-\u1CD2\u1CD4-\u1CF9\u1D00-\u1DF9\u1DFB-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u203F\u2040\u2054\u2071\u207F\u2090-\u209C\u20D0-\u20DC\u20E1\u20E5-\u20F0\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D7F-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2DE0-\u2DFF\u3005-\u3007\u3021-\u302F\u3031-\u3035\u3038-\u303C\u3041-\u3096\u3099\u309A\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312E\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FEA\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66F\uA674-\uA67D\uA67F-\uA6F1\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AE\uA7B0-\uA7B7\uA7F7-\uA827\uA840-\uA873\uA880-\uA8C5\uA8D0-\uA8D9\uA8E0-\uA8F7\uA8FB\uA8FD\uA900-\uA92D\uA930-\uA953\uA960-\uA97C\uA980-\uA9C0\uA9CF-\uA9D9\uA9E0-\uA9FE\uAA00-\uAA36\uAA40-\uAA4D\uAA50-\uAA59\uAA60-\uAA76\uAA7A-\uAAC2\uAADB-\uAADD\uAAE0-\uAAEF\uAAF2-\uAAF6\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABEA\uABEC\uABED\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE00-\uFE0F\uFE20-\uFE2F\uFE33\uFE34\uFE4D-\uFE4F\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF3F\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]*$/;
 
 var Cf = /[\xAD\u0600-\u0605\u061C\u06DD\u070F\u08E2\u180E\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u206F\uFEFF\uFFF9-\uFFFB]|\uD804\uDCBD|\uD82F[\uDCA0-\uDCA3]|\uD834[\uDD73-\uDD7A]|\uDB40[\uDC01\uDC20-\uDC7F]/g;
+
 var CANT_IN_SINGLE_QUOTE = /[\n\r'\\\u2028\u2029]/g;
-function staticallyEscape(cant_in_single_quote) {
-    return CHAR_TO_ESCAPED[cant_in_single_quote];
+function staticallyEscape (cant_in_single_quote                              )         {
+	return CHAR_TO_ESCAPED[cant_in_single_quote];
 }
+
 var CHAR_TO_ESCAPED = { '\n': '\\n', '\r': '\\r', '\'': '\\\'', '\\': '\\\\', '\u2028': '\\u2028', '\u2029': '\\u2029' };
-function dynamicallyEscape(char_in_cf) {
-    if (char_in_cf.length > 1) {
-        return dynamicallyEscape(char_in_cf.charAt(0)) + dynamicallyEscape(char_in_cf.charAt(1));
-    }
-    var hex = char_in_cf.charCodeAt(0).toString(16).toUpperCase();
-    switch (hex.length) {
-        case 4:
-            return '\\u' + hex;
-        case 3:
-            return '\\u0' + hex;
-        case 2:
-            return '\\x' + hex;
-    }
-    return '\\x0' + hex;
+function dynamicallyEscape (char_in_cf        )         {
+	if ( char_in_cf.length>1 ) {
+		return dynamicallyEscape(char_in_cf.charAt(0))+dynamicallyEscape(char_in_cf.charAt(1));
+	}
+	var hex         = char_in_cf.charCodeAt(0).toString(16).toUpperCase();
+	switch ( hex.length ) {
+		case 4:
+			return '\\u'+hex;
+		case 3:
+			return '\\u0'+hex;
+		case 2:
+			return '\\x'+hex;
+	}
+	return '\\x0'+hex;
 }
-function StringLiteral(string) {
-    return '\''
-        + string
-            .replace(CANT_IN_SINGLE_QUOTE, staticallyEscape)
-            .replace(Cf, dynamicallyEscape)
-        + '\'';
+
+                                           
+
+function StringLiteral (string        )         {
+	return '\''
+		+string
+		.replace(CANT_IN_SINGLE_QUOTE, staticallyEscape            )
+		.replace(Cf, dynamicallyEscape            )
+		+'\'';
 }
 
 var LIKE_SAFE_INTEGER = /^(?:0|[1-9]\d{0,15})$/;
-function isIntegerIndex(key) {
-    return LIKE_SAFE_INTEGER.test(key) && key <= 9007199254740991;
+function isIntegerIndex (key        )          {
+	return LIKE_SAFE_INTEGER.test(key) && key       <=9007199254740991;
 }
-function isReservedWord(name, ES) {
-    return ES < 0
-        ? RESERVED_WORD_ES3.test(name)
-        : RESERVED_WORD_ESM.test(name);
+function isReservedWord (name        , ES         )          {
+	return ES <0
+		? RESERVED_WORD_ES3.test(name)
+		: RESERVED_WORD_ESM.test(name);
 }
-function isIdentifierName(name, ES) {
-    if (ES) {
-        if (ES >= 6) {
-            return IDENTIFIER_NAME_ES6.test(name);
-        }
-        if (ES >= 5) {
-            return IDENTIFIER_NAME_ES5.test(name);
-        }
-    }
-    return IDENTIFIER_NAME_ES3.test(name);
+function isIdentifierName (name        , ES         )          {
+	if ( ES ) {
+		if ( ES>=6 ) { return IDENTIFIER_NAME_ES6.test(name); }
+		if ( ES>=5 ) { return IDENTIFIER_NAME_ES5.test(name); }
+	}
+	return IDENTIFIER_NAME_ES3.test(name);
 }
-function PropertyAccessor(key, ES) {
-    if (isIdentifierName(key, ES)) {
-        if (ES >= 5 || !RESERVED_WORD_ES3.test(key)) {
-            return '.' + key;
-        }
-    }
-    else {
-        if (isIntegerIndex(key)) {
-            return '[' + key + ']';
-        }
-    }
-    return '[' + StringLiteral(key) + ']';
+function PropertyAccessor (key        , ES         )         {
+	if ( isIdentifierName(key, ES) ) { if ( ES >=5 || !RESERVED_WORD_ES3.test(key) ) { return '.'+key; } }
+	else { if ( isIntegerIndex(key) ) { return '['+key+']'; } }
+	return '['+StringLiteral(key)+']';
 }
-function PropertyAccessors(keys, ES) {
-    var propertyAccessors = '';
-    for (var length = keys.length, index = 0; index < length; ++index) {
-        propertyAccessors += PropertyAccessor(keys[index], ES);
-    }
-    return propertyAccessors;
+function PropertyAccessors (keys          , ES         )         {
+	var propertyAccessors         = '';
+	for ( var length = keys.length, index = 0; index<length; ++index ) {
+		propertyAccessors += PropertyAccessor(keys[index], ES);
+	}
+	return propertyAccessors;
 }
 
 /*¡ ES */
 
-const version = '5.0.0';
+const version = '5.1.0';
 
 const assign = Object.assign;
 
 const create = Object.create;
 
 const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
-    'Array': ['prototype', 'from', 'isArray', 'of'],
-    'Array.prototype': [
-        'concat',
-        'copyWithin',
-        'every',
-        'entries',
-        'fill',
-        'find',
-        'findIndex',
-        'filter',
-        'flat',
-        'flatMap',
-        'forEach',
-        'includes',
-        'indexOf',
-        'join',
-        'keys',
-        'lastIndexOf',
-        'map',
-        'pop',
-        'push',
-        'reduce',
-        'reduceRight',
-        'reverse',
-        'shift',
-        'slice',
-        'some',
-        'sort',
-        'splice',
-        'toLocaleString',
-        'toString',
-        'unshift',
-        'values',
-    ],
-    'Boolean': ['prototype'],
-    'Boolean.prototype': ['toString', 'valueOf'],
-    'Date': ['prototype', 'UTC', 'now', 'parse'],
-    'Date.prototype': [
-        'getDate',
-        'getDay',
-        'getFullYear',
-        'getHours',
-        'getMilliseconds',
-        'getMinutes',
-        'getMonth',
-        'getSeconds',
-        'getTime',
-        'getTimezoneOffset',
-        'getUTCDate',
-        'getUTCDay',
-        'getUTCFullYear',
-        'getUTCHours',
-        'getUTCMilliseconds',
-        'getUTCMinutes',
-        'getUTCMonth',
-        'getUTCSeconds',
-        /*'getYear',*/
-        'setDate',
-        'setFullYear',
-        'setHours',
-        'setMilliseconds',
-        'setMinutes',
-        'setMonth',
-        'setSeconds',
-        'setTime',
-        'setUTCDate',
-        'setUTCFullYear',
-        'setUTCHours',
-        'setUTCMilliseconds',
-        'setUTCMinutes',
-        'setUTCMonth',
-        'setUTCSeconds',
-        /*'setYear',*/
-        'toDateString',
-        /*'toGMTString',*/
-        'toISOString',
-        'toJSON',
-        'toLocaleDateString',
-        'toLocaleString',
-        'toLocaleTimeString',
-        'toString',
-        'toTimeString',
-        'toUTCString',
-        'valueOf',
-    ],
-    'Error': ['prototype'],
-    'Error.prototype': ['toString'],
-    'EvalError': ['prototype'],
-    'EvalError.prototype': ['toString'],
-    'Function': ['prototype'],
-    'Function.prototype': ['apply', 'bind', 'call', 'toString'],
-    'Math': [
-        'E',
-        'LN10',
-        'LN2',
-        'LOG10E',
-        'LOG2E',
-        'PI',
-        'SQRT1_2',
-        'SQRT2',
-        'abs',
-        'acos',
-        'acosh',
-        'asin',
-        'asinh',
-        'atan',
-        'atan2',
-        'atanh',
-        'cbrt',
-        'ceil',
-        'clz32',
-        'cos',
-        'cosh',
-        'exp',
-        'expm1',
-        'floor',
-        'fround',
-        'hypot',
-        'imul',
-        'log',
-        'log10',
-        'log1p',
-        'log2',
-        'max',
-        'min',
-        'pow',
-        'random',
-        'round',
-        'sign',
-        'sin',
-        'sinh',
-        'sqrt',
-        'tan',
-        'tanh',
-        'trunc',
-    ],
-    'Number': [
-        'prototype',
-        'isFinite',
-        'isInteger',
-        'isNaN',
-        'isSafeInteger',
-        'parseFloat',
-        'parseInt',
-        'EPSILON',
-        'MAX_SAFE_INTEGER',
-        'MAX_VALUE',
-        'MIN_SAFE_INTEGER',
-        'MIN_VALUE',
-        'NEGATIVE_INFINITY',
-        'NaN',
-        'POSITIVE_INFINITY',
-    ],
-    'Number.prototype': ['toExponential', 'toFixed', 'toLocaleString', 'toPrecision', 'toString', 'valueOf'],
-    'Object': [
-        'prototype',
-        'assign',
-        'create',
-        'defineProperties',
-        'defineProperty',
-        'entries',
-        'freeze',
-        'fromEntries',
-        'getOwnPropertyDescriptor',
-        'getOwnPropertyDescriptors',
-        'getOwnPropertyNames',
-        'getOwnPropertySymbols',
-        'getPrototypeOf',
-        'is',
-        'isExtensible',
-        'isFrozen',
-        'isSealed',
-        'keys',
-        'preventExtensions',
-        'seal',
-        'setPrototypeOf',
-        'values',
-    ],
-    'Object.prototype': [/*'__defineGetter__', '__defineSetter__', '__lookupGetter__', '__lookupSetter__',*/ 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf'],
-    'RangeError': ['prototype'],
-    'RangeError.prototype': ['toString'],
-    'ReferenceError': ['prototype'],
-    'ReferenceError.prototype': ['toString'],
-    'RegExp': ['prototype'],
-    'RegExp.prototype': ['compile', 'exec', 'source', 'test', 'toString'],
-    'String': ['prototype', 'fromCharCode', 'fromCodePoint', 'raw'],
-    'String.prototype': [
-        'charAt',
-        'charCodeAt',
-        'codePointAt',
-        'concat',
-        'endsWith',
-        'includes',
-        'indexOf',
-        'lastIndexOf',
-        'localeCompare',
-        'match',
-        'matchAll',
-        'normalize',
-        'padEnd',
-        'padStart',
-        'repeat',
-        'replace',
-        'search',
-        'slice',
-        'split',
-        'startsWith',
-        'substr',
-        'substring',
-        'sup',
-        'toLocaleLowerCase',
-        'toLocaleUpperCase',
-        'toLowerCase',
-        'toString',
-        'toUpperCase',
-        'trim',
-        'trimEnd',
-        'trimLeft',
-        'trimRight',
-        'trimStart',
-        'valueOf',
-    ],
-    'SyntaxError': ['prototype'],
-    'SyntaxError.prototype': ['toString'],
-    'TypeError': ['prototype'],
-    'TypeError.prototype': ['toString'],
-    'URIError': ['prototype'],
-    'URIError.prototype': ['toString'],
-    'console': [
-        'assert',
-        'clear',
-        /*'context',*/
-        'count',
-        'countReset',
-        'debug',
-        'dir',
-        'dirxml',
-        'error',
-        /*'_exception',*/
-        'group',
-        'groupCollapsed',
-        'groupEnd',
-        'info',
-        'log',
-        'memory',
-        'profile',
-        'profileEnd',
-        'table',
-        'time',
-        'timeEnd',
-        'timeLog',
-        'timeStamp',
-        'trace',
-        'warn',
-    ],
-    'JSON': ['parse', 'stringify'],
-    'Reflect': [
-        'apply',
-        'construct',
-        'defineProperty',
-        'deleteProperty',
-        'get',
-        'getOwnPropertyDescriptor',
-        'getPrototypeOf',
-        'has',
-        'isExtensible',
-        'ownKeys',
-        'preventExtensions',
-        'set',
-        'setPrototypeOf',
-    ],
-    'Proxy': ['revocable'],
-    'Map': ['prototype'],
-    'Map.prototype': ['clear', 'delete', 'entries', 'forEach', 'has', 'keys', 'get', 'set', 'size', 'values'],
-    'Set': ['prototype'],
-    'Set.prototype': ['add', 'clear', 'delete', 'entries', 'forEach', 'has', 'keys', 'size', 'values'],
-    'WeakMap': ['prototype'],
-    'WeakMap.prototype': ['delete', 'has', 'get', 'set'],
-    'WeakSet': ['prototype'],
-    'WeakSet.prototype': ['add', 'delete', 'has'],
-    'Promise': ['prototype', 'all', 'race', 'reject', 'resolve'],
-    'Promise.prototype': ['then', 'catch', 'finally'],
-    'Symbol': ['prototype',
-        'asyncIterator',
-        'for',
-        'hasInstance',
-        'isConcatSpreadable',
-        'iterator',
-        'keyFor',
-        'match',
-        'matchAll',
-        'replace',
-        'search',
-        'species',
-        'split',
-        'toPrimitive',
-        'toStringTag',
-        'unscopables',
-    ],
-    'Symbol.prototype': ['toString', 'valueOf'],
-    'BigInt': ['prototype', 'asIntN', 'asUintN'],
-    'BigInt.prototype': ['toLocaleString', 'toString', 'valueOf'],
-    /*
-    'globalThis': [// SharedArrayBuffer ArrayBuffer **Array DataView Intl?
-        'parseFloat',
-        'parseInt',
-        'Infinity',
-        'NaN',
-        'undefined',
-        'decodeURI',
-        'decodeURIComponent',
-        'encodeURI',
-        'encodeURIComponent',
-        'escape',
-        'unescape',
-        'isFinite',
-        'isNaN',
-        'process',
-        'Buffer',
-        'cancelAnimationFrame',
-        'clearImmediate',
-        'clearInterval',
-        'clearTimeout',
-        'requestAnimationFrame',
-        'setImmediate',
-        'setInterval',
-        'setTimeout',
-    ],
-    */
-    'null': [
-        'assign',
-        'create',
-        'defineProperties',
-        'defineProperty',
-        'fromEntries',
-        'getOwnPropertyDescriptor',
-        'getOwnPropertyDescriptors',
-        'PropertyDescriptor',
-    ],
-    'throw': [
-        'Error',
-        'EvalError',
-        'RangeError',
-        'ReferenceError',
-        'SyntaxError',
-        'TypeError',
-        'URIError',
-    ],
-    'class': [
-        'isBoolean', 'isNumber', 'isString', 'isDate', 'isRegExp',
-        'isMap', 'isSet', 'isWeakMap', 'isWeakSet',
-        'isPromise', 'isSymbol',
-        'isBigInt',
-    ],
-    'return': [
-        'true',
-        'false',
-        'sideeffects',
-    ],
-});
+	
+	'Array': [ 'prototype', 'from', 'isArray', 'of' ],
+	'Array.prototype': [
+		'concat',
+		'copyWithin',
+		'every',
+		'entries',
+		'fill',
+		'find',
+		'findIndex',
+		'filter',
+		'flat',
+		'flatMap',
+		'forEach',
+		'includes',
+		'indexOf',
+		'join',
+		'keys',
+		'lastIndexOf',
+		'map',
+		'pop',
+		'push',
+		'reduce',
+		'reduceRight',
+		'reverse',
+		'shift',
+		'slice',
+		'some',
+		'sort',
+		'splice',
+		'toLocaleString',
+		'toString',
+		'unshift',
+		'values',
+	],
+	'Boolean': [ 'prototype' ],
+	'Boolean.prototype': [ 'toString', 'valueOf' ],
+	'Date': [ 'prototype', 'UTC', 'now', 'parse' ],
+	'Date.prototype': [
+		'getDate',
+		'getDay',
+		'getFullYear',
+		'getHours',
+		'getMilliseconds',
+		'getMinutes',
+		'getMonth',
+		'getSeconds',
+		'getTime',
+		'getTimezoneOffset',
+		'getUTCDate',
+		'getUTCDay',
+		'getUTCFullYear',
+		'getUTCHours',
+		'getUTCMilliseconds',
+		'getUTCMinutes',
+		'getUTCMonth',
+		'getUTCSeconds',
+		/*'getYear',*/
+		'setDate',
+		'setFullYear',
+		'setHours',
+		'setMilliseconds',
+		'setMinutes',
+		'setMonth',
+		'setSeconds',
+		'setTime',
+		'setUTCDate',
+		'setUTCFullYear',
+		'setUTCHours',
+		'setUTCMilliseconds',
+		'setUTCMinutes',
+		'setUTCMonth',
+		'setUTCSeconds',
+		/*'setYear',*/
+		'toDateString',
+		/*'toGMTString',*/
+		'toISOString',
+		'toJSON',
+		'toLocaleDateString',
+		'toLocaleString',
+		'toLocaleTimeString',
+		'toString',
+		'toTimeString',
+		'toUTCString',
+		'valueOf',
+	],
+	'Error': [ 'prototype' ],
+	'Error.prototype': [ 'toString' ],
+	'EvalError': [ 'prototype' ],
+	'EvalError.prototype': [ 'toString' ],
+	'Function': [ 'prototype' ],
+	'Function.prototype': [ 'apply', 'bind', 'call', 'toString' ],
+	'Math': [
+		'E',
+		'LN10',
+		'LN2',
+		'LOG10E',
+		'LOG2E',
+		'PI',
+		'SQRT1_2',
+		'SQRT2',
+		'abs',
+		'acos',
+		'acosh',
+		'asin',
+		'asinh',
+		'atan',
+		'atan2',
+		'atanh',
+		'cbrt',
+		'ceil',
+		'clz32',
+		'cos',
+		'cosh',
+		'exp',
+		'expm1',
+		'floor',
+		'fround',
+		'hypot',
+		'imul',
+		'log',
+		'log10',
+		'log1p',
+		'log2',
+		'max',
+		'min',
+		'pow',
+		'random',
+		'round',
+		'sign',
+		'sin',
+		'sinh',
+		'sqrt',
+		'tan',
+		'tanh',
+		'trunc',
+	],
+	'Number': [
+		'prototype',
+		'isFinite',
+		'isInteger',
+		'isNaN',
+		'isSafeInteger',
+		'parseFloat',
+		'parseInt',
+		'EPSILON',
+		'MAX_SAFE_INTEGER',
+		'MAX_VALUE',
+		'MIN_SAFE_INTEGER',
+		'MIN_VALUE',
+		'NEGATIVE_INFINITY',
+		'NaN',
+		'POSITIVE_INFINITY',
+	],
+	'Number.prototype': [ 'toExponential', 'toFixed', 'toLocaleString', 'toPrecision', 'toString', 'valueOf' ],
+	'Object': [
+		'prototype',
+		'assign',
+		'create',
+		'defineProperties',
+		'defineProperty',
+		'entries',
+		'freeze',
+		'fromEntries',
+		'getOwnPropertyDescriptor',
+		'getOwnPropertyDescriptors',
+		'getOwnPropertyNames',
+		'getOwnPropertySymbols',
+		'getPrototypeOf',
+		'is',
+		'isExtensible',
+		'isFrozen',
+		'isSealed',
+		'keys',
+		'preventExtensions',
+		'seal',
+		'setPrototypeOf',
+		'values',
+	],
+	'Object.prototype': [ /*'__defineGetter__', '__defineSetter__', '__lookupGetter__', '__lookupSetter__',*/ 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf' ],
+	'RangeError': [ 'prototype' ],
+	'RangeError.prototype': [ 'toString' ],
+	'ReferenceError': [ 'prototype' ],
+	'ReferenceError.prototype': [ 'toString' ],
+	'RegExp': [ 'prototype' ],
+	'RegExp.prototype': [ 'compile', 'exec', 'source', 'test', 'toString' ],
+	'String': [ 'prototype', 'fromCharCode', 'fromCodePoint', 'raw' ],
+	'String.prototype': [
+		'charAt',
+		'charCodeAt',
+		'codePointAt',
+		'concat',
+		'endsWith',
+		'includes',
+		'indexOf',
+		'lastIndexOf',
+		'localeCompare',
+		'match',
+		'matchAll',
+		'normalize',
+		'padEnd',
+		'padStart',
+		'repeat',
+		'replace',
+		'search',
+		'slice',
+		'split',
+		'startsWith',
+		'substr',
+		'substring',
+		'sup',
+		'toLocaleLowerCase',
+		'toLocaleUpperCase',
+		'toLowerCase',
+		'toString',
+		'toUpperCase',
+		'trim',
+		'trimEnd',
+		'trimLeft',
+		'trimRight',
+		'trimStart',
+		'valueOf',
+	],
+	'SyntaxError': [ 'prototype' ],
+	'SyntaxError.prototype': [ 'toString' ],
+	'TypeError': [ 'prototype' ],
+	'TypeError.prototype': [ 'toString' ],
+	'URIError': [ 'prototype' ],
+	'URIError.prototype': [ 'toString' ],
+	
+	'console': [
+		'assert',
+		'clear',
+		/*'context',*/
+		'count',
+		'countReset',
+		'debug',
+		'dir',//
+		'dirxml',//
+		'error',
+		/*'_exception',*/
+		'group',
+		'groupCollapsed',
+		'groupEnd',
+		'info',
+		'log',
+		'memory',//
+		'profile',//
+		'profileEnd',//
+		'table',
+		'time',
+		'timeEnd',
+		'timeLog',
+		'timeStamp',//
+		'trace',
+		'warn',
+	],
+	'JSON': [ 'parse', 'stringify' ],
+	
+	'Reflect': [
+		'apply',
+		'construct',
+		'defineProperty',
+		'deleteProperty',
+		'get',
+		'getOwnPropertyDescriptor',
+		'getPrototypeOf',
+		'has',
+		'isExtensible',
+		'ownKeys',
+		'preventExtensions',
+		'set',
+		'setPrototypeOf',
+	],
+	'Proxy': [ 'revocable' ],
+	'Map': [ 'prototype' ],
+	'Map.prototype': [ 'clear', 'delete', 'entries', 'forEach', 'has', 'keys', 'get', 'set', 'size', 'values' ],
+	'Set': [ 'prototype' ],
+	'Set.prototype': [ 'add', 'clear', 'delete', 'entries', 'forEach', 'has', 'keys', 'size', 'values' ],
+	'WeakMap': [ 'prototype' ],
+	'WeakMap.prototype': [ 'delete', 'has', 'get', 'set' ],
+	'WeakSet': [ 'prototype' ],
+	'WeakSet.prototype': [ 'add', 'delete', 'has' ],
+	
+	'Promise': [ 'prototype', 'all', 'race', 'reject', 'resolve' ],
+	'Promise.prototype': [ 'then' , 'catch', 'finally' ],
+	'Symbol': [ 'prototype',
+		'asyncIterator',
+		'for',
+		'hasInstance',
+		'isConcatSpreadable',
+		'iterator',
+		'keyFor',
+		'match',
+		'matchAll',
+		'replace',
+		'search',
+		'species',
+		'split',
+		'toPrimitive',
+		'toStringTag',
+		'unscopables',
+	],
+	'Symbol.prototype': [ 'toString', 'valueOf' ],
+	'BigInt': [ 'prototype', 'asIntN', 'asUintN' ],
+	'BigInt.prototype': [ 'toLocaleString', 'toString', 'valueOf' ],
+	
+	/*
+	'globalThis': [// SharedArrayBuffer ArrayBuffer **Array DataView Intl?
+		'parseFloat',
+		'parseInt',
+		'Infinity',
+		'NaN',
+		'undefined',
+		'decodeURI',
+		'decodeURIComponent',
+		'encodeURI',
+		'encodeURIComponent',
+		'escape',
+		'unescape',
+		'isFinite',
+		'isNaN',
+		'process',
+		'Buffer',
+		'cancelAnimationFrame',
+		'clearImmediate',
+		'clearInterval',
+		'clearTimeout',
+		'requestAnimationFrame',
+		'setImmediate',
+		'setInterval',
+		'setTimeout',
+	],
+	*/
+	
+	'null': [
+		'assign',
+		'create',
+		'defineProperties',
+		'defineProperty',
+		'fromEntries',
+		'getOwnPropertyDescriptor',
+		'getOwnPropertyDescriptors',
+		'PropertyDescriptor',
+	],
+	
+	'throw': [
+		'Error',
+		'EvalError',
+		'RangeError',
+		'ReferenceError',
+		'SyntaxError',
+		'TypeError',
+		'URIError',
+	],
+	
+	'class': [
+		'isBoolean', 'isNumber', 'isString', 'isDate', 'isRegExp',
+		'isMap', 'isSet', 'isWeakMap', 'isWeakSet',
+		'isPromise', 'isSymbol',
+		'isBigInt',
+	],
+	
+	'return': [
+		'true',
+		'false',
+		'sideeffects',
+	],
+	
+})                                 ;
 
-const OPTIONS = 
-/*#__PURE__*/
-assign(create(null), {
-    bom: false,
-    tab: '\t',
-    eol: '\n',
-    pre: '.',
-    sur: '',
-});
+const OPTIONS          =
+	/*#__PURE__*/
+	assign(create(null), {
+		bom: false,
+		tab: '\t',
+		eol: '\n',
+		pre: '.',
+		sur: '',
+	});
 
 const Default = 'import create from \'.Object.create\';\nimport assign from \'.Object.assign\';\nimport hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nimport toStringTag from \'.Symbol.toStringTag?\';\nimport defineProperty from \'.Object.defineProperty\';\nimport freeze from \'.Object.freeze\';\nimport seal from \'.Object.seal\';\nexport default (\n	/*! j-globals: default (internal) */\n	function Default (exports, addOnOrigin) {\n		return /*#__PURE__*/ function Module (exports, addOnOrigin) {\n			if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(null); }\n			if ( assign ) { assign(exports, addOnOrigin); }\n			else { for ( var key in addOnOrigin ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } } }\n			exports[\'default\'] = exports;\n			typeof exports===\'function\' && exports.prototype && seal(exports.prototype);\n			if ( toStringTag ) {\n				var descriptor = create(null);\n				descriptor.value = \'Module\';\n				defineProperty(exports, toStringTag, descriptor);\n			}\n			return freeze(exports);\n		}(exports, addOnOrigin);\n	}\n	/*¡ j-globals: default (internal) */\n);';
 
@@ -547,45 +552,53 @@ const throwURIError = 'export default (\n	/*! j-globals: throw.URIError (interna
 const NATIVE = 'import floor from \'.Math.floor\';\nimport IsArray from \'.Array.isArray?=\';\nimport Infinity from \'.Infinity\';\nimport Symbol_species from \'.Symbol.species?\';\nimport undefined from \'.undefined\';\nimport toString from \'.Object.prototype.toString\';\nimport Object_prototype from \'.Object.prototype\';\nimport Array_prototype from \'.Array.prototype\';\nimport fromCharCode from \'.String.fromCharCode\';\nimport ArrayCreate from \'.Array\';\n\n//                 18446744073709551615 // 0xFFFFFFFFFFFFFFFF //                                                         // 0b1777777777777777777777 // 2**64-1\n//                  9223372036854775807 // 0x7FFFFFFFFFFFFFFF //                                                         // 0b0777777777777777777777 // 2**63-1\nvar MAX_SAFE_INTEGER = 9007199254740991;// 0x001FFFFFFFFFFFFF // 0b11111111111111111111111111111111111111111111111111111 // 0o0000377777777777777777 // 2**53-1\nvar MAX_ARRAY_LENGTH =       4294967295;// 0x00000000FFFFFFFF // 0b00000000000000000000011111111111111111111111111111111 // 0o0000000000037777777777 // 2**32-1\n//                                      // 0x000000003FFFFFFF // 0b00000000000000000000000111111111111111111111111111111 // 0o0000000000007777777777 // 2**30-1\n//var MAX_STRING_LENGTH =    1073741799;// 0x000000003FFFFFE7 // 0b00000000000000000000000111111111111111111111111100111 // 0o0000000000007777777747 // 2**30-1-24\nvar LIKE_SAFE_INTEGER = /^(?:0|[1-9]\\d{0,15})$/;\nvar LIKE_ARRAY_INDEX = /^(?:0|[1-4]\\d{0,9}|[5-9]\\d{0,8})$/;\nfunction isIntegerIndex (key) {\n	return LIKE_SAFE_INTEGER.test(key) && key<=MAX_SAFE_INTEGER;\n}\nfunction isArrayIndex (key) {\n	return LIKE_ARRAY_INDEX.test(key) && key<MAX_ARRAY_LENGTH;\n}\nexport { isArrayIndex as isIndex };\n\nexport function ToObject (argument, _message) { return Object(/*#__PURE__*/ RequireObjectCoercible(argument, _message)); }\nexport function ToString (argument) { return \'\'+argument; }\nexport function ToNumber (argument) { return +argument; }// Number(): bigint?\nexport function ToInteger (argument) {\n	argument = ToNumber(argument);\n	if ( argument!==argument ) { return 0; }\n	if ( argument===0 || argument===Infinity || argument===-Infinity ) { return argument; }\n	return argument>0 ? floor(argument) : -floor(-argument);\n}\nexport function RequireObjectCoercible (argument, _message) {\n	if ( argument==null ) { throw TypeError(_message); }\n	return argument;\n}\nexport function UTF16Decode (lead, trail) { return ( lead-0xD800 )*1024+( trail-0xDC00 )+0x10000; }\n\nexport function UTF16Encoding (cp) {\n	if ( cp<=0xFFFF ) { return fromCharCode(cp); }\n	cp -= 0x10000;\n	return fromCharCode(floor(cp/1024)+0xD800, cp%1024+0xDC00);\n}\n\nexport function ToLength (argument) {// [v] ES 6: start number only could has use in ES 6 class species\n	var len = ToNumber(argument);\n	if ( len>0 ) { return len>MAX_SAFE_INTEGER ? MAX_SAFE_INTEGER : floor(len); }\n	return 0;\n}\nexport function ToUint32 (argument) {// ES 5\n	return argument>>>0;\n	//var number = ToNumber(argument);\n	//if ( !number || number===Infinity || number===-Infinity ) { return 0; }\n	//var posInt = number>0 ? floor(number) : -floor(-number);\n	//var int32bit = posInt%4294967296;// 2**32 // MAX_ARRAY_LENGTH+1\n	//return int32bit<0 ? int32bit+4294967296 : int32bit;\n}\n\nfunction IsConstructor (argument) { return typeof argument===\'function\'; }\n//function notThisRealm_and_isBuiltInArrayConstructorOfItsRealm (originalArray_constructor) { }\nexport var TheUndefinedType = 1;\nexport var TheNullType = 2;\nexport var TheBooleanType = 3;\nexport var TheStringType = 4;\nexport var TheSymbolType = 5;\nexport var TheNumberType = 6;\nexport var TheObjectType = 7;\nexport var TheBigIntType = 0;\nexport function Type (argument) {\n	switch ( typeof argument ) {\n		case \'function\':\n			return TheObjectType;\n		case \'object\':\n			return argument ? TheObjectType : TheNullType;// null\n		case \'undefined\':\n			return argument===undefined ? TheUndefinedType : TheObjectType;// document.all\n		case \'boolean\':\n			return TheBooleanType;\n		case \'string\':\n			return TheStringType;\n		case \'symbol\':\n			return TheSymbolType;\n		case \'number\':\n			return TheNumberType;\n		case \'bigint\':\n			return TheBigIntType;\n		default:\n			return TheObjectType;// unknown date ...\n	}\n}\nexport function ArraySpeciesCreate (originalArray, length) {\n	var C;\n	if ( IsArray(originalArray) ) {\n		C = originalArray.constructor;\n		//if ( IsConstructor(C) && notThisRealm_and_isBuiltInArrayConstructorOfItsRealm(C) ) { C = undefined; }\n		if ( Type(C)===TheObjectType ) {\n			C = Symbol_species===undefined ? undefined : C[Symbol_species];\n			if ( C===null ) { C = undefined; }\n		}\n	}\n	if ( C===undefined ) { return ArrayCreate(length); }\n	if ( !IsConstructor(C) ) { throw TypeError(\'object.constructor[Symbol.species] is not a constructor\'); }\n	return new C(length);\n}\n\nvar descriptor = Object.create && /*#__PURE__*/ function () {\n	var descriptor = Object.create(null);\n	descriptor.value = undefined;\n	descriptor.writable = true;\n	descriptor.enumerable = true;\n	descriptor.configurable = true;\n	return descriptor;\n}();\nvar defineProperty = Object.defineProperty;\nexport var defineIndexValue = Object.create\n	? function CreateDataProperty (array, index, value) {\n		index in Array_prototype && defineProperty(array, index, descriptor);\n		array[index] = value;\n	}\n	: function CreateDataProperty (array, index, value) {\n		array[index] = value;\n	};\nexport var defineKeyValue = Object.create\n	? typeof Symbol===\'function\'\n		? function CreateDataProperty (object, key, value) {\n			if ( typeof key!==\'symbol\' ) { key = \'\'+key; }\n			key in Object_prototype && defineProperty(object, key, descriptor);\n			object[key] = value;\n		}\n		: function CreateDataProperty (object, key, value) {\n			key = \'\'+key;\n			key in Object_prototype && defineProperty(object, key, descriptor);\n			object[key] = value;\n		}\n	: function CreateDataProperty (object, key, value) {\n		object[key] = value;\n	};\n\nexport var createBound = function () { \'use strict\'; return this===undefined; }()\n	? function createBound (fn, thisArg) {\n		if ( thisArg==null ) { throw TypeError(\'undefined or null cannot become this in ES3\'); }\n		return function bound () {\n			return apply.call(fn, thisArg, arguments);\n		};\n	}\n	: function createBound (fn, thisArg) {\n		return thisArg===undefined ? fn : function bound () {\n			return apply.call(fn, thisArg, arguments);\n		};\n	};\nexport function assertArrayFn (fn) {\n	switch ( typeof fn ) {\n		case \'function\':\n			return;\n		case \'object\':\n			throw TypeError(( fn ? toString.call(fn) : fn )+\' is not a function\');\n		default:\n			throw TypeError(String(fn)+\' is not a function\');\n	}\n}\n\nexport function FlattenIntoArray (target, source, sourceLen, start, depth, mapperFunction) {\n	var targetIndex = start;\n	for ( var sourceIndex = 0; sourceIndex<sourceLen; ++sourceIndex ) {\n		if ( sourceIndex in source ) {\n			var element = source[sourceIndex];\n			if ( mapperFunction ) { element = mapperFunction(element, sourceIndex, source); }\n			if ( depth>0 && IsArray(element) ) {\n				targetIndex = FlattenIntoArray(target, element, ToLength(element.length), targetIndex, depth-1);\n			}\n			else {\n				if ( targetIndex>=9007199254740991 ) { throw TypeError(\'Invalid index\'); }// Number.MAX_SAFE_INTEGER // 2**53-1\n				defineIndexValue(target, targetIndex, element);\n				++targetIndex;\n			}\n		}\n	}\n	return targetIndex;\n}\n';
 
 const INTERNAL = /*#__PURE__*/ assign(create(null), {
-    'native': NATIVE,
-    'default': Default,
-    'private': Private,
-    'for.of': of,
-    'typeof': TYPEOF,
-    'class.isBoolean': class_isBoolean,
-    'class.isNumber': class_isNumber,
-    'class.isString': class_isString,
-    'class.isDate': class_isDate,
-    'class.isRegExp': class_isRegExp,
-    'class.isMap': class_isMap,
-    'class.isSet': class_isSet,
-    'class.isWeakMap': class_isWeakMap,
-    'class.isWeakSet': class_isWeakSet,
-    'class.isPromise': class_isPromise,
-    'class.isSymbol': class_isSymbol,
-    'class.isBigInt': class_isBigInt,
-    'null': NULL,
-    'null.assign': NULL_assign,
-    'null.create': NULL_create,
-    'null.defineProperties': NULL_defineProperties,
-    'null.defineProperty': NULL_defineProperty,
-    'null.getOwnPropertyDescriptor': NULL_getOwnPropertyDescriptor,
-    'null.getOwnPropertyDescriptors': NULL_getOwnPropertyDescriptors,
-    'null.fromEntries': NULL_fromEntries,
-    'null.PropertyDescriptor': NULL_PropertyDescriptor,
-    'return': RETURN,
-    'return.true': return_true,
-    'return.false': return_false,
-    'return.sideeffects': return_sideeffects,
-    'throw.Error': throwError,
-    'throw.EvalError': throwEvalError,
-    'throw': THROW,
-    'throw.RangeError': throwRangeError,
-    'throw.ReferenceError': throwReferenceError,
-    'throw.SyntaxError': throwSyntaxError,
-    'throw.TypeError': throwTypeError,
-    'throw.URIError': throwURIError,
-});
+	
+	'native': NATIVE,
+	
+	'default': Default,
+	'private': Private,
+	'for.of': of,
+	
+	'typeof': TYPEOF,
+	
+	'class.isBoolean': class_isBoolean,
+	'class.isNumber': class_isNumber,
+	'class.isString': class_isString,
+	'class.isDate': class_isDate,
+	'class.isRegExp': class_isRegExp,
+	'class.isMap': class_isMap,
+	'class.isSet': class_isSet,
+	'class.isWeakMap': class_isWeakMap,
+	'class.isWeakSet': class_isWeakSet,
+	'class.isPromise': class_isPromise,
+	'class.isSymbol': class_isSymbol,
+	'class.isBigInt': class_isBigInt,
+	
+	'null': NULL,
+	'null.assign': NULL_assign,
+	'null.create': NULL_create,
+	'null.defineProperties': NULL_defineProperties,
+	'null.defineProperty': NULL_defineProperty,
+	'null.getOwnPropertyDescriptor': NULL_getOwnPropertyDescriptor,
+	'null.getOwnPropertyDescriptors': NULL_getOwnPropertyDescriptors,
+	'null.fromEntries': NULL_fromEntries,
+	'null.PropertyDescriptor': NULL_PropertyDescriptor,
+	
+	'return': RETURN,
+	'return.true': return_true,
+	'return.false': return_false,
+	'return.sideeffects': return_sideeffects,
+	
+	'throw.Error': throwError,
+	'throw.EvalError': throwEvalError,
+	'throw': THROW,
+	'throw.RangeError': throwRangeError,
+	'throw.ReferenceError': throwReferenceError,
+	'throw.SyntaxError': throwSyntaxError,
+	'throw.TypeError': throwTypeError,
+	'throw.URIError': throwURIError,
+	
+})                               ;
 
 const _Buffer_from_ = 'import hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nimport undefined from \'.undefined\';\nexport default (\n	/*! j-globals: Buffer.from (fallback) */\n	typeof Buffer===\'function\' && /*#__PURE__*/ hasOwnProperty.call(Buffer, \'from\') ? Buffer.from : undefined\n	/*¡ j-globals: Buffer.from (fallback) */\n);';
 
@@ -594,10 +607,10 @@ const _Object_keys_ = 'export default (\n	/*! j-globals: Object.keys (fallback) 
 const _Object_defineProperty_ = 'export default (\n	/*! j-globals: Object.defineProperty (fallback) */\n	Object.seal && Object.defineProperty\n	/*¡ j-globals: Object.defineProperty (fallback) */\n)';
 
 const FALLBACK = /*#__PURE__*/ assign(create(null), {
-    'Object.assign': _Object_defineProperty_,
-    'Object.entries': _Object_keys_,
-    'Buffer.from': _Buffer_from_,
-});
+	'Object.assign': _Object_defineProperty_,
+	'Object.entries': _Object_keys_,
+	'Buffer.from': _Buffer_from_,
+})                               ;
 
 const _Default = 'import create from \'.Object.create?=\';\nimport assign from \'.Object.assign\';\nimport hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nimport toStringTag from \'.Symbol.toStringTag?\';\nimport defineProperty from \'.Object.defineProperty\';\nimport freeze from \'.Object.freeze\';\nimport seal from \'.Object.seal\';\nexport default (\n	/*! j-globals: default (internal) */\n	function Default (exports, addOnOrigin) {\n		return /*#__PURE__*/ function Module (exports, addOnOrigin) {\n			if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(null); }\n			if ( assign ) { assign(exports, addOnOrigin); }\n			else {\n				for ( var key in addOnOrigin ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } }\n				if ( !{ \'toString\': null }.propertyIsEnumerable(\'toString\') ) {\n					var keys = [ \'constructor\', \'propertyIsEnumerable\', \'isPrototypeOf\', \'hasOwnProperty\', \'valueOf\', \'toLocaleString\', \'toString\' ];\n					while ( key = keys.pop() ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } }\n				}\n			}\n			exports[\'default\'] = exports;\n			if ( seal ) {\n				typeof exports===\'function\' && exports.prototype && seal(exports.prototype);\n				if ( toStringTag ) {\n					var descriptor = create(null);\n					descriptor.value = \'Module\';\n					defineProperty(exports, toStringTag, descriptor);\n				}\n				freeze(exports);\n			}\n			return exports;\n		}(exports, addOnOrigin);\n	}\n	/*¡ j-globals: default (internal) */\n);';
 
@@ -690,296 +703,351 @@ const _String_prototype_codePointAt = 'import { RequireObjectCoercible, ToString
 const _document_head = 'export default (\n	/*! j-globals: document.head (polyfill) */\n	document.head || /*#__PURE__*/ function () {\n		var head = document.documentElement.firstChild;\n		while ( head.tagName!==\'HEAD\' ) { head = head.nextSibling; }\n		return head;\n	}()\n	/*¡ j-globals: document.head (polyfill) */\n);';
 
 const POLYFILL = /*#__PURE__*/ assign(create(null), {
-    'default': _Default,
-    'String.raw': _String_raw,
-    'String.fromCodePoint': _String_fromCodePoint,
-    'String.prototype.codePointAt': _String_prototype_codePointAt,
-    'null.assign': _NULL_assign,
-    'null.create': _NULL_create,
-    'null.fromEntries': _NULL_fromEntries,
-    'null': _NULL,
-    'Reflect.ownKeys': _Reflect_ownKeys,
-    'Reflect.apply': _Reflect_apply,
-    'Object.assign': _Object_assign,
-    'Object.create': _Object_create,
-    'Object.entries': _Object_entries,
-    'Object.fromEntries': _Object_fromEntries,
-    'Object.getOwnPropertyNames': _Object_getOwnPropertyNames,
-    'Object.getOwnPropertySymbols': _Object_getOwnPropertySymbols,
-    'Object.is': _Object_is,
-    'Object.keys': _Object_keys,
-    'Object.values': _Object_values,
-    'Array.of': _Array_of,
-    'Array.from': _Array_from,
-    'Array.isArray': _Array_isArray,
-    //'Array.prototype.splice': ,
-    //'Array.prototype.find': ,
-    //'Array.prototype.findIndex': ,
-    //'Array.prototype.forEach': ,
-    'Array.prototype.map': _Array_prototype_map,
-    //'Array.prototype.reduce': ,
-    //'Array.prototype.reduceRight': ,
-    //'Array.prototype.every': ,
-    //'Array.prototype.some': ,
-    //'Array.prototype.indexOf': ,
-    //'Array.prototype.lastIndexOf': ,
-    //'Array.prototype.includes': ,
-    'Array.prototype.flat': _Array_prototype_flat,
-    'Array.prototype.flatMap': _Array_prototype_flatMap,
-    'globalThis': _globalThis,
-    'Error': _Error,
-    //'Function.prototype.bind': _Function_prototype_bind,
-    'undefined': _undefined,
-    'Infinity': _Infinity,
-    'NaN': _NaN,
-    'Number.MAX_SAFE_INTEGER': _Number_MAX_SAFE_INTEGER,
-    'Number.MIN_SAFE_INTEGER': _Number_MIN_SAFE_INTEGER,
-    'Number.isSafeInteger': _Number_isSafeInteger,
-    'Number.isInteger': _Number_isInteger,
-    'Number.isFinite': _Number_isFinite,
-    'Number.isNaN': _Number_isNaN,
-    'Number.EPSILON': _Number_EPSILON,
-    //'JSON': ,
-    //'JSON.parse': ,
-    //'JSON.stringify': ,
-    'Buffer.isBuffer': _Buffer_isBuffer,
-    'Buffer.from': _Buffer_from,
-    'Buffer.alloc': _Buffer_alloc,
-    'Buffer.allocUnsafe': _Buffer_allocUnsafe,
-    'Buffer.allocUnsafeSlow': _Buffer_allocUnsafeSlow,
-    'Map': _Map,
-    'Set': _Set,
-    'document.head': _document_head,
-});
+	
+	'default': _Default,
+	
+	'String.raw': _String_raw,
+	'String.fromCodePoint': _String_fromCodePoint,
+	'String.prototype.codePointAt': _String_prototype_codePointAt,
+	
+	'null.assign': _NULL_assign,
+	'null.create': _NULL_create,
+	'null.fromEntries': _NULL_fromEntries,
+	'null': _NULL,
+	
+	'Reflect.ownKeys': _Reflect_ownKeys,
+	'Reflect.apply': _Reflect_apply,
+	
+	'Object.assign': _Object_assign,
+	'Object.create': _Object_create,
+	'Object.entries': _Object_entries,
+	'Object.fromEntries': _Object_fromEntries,
+	'Object.getOwnPropertyNames': _Object_getOwnPropertyNames,
+	'Object.getOwnPropertySymbols': _Object_getOwnPropertySymbols,
+	'Object.is': _Object_is,
+	'Object.keys': _Object_keys,
+	'Object.values': _Object_values,
+	
+	'Array.of': _Array_of,
+	'Array.from': _Array_from,
+	'Array.isArray': _Array_isArray,
+	//'Array.prototype.splice': ,
+	//'Array.prototype.find': ,
+	//'Array.prototype.findIndex': ,
+	//'Array.prototype.forEach': ,
+	'Array.prototype.map': _Array_prototype_map,
+	//'Array.prototype.reduce': ,
+	//'Array.prototype.reduceRight': ,
+	//'Array.prototype.every': ,
+	//'Array.prototype.some': ,
+	//'Array.prototype.indexOf': ,
+	//'Array.prototype.lastIndexOf': ,
+	//'Array.prototype.includes': ,
+	'Array.prototype.flat': _Array_prototype_flat,
+	'Array.prototype.flatMap': _Array_prototype_flatMap,
+	
+	'globalThis': _globalThis,
+	
+	'Error': _Error,
+	
+	//'Function.prototype.bind': _Function_prototype_bind,
+	
+	'undefined': _undefined,
+	'Infinity': _Infinity,
+	'NaN': _NaN,
+	
+	'Number.MAX_SAFE_INTEGER': _Number_MAX_SAFE_INTEGER,
+	'Number.MIN_SAFE_INTEGER': _Number_MIN_SAFE_INTEGER,
+	'Number.isSafeInteger': _Number_isSafeInteger,
+	'Number.isInteger': _Number_isInteger,
+	'Number.isFinite': _Number_isFinite,
+	'Number.isNaN': _Number_isNaN,
+	'Number.EPSILON': _Number_EPSILON,
+	
+	//'JSON': ,
+	//'JSON.parse': ,
+	//'JSON.stringify': ,
+	
+	'Buffer.isBuffer': _Buffer_isBuffer,
+	'Buffer.from': _Buffer_from,
+	'Buffer.alloc': _Buffer_alloc,
+	'Buffer.allocUnsafe': _Buffer_allocUnsafe,
+	'Buffer.allocUnsafeSlow': _Buffer_allocUnsafeSlow,
+	
+	'Map': _Map,
+	'Set': _Set,
+	
+	'document.head': _document_head,
+	
+})                               ;
 
 const NON_GLOBAL = /^\s*(?:eval|exports|module|require|this|__(?:dir|file)name)\s*(?![^.[])/;
 const MODULE_ID = /(?<=^import [a-zA-Z_$][\w$]* from ')\.(.+)(?=';$)/mg;
 const IN_GLOBAL = /^\s*globalThis\s*[.[]/;
 const ASCII_DOTS = /^[a-z_$][\w$]*(?:\.[\w$]*)*$/i;
-function get(id, { bom = false, tab = '\t', eol = '\n', pre = '.', sur = '' } = OPTIONS) {
-    let code = '';
-    for (const chunk of Chunk(parseID(id), bom, tab, eol, pre, sur)) {
-        code += chunk;
-    }
-    return code;
-}
-function* Chunk([chain, multi, fallback, polyfill, exp, along], bom, tab, eol, pre, sur) {
-    if (NON_GLOBAL.test(chain)) {
-        throw Error(`${chain} 不是全局变量`);
-    }
-    if (bom) {
-        yield '\uFEFF';
-    }
-    if (!fallback) {
-        if (multi) {
-            yield `export default ${chain};${eol}${eol}`;
-            const identifiers = [];
-            for (const node of MULTI_EXPORT[chain]) {
-                if (isReservedWord(node)) {
-                    const NODE = node.toUpperCase();
-                    yield `import ${NODE} from '${pre}${chain}.${node}${sur}'; export { ${NODE} as ${node} };${eol}`;
-                    identifiers.push(NODE);
-                }
-                else {
-                    yield `import ${node} from '${pre}${chain}.${node}${sur}'; export { ${node} };${eol}`;
-                    identifiers.push(node);
-                }
-            }
-            yield `${eol}[ ${identifiers.join(', ')} ];`;
-        }
-        else if (chain in INTERNAL) {
-            yield pre === '.' && sur === '' && tab === '\t' && eol === '\n'
-                ? INTERNAL[chain]
-                : INTERNAL[chain].replace(MODULE_ID, replacer).split('\n').join(eol).split('\t').join(tab);
-        }
-        else {
-            yield IN_GLOBAL.test(chain)
-                ? /*globalThis*/ `import globalThis from '${pre}globalThis?=${sur}';${eol}`
-                : '';
-            yield `export default ${chain === 'undefined' ? 'void 0' :
-                chain === 'Infinity' ? '1/0' :
-                    chain === 'NaN' ? '0/0' :
-                        ES3Chain(chain)};`;
-        }
-    }
-    else if (!polyfill) {
-        if (multi) {
-            throw Error('暂不支持“.?”');
-        }
-        if (chain in FALLBACK) {
-            yield pre === '.' && sur === '' && tab === '\t' && eol === '\n'
-                ? FALLBACK[chain]
-                : FALLBACK[chain].replace(MODULE_ID, replacer).split('\n').join(eol).split('\t').join(tab);
-        }
-        else if (along) {
-            yield IN_GLOBAL.test(chain)
-                ? /*globalThis*/ `import globalThis from '${pre}globalThis?=${sur}';${eol}`
-                : '';
-            yield along.endsWith('"')
-                ? `import undefined from '${pre}undefined${sur}';${eol}`
-                : '';
-            yield `export default ${along} ? ${ES3Chain(chain)} : undefined;`;
-        }
-        else {
-            yield `export default ${ES3Chain(chain)}`;
-        }
-    }
-    else if (!exp) {
-        if (multi) {
-            yield chain in POLYFILL
-                ? `export { default } from '${pre}${chain}?=${sur}';${eol}${eol}`
-                : `export default ${chain};${eol}${eol}`;
-            const identifiers = [];
-            for (const node of MULTI_EXPORT[chain]) {
-                let id = `${chain}.${node}`;
-                if (id in POLYFILL) {
-                    id += '?=';
-                }
-                if (isReservedWord(node)) {
-                    const NODE = node.toUpperCase();
-                    yield `import ${NODE} from '${pre}${id}${sur}'; export { ${NODE} as ${node} };${eol}`;
-                    identifiers.push(NODE);
-                }
-                else {
-                    yield `import ${node} from '${pre}${id}${sur}'; export { ${node} };${eol}`;
-                    identifiers.push(node);
-                }
-            }
-            yield `${eol}var $= [ ${identifiers.join(', ')} ];${eol}`;
-        }
-        else {
-            if (chain in POLYFILL) {
-                yield pre === '.' && sur === '' && tab === '\t' && eol === '\n'
-                    ? POLYFILL[chain]
-                    : POLYFILL[chain].replace(MODULE_ID, replacer).split('\n').join(eol).split('\t').join(tab);
-            }
-            else {
-                throw Error(`@ltd/j-globals 没有为 ${chain} 准备内置的 polyfill`);
-            }
-        }
-    }
-    else {
-        if (multi) {
-            throw Error('不支持“.?=*”');
-        }
-        if (along) {
-            yield IN_GLOBAL.test(chain)
-                ? /*globalThis*/ `import globalThis from '${pre}globalThis?=${sur}';${eol}`
-                : '';
-            yield along.endsWith('d')
-                ? `import undefined from '${pre}undefined${sur}';${eol}`
-                : '';
-            yield `export default ${along} ? ${ES3Chain(chain)} : /*#__PURE__*/ ${exp};`;
-        }
-        else {
-            yield `export default typeof globalThis==='object' ? ${ES3Chain(chain)} : /*#__PURE__*/ ${exp};`;
-        }
-    }
-    function replacer(id, chain) { return pre + chain + sur; }
-}
-function parseID(id) {
-    let chain;
-    let multi;
-    const index = id.indexOf('?=');
-    if (index >= 0) {
-        let chain = id.slice(0, index);
-        if (chain.endsWith('.')) {
-            chain = chain.slice(0, -1);
-            multi = '.';
-        }
-        else {
-            multi = '';
-        }
-        return [chain, multi, '?', '=', id.slice(index + 2), Along(chain, -0)];
-    }
-    if (id.endsWith('?')) {
-        let chain = id.slice(0, -1);
-        if (chain.endsWith('.')) {
-            chain = chain.slice(0, -1);
-            multi = '.';
-        }
-        else {
-            multi = '';
-        }
-        return [chain, multi, '?', '', '', Along(chain, -1)];
-    }
-    if (id.endsWith('.')) {
-        chain = id.slice(0, -1);
-        multi = '.';
-    }
-    else {
-        chain = id;
-        multi = '';
-    }
-    return [chain, multi, '', '', '', ''];
-}
-function Along(chain, end) {
-    const rest = [];
-    const nodes = Nodes(chain);
-    const first = nodes.shift();
-    /*globalThis*/ first === 'globalThis' ||
-        rest.push(`typeof ${first}!=='undefined'`);
-    for (let index = 0, length = nodes.length + end; index < length;) {
-        rest.push(`${first}${PropertyAccessors(nodes.slice(0, ++index))}!==undefined`);
-    }
-    return rest.join(' && ');
-}
-function ES3Chain(chain) {
-    const nodes = Nodes(chain);
-    return nodes.shift() + PropertyAccessors(nodes);
-}
-function Nodes(chain) {
-    if (ASCII_DOTS.test(chain)) {
-        return chain.split('.');
-    }
-    throw SyntaxError('暂不支持解析非纯 ASCII 点号获取法');
+
+function get (id        , { bom = false, tab = '\t', eol = '\n', pre = '.', sur = '' }          = OPTIONS)         {
+	let code         = '';
+	for ( const chunk of Chunk(parseID(id), bom, tab, eol, pre, sur) ) { code += chunk; }
+	return code;
 }
 
+function * Chunk ([ chain, multi, fallback, polyfill, exp, along ]                                         , bom         , tab        , eol        , pre        , sur        )                           {
+	
+	if ( NON_GLOBAL.test(chain) ) { throw Error(`${chain} 不是全局变量`); }
+	
+	if ( bom ) { yield '\uFEFF'; }
+	
+	if ( !fallback ) {
+		if ( multi ) {
+			yield `export default ${chain};${eol}${eol}`;
+			const identifiers           = [];
+			for ( const node of MULTI_EXPORT[chain] ) {
+				if ( isReservedWord(node) ) {
+					const NODE         = node.toUpperCase();
+					yield `import ${NODE} from '${pre}${chain}.${node}${sur}'; export { ${NODE} as ${node} };${eol}`;
+					identifiers.push(NODE);
+				}
+				else {
+					yield `import ${node} from '${pre}${chain}.${node}${sur}'; export { ${node} };${eol}`;
+					identifiers.push(node);
+				}
+			}
+			yield `${eol}[ ${identifiers.join(', ')} ];`;
+		}
+		else if ( chain in INTERNAL ) {
+			yield pre==='.' && sur==='' && tab==='\t' && eol==='\n'
+				? INTERNAL[chain]
+				: INTERNAL[chain].replace(MODULE_ID, replacer).split('\n').join(eol).split('\t').join(tab);
+		}
+		else {
+			yield IN_GLOBAL.test(chain)
+				? /*globalThis*/ `import globalThis from '${pre}globalThis?=${sur}';${eol}`
+				: '';
+			yield `export default ${
+				chain==='undefined' ? 'void 0' :
+					chain==='Infinity' ? '1/0' :
+						chain==='NaN' ? '0/0' :
+							ES3Chain(chain)
+			};`;
+		}
+	}
+	
+	else if ( !polyfill ) {
+		if ( multi ) { throw Error('暂不支持“.?”'); }
+		if ( chain in FALLBACK ) {
+			yield pre==='.' && sur==='' && tab==='\t' && eol==='\n'
+				? FALLBACK[chain]
+				: FALLBACK[chain].replace(MODULE_ID, replacer).split('\n').join(eol).split('\t').join(tab);
+		}
+		else if ( along ) {
+			yield IN_GLOBAL.test(chain)
+				? /*globalThis*/ `import globalThis from '${pre}globalThis?=${sur}';${eol}`
+				: '';
+			yield along.endsWith('"')
+				? `import undefined from '${pre}undefined${sur}';${eol}`
+				: '';
+			yield `export default ${along} ? ${ES3Chain(chain)} : undefined;`;
+		}
+		else {
+			yield `export default ${ES3Chain(chain)}`;
+		}
+	}
+	
+	else if ( !exp ) {
+		if ( multi ) {
+			yield chain in POLYFILL
+				? `export { default } from '${pre}${chain}?=${sur}';${eol}${eol}`
+				: `export default ${chain};${eol}${eol}`;
+			const identifiers           = [];
+			for ( const node of MULTI_EXPORT[chain] ) {
+				let id         = `${chain}.${node}`;
+				if ( id in POLYFILL ) { id += '?='; }
+				if ( isReservedWord(node) ) {
+					const NODE         = node.toUpperCase();
+					yield `import ${NODE} from '${pre}${id}${sur}'; export { ${NODE} as ${node} };${eol}`;
+					identifiers.push(NODE);
+				}
+				else {
+					yield `import ${node} from '${pre}${id}${sur}'; export { ${node} };${eol}`;
+					identifiers.push(node);
+				}
+			}
+			yield `${eol}var $= [ ${identifiers.join(', ')} ];${eol}`;
+		}
+		else {
+			if ( chain in POLYFILL ) {
+				yield pre==='.' && sur==='' && tab==='\t' && eol==='\n'
+					? POLYFILL[chain]
+					: POLYFILL[chain].replace(MODULE_ID, replacer).split('\n').join(eol).split('\t').join(tab);
+			}
+			else { throw Error(`@ltd/j-globals 没有为 ${chain} 准备内置的 polyfill`); }
+		}
+	}
+	
+	else {
+		if ( multi ) { throw Error('不支持“.?=*”'); }
+		if ( along ) {
+			yield IN_GLOBAL.test(chain)
+				? /*globalThis*/ `import globalThis from '${pre}globalThis?=${sur}';${eol}`
+				: '';
+			yield along.endsWith('d')
+				? `import undefined from '${pre}undefined${sur}';${eol}`
+				: '';
+			yield `export default ${along} ? ${ES3Chain(chain)} : /*#__PURE__*/ ${exp};`;
+		}
+		else {
+			yield `export default typeof globalThis==='object' ? ${ES3Chain(chain)} : /*#__PURE__*/ ${exp};`;
+		}
+	}
+	
+	function replacer (id        , chain        )         { return pre+chain+sur; }
+	
+}
+
+                                                                                                  
+
+function parseID (id        )                                          {
+	let chain        ;
+	let multi        ;
+	const index = id.indexOf('?=');
+	if ( index>=0 ) {
+		let chain         = id.slice(0, index);
+		if ( chain.endsWith('.') ) {
+			chain = chain.slice(0, -1);
+			multi = '.';
+		}
+		else { multi = ''; }
+		return [ chain, multi, '?', '=', id.slice(index+2), Along(chain, -0) ];
+	}
+	if ( id.endsWith('?') ) {
+		let chain         = id.slice(0, -1);
+		if ( chain.endsWith('.') ) {
+			chain = chain.slice(0, -1);
+			multi = '.';
+		}
+		else { multi = ''; }
+		return [ chain, multi, '?', '', '', Along(chain, -1) ];
+	}
+	if ( id.endsWith('.') ) {
+		chain = id.slice(0, -1);
+		multi = '.';
+	}
+	else {
+		chain = id;
+		multi = '';
+	}
+	return [ chain, multi, '', '', '', '' ];
+}
+
+function Along (chain        , end        )         {
+	const rest           = [];
+	const nodes        = Nodes(chain);
+	const first         = nodes.shift();
+	/*globalThis*/ first==='globalThis' ||
+	rest.push(`typeof ${first}!=='undefined'`);
+	for ( let index         = 0, length         = nodes.length+end; index<length; ) {
+		rest.push(`${first}${PropertyAccessors(nodes.slice(0, ++index))}!==undefined`);
+	}
+	return rest.join(' && ');
+}
+
+function ES3Chain (chain        )         {
+	const nodes        = Nodes(chain);
+	return nodes.shift()+PropertyAccessors(nodes);
+}
+
+function Nodes (chain        )        {
+	if ( ASCII_DOTS.test(chain) ) { return chain.split('.')         ; }
+	throw SyntaxError('暂不支持解析非纯 ASCII 点号获取法');
+}
+
+const toStringTag = typeof Symbol!=='undefined' ? Symbol.toStringTag : undefined;
+
+const defineProperty = Object.defineProperty;
+
+const freeze = Object.freeze;
+
+const seal = Object.seal;
+
+const Default$1 = (
+	/*! j-globals: default (internal) */
+	function Default (exports, addOnOrigin) {
+		return /*#__PURE__*/ function Module (exports, addOnOrigin) {
+			if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(null); }
+			if ( assign ) { assign(exports, addOnOrigin); }
+			else { for ( var key in addOnOrigin ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } } }
+			exports['default'] = exports;
+			typeof exports==='function' && exports.prototype && seal(exports.prototype);
+			if ( toStringTag ) {
+				var descriptor = create(null);
+				descriptor.value = 'Module';
+				defineProperty(exports, toStringTag, descriptor);
+			}
+			return freeze(exports);
+		}(exports, addOnOrigin);
+	}
+	/*¡ j-globals: default (internal) */
+);
+
 const TAB = /(?<=^\n*)\n\t+/;
-class Globals extends Set {
-    constructor() { super(); }
-    get(id, options = OPTIONS) {
-        const got = get(id, options);
-        this.add(id);
-        return got;
-    }
-    //add
-    toTSD({ bom = false, tab = '\t', eol = '\n', pre = '.', sur = '' } = OPTIONS) {
-        let tsd = '';
-        let previous = '';
-        for (const id of [...collectAll(this)].sort()) {
-            const [chain, multi] = fetchChain(id);
-            const current = fetchFirst(chain);
-            if (current !== previous) {
-                previous = current;
-                tsd += eol;
-            }
-            tsd += `declare module '${pre}${StringLiteral(id).slice(1, -1)}${sur}' { export default `;
-            if (multi) {
-                tsd += `${chain};${eol}`;
-                for (const node of MULTI_EXPORT[chain]) {
-                    tsd += `${tab}export { default as ${node} } from '${pre}${chain}.${node}${sur}';${eol}`;
-                }
-            }
-            else {
-                switch (chain) {
-                    case 'default':
-                        tsd += trim `Default;${eol}
+
+class Globals extends Set         {
+	
+	//static version = version;
+	
+	//static Globals = Globals;
+	
+	constructor () { super(); }
+	
+	//static get = get;
+	
+	get (               id        , options          = OPTIONS)         {
+		const got         = get(id, options);
+		this.add(id);
+		return got;
+	}
+	
+	//add
+	
+	toTSD (               { bom = false, tab = '\t', eol = '\n', pre = '.', sur = '' }          = OPTIONS)         {
+		let tsd         = '';
+		let previous         = '';
+		for ( const id of [ ...collectAll(this) ].sort() ) {
+			const [ chain, multi ]              = fetchChain(id);
+			const current         = fetchFirst(chain);
+			if ( current!==previous ) {
+				previous = current;
+				tsd += eol;
+			}
+			tsd += `declare module '${pre}${StringLiteral(id).slice(1, -1)}${sur}' { export default `;
+			if ( multi ) {
+				tsd += `${chain};${eol}`;
+				for ( const node of MULTI_EXPORT[chain] ) {
+					tsd += `${tab}export { default as ${node} } from '${pre}${chain}.${node}${sur}';${eol}`;
+				}
+			}
+			else {
+				switch ( chain ) {
+					
+					case 'default':
+						tsd += trim`Default;${eol}
 							${tab}function Default<Exports extends Readonly<{ [key :string] :any, default? :Module<Exports> }>> (exports :Exports) :Module<Exports>;${eol}
 							${tab}function Default<Statics extends Readonly<{ [key :string] :any, default? :ModuleFunction<Statics, Main> }>, Main extends Callable | Newable | Callable & Newable> (main :Main, statics :Statics) :ModuleFunction<Statics, Main>;${eol}
 							${tab}type Module<Exports> = Readonly<Exports & { default :Module<Exports> }>;${eol}
 							${tab}type ModuleFunction<Statics, Main> = Readonly<Statics & { default :ModuleFunction<Statics, Main> } & Main>;${eol}
 							${tab}type Callable = (...args :any[]) => any;${eol}
 							${tab}type Newable = { new (...args :any[]) :any };${eol}`;
-                        break;
-                    case 'private':
-                        tsd += `Private;${eol}${tab}function Private () :<T extends {}> (THIS :T) => T;${eol}`;
-                        break;
-                    case 'for.of':
-                        tsd += `of;${eol}${tab}function of<V extends any, T extends any> (arrayLike_iterable :Iterable<V>, callbackfn :(this :T, value :V) => void | boolean, thisArg? :T) :void;${eol}`;
-                        break;
-                    case 'typeof':
-                        tsd += trim `TYPEOF;${eol}
+						break;
+					case 'private':
+						tsd += `Private;${eol}${tab}function Private () :<T extends {}> (THIS :T) => T;${eol}`;
+						break;
+					case 'for.of':
+						tsd += `of;${eol}${tab}function of<V extends any, T extends any> (arrayLike_iterable :Iterable<V>, callbackfn :(this :T, value :V) => void | boolean, thisArg? :T) :void;${eol}`;
+						break;
+					
+					case 'typeof':
+						tsd += trim`TYPEOF;${eol}
 							${tab}function TYPEOF (value :any) :${eol}
 							${tab}${tab}typeof value extends undefined ? 'undefined' :${eol}
 							${tab}${tab}typeof value extends null ? 'null' :${eol}
@@ -991,77 +1059,79 @@ class Globals extends Set {
 							${tab}${tab}typeof value extends ( (...args :any[]) => any ) | { new (...args :any[]) :any } ? 'function' | 'object' : // IE6~8: typeof alert...DOM/BOM.host method==='object', alert.call===undefined${eol}
 							${tab}${tab}//typeof value extends object ? 'object' | 'function' | 'undefined' : // typeof document.all==='undefined' // Chrome1~23, Safari?: typeof /RegExp/==='function' // Safari?: typeof .childNodes/children==='function'${eol}
 							${tab}${tab}Exclude<string, 'boolean' | 'number' | 'string'/* | 'undefined' | 'function' | 'symbol' | 'bigint' | 'null'*/>;// typeof ( /* xhr: */ new ActiveXObject("Msxml2.XMLHTTP") ).abort==='unknown'...'date'${eol}`;
-                        break;
-                    case 'class.isBoolean':
-                        tsd += `isBoolean;${eol}${tab}function isBoolean (value :any) :value is Boolean;${eol}`;
-                        break;
-                    case 'class.isNumber':
-                        tsd += `isNumber;${eol}${tab}function isNumber (value :any) :value is Number;${eol}`;
-                        break;
-                    case 'class.isString':
-                        tsd += `isString;${eol}${tab}function isString (value :any) :value is String;${eol}`;
-                        break;
-                    case 'class.isDate':
-                        tsd += `isDate;${eol}${tab}function isDate (value :any) :value is Date;${eol}`;
-                        break;
-                    case 'class.isRegExp':
-                        tsd += `isRegExp;${eol}${tab}function isRegExp (value :any) :value is RegExp;${eol}`;
-                        break;
-                    case 'class.isMap':
-                        tsd += `isMap;${eol}${tab}function isMap (value :any) :value is Map;${eol}`;
-                        break;
-                    case 'class.isSet':
-                        tsd += `isSet;${eol}${tab}function isSet (value :any) :value is Set;${eol}`;
-                        break;
-                    case 'class.isWeakMap':
-                        tsd += `isWeakMap;${eol}${tab}function isWeakMap (value :any) :value is WeakMap;${eol}`;
-                        break;
-                    case 'class.isWeakSet':
-                        tsd += `isWeakSet;${eol}${tab}function isWeakSet (value :any) :value is WeakSet;${eol}`;
-                        break;
-                    case 'class.isPromise':
-                        tsd += `isPromise;${eol}${tab}function isPromise (value :any) :value is Promise<any>;${eol}`;
-                        break;
-                    case 'class.isSymbol':
-                        tsd += `isSymbol;${eol}${tab}function isSymbol (value :any) :value is Symbol;${eol}`;
-                        break;
-                    case 'class.isBigInt':
-                        tsd += `isBigInt;${eol}${tab}function isBigInt (value :any) :value is BigInt;${eol}`;
-                        break;
-                    case 'null.assign':
-                        tsd += `assign;${eol}${tab}function assign<O extends {}> (target :null | O, firstSource :O, ...restSources :O[]) :O;${eol}`;
-                        break;
-                    case 'null.create':
-                        tsd += trim `create;${eol}
+						break;
+					
+					case 'class.isBoolean':
+						tsd += `isBoolean;${eol}${tab}function isBoolean (value :any) :value is Boolean;${eol}`;
+						break;
+					case 'class.isNumber':
+						tsd += `isNumber;${eol}${tab}function isNumber (value :any) :value is Number;${eol}`;
+						break;
+					case 'class.isString':
+						tsd += `isString;${eol}${tab}function isString (value :any) :value is String;${eol}`;
+						break;
+					case 'class.isDate':
+						tsd += `isDate;${eol}${tab}function isDate (value :any) :value is Date;${eol}`;
+						break;
+					case 'class.isRegExp':
+						tsd += `isRegExp;${eol}${tab}function isRegExp (value :any) :value is RegExp;${eol}`;
+						break;
+					case 'class.isMap':
+						tsd += `isMap;${eol}${tab}function isMap (value :any) :value is Map;${eol}`;
+						break;
+					case 'class.isSet':
+						tsd += `isSet;${eol}${tab}function isSet (value :any) :value is Set;${eol}`;
+						break;
+					case 'class.isWeakMap':
+						tsd += `isWeakMap;${eol}${tab}function isWeakMap (value :any) :value is WeakMap;${eol}`;
+						break;
+					case 'class.isWeakSet':
+						tsd += `isWeakSet;${eol}${tab}function isWeakSet (value :any) :value is WeakSet;${eol}`;
+						break;
+					case 'class.isPromise':
+						tsd += `isPromise;${eol}${tab}function isPromise (value :any) :value is Promise<any>;${eol}`;
+						break;
+					case 'class.isSymbol':
+						tsd += `isSymbol;${eol}${tab}function isSymbol (value :any) :value is Symbol;${eol}`;
+						break;
+					case 'class.isBigInt':
+						tsd += `isBigInt;${eol}${tab}function isBigInt (value :any) :value is BigInt;${eol}`;
+						break;
+					
+					case 'null.assign':
+						tsd += `assign;${eol}${tab}function assign<O extends {}> (target :null | O, firstSource :O, ...restSources :O[]) :O;${eol}`;
+						break;
+					case 'null.create':
+						tsd += trim`create;${eol}
 							${tab}function create<O extends object, OO extends PropertyDescriptorMap> (proto? :null | O, descriptorMap? :OO) :( OO extends TypedPropertyDescriptorMap<infer O> ? O : object ) & O;${eol}
 							${tab}type TypedPropertyDescriptorMap<O> = { [k in keyof O] :TypedPropertyDescriptor<O[k]> };${eol}`;
-                        break;
-                    case 'null.defineProperties':
-                        tsd += trim `defineProperties;${eol}
+						break;
+					case 'null.defineProperties':
+						tsd += trim`defineProperties;${eol}
 							${tab}function defineProperties<O extends object, OO extends PropertyDescriptorMap> (object :O, descriptorMap :OO) :( OO extends TypedPropertyDescriptorMap<infer O> ? O : never ) & O;${eol}
 							${tab}type TypedPropertyDescriptorMap<O> = { [k in keyof O] :TypedPropertyDescriptor<O[k]> };${eol}`;
-                        break;
-                    case 'null.defineProperty':
-                        tsd += trim `defineProperty;${eol}
+						break;
+					case 'null.defineProperty':
+						tsd += trim`defineProperty;${eol}
 							${tab}function defineProperty<O extends object, K extends string | symbol, D extends PropertyDescriptor> (object :O, key :K, descriptor :D, useReflect? :false) :( D extends TypedPropertyDescriptor<infer V> ? { [key in K] :V } : never ) & O;${eol}
 							${tab}function defineProperty<O extends object, K extends string | symbol, D extends PropertyDescriptor> (object :O, key :K, descriptor :D, useReflect :true) :boolean;${eol}`;
-                        break;
-                    case 'null.fromEntries':
-                        tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<{ readonly 0: K, readonly 1: V }>) :{ [k in K] :V };${eol}`;
-                        break;
-                    case 'null.getOwnPropertyDescriptor':
-                        tsd += `getOwnPropertyDescriptor;${eol}${tab}function getOwnPropertyDescriptor<O extends {}, K extends Extract<keyof O, string | symbol>> (object :O, key :K) :TypedPropertyDescriptor<O[K]>;${eol}`;
-                        break;
-                    case 'null.getOwnPropertyDescriptors':
-                        tsd += `getOwnPropertyDescriptors;${eol}${tab}function getOwnPropertyDescriptors<O extends {}> (object :O) :{ [k in keyof O] :TypedPropertyDescriptor<O[k]> };${eol}`;
-                        break;
-                    case 'null.PropertyDescriptor':
-                        tsd += trim `PropertyDescriptor;${eol}
+						break;
+					case 'null.fromEntries':
+						tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<{ readonly 0: K, readonly 1: V }>) :{ [k in K] :V };${eol}`;
+						break;
+					case 'null.getOwnPropertyDescriptor':
+						tsd += `getOwnPropertyDescriptor;${eol}${tab}function getOwnPropertyDescriptor<O extends {}, K extends Extract<keyof O, string | symbol>> (object :O, key :K) :TypedPropertyDescriptor<O[K]>;${eol}`;
+						break;
+					case 'null.getOwnPropertyDescriptors':
+						tsd += `getOwnPropertyDescriptors;${eol}${tab}function getOwnPropertyDescriptors<O extends {}> (object :O) :{ [k in keyof O] :TypedPropertyDescriptor<O[k]> };${eol}`;
+						break;
+					case 'null.PropertyDescriptor':
+						tsd += trim`PropertyDescriptor;${eol}
 							${tab}function PropertyDescriptor<V extends any, W extends boolean, E extends boolean, C extends boolean> (value :V, writable :W, enumerable :E, configurable :C) :{ value :V, writable :W, enumerable :E, configurable :C };${eol}
 							${tab}function PropertyDescriptor<G extends ( () => any ) | undefined, S extends ( (value :any) => void ) | undefined, E extends boolean, C extends boolean> (get :G, set :S, enumerable :E, configurable :C) :{ get :G, set :S, enumerable :E, configurable :C };${eol}`;
-                        break;
-                    case 'null':
-                        tsd += trim `NULL;${eol}
+						break;
+					case 'null':
+						tsd += trim`NULL;${eol}
 							${tab}const NULL :{${eol}
 							${tab}${tab}new<ValueType extends any> () :NULL<ValueType>,${eol}
 							${tab}${tab}new () :object,${eol}
@@ -1083,31 +1153,34 @@ class Globals extends Set {
 							${tab}${tab}__proto__? :ValueType,${eol}
 							${tab}${tab}constructor? :ValueType,${eol}
 							${tab}};${eol}`;
-                        break;
-                    case 'return':
-                    case 'return.sideeffects':
-                        tsd += `RETURN;${eol}${tab}function RETURN<T extends any> (value :T) :T;${eol}`;
-                        break;
-                    case 'return.false':
-                        tsd += `return_false;${eol}${tab}function return_false () :false;${eol}`;
-                        break;
-                    case 'return.true':
-                        tsd += `return_true;${eol}${tab}function return_true () :true;${eol}`;
-                        break;
-                    case 'throw':
-                        tsd += `THROW;${eol}${tab}function THROW (error :Error) :never;${eol}`;
-                        break;
-                    case 'throw.Error':
-                    case 'throw.EvalError':
-                    case 'throw.RangeError':
-                    case 'throw.ReferenceError':
-                    case 'throw.SyntaxError':
-                    case 'throw.TypeError':
-                    case 'throw.URIError':
-                        tsd += `${chain.replace('.', '')};${eol}${tab}function ${chain.replace('.', '')} (message? :string) :never;${eol}`;
-                        break;
-                    case 'Object':
-                        tsd += trim `Object;${eol}
+						break;
+					
+					case 'return':
+					case 'return.sideeffects':
+						tsd += `RETURN;${eol}${tab}function RETURN<T extends any> (value :T) :T;${eol}`;
+						break;
+					case 'return.false':
+						tsd += `return_false;${eol}${tab}function return_false () :false;${eol}`;
+						break;
+					case 'return.true':
+						tsd += `return_true;${eol}${tab}function return_true () :true;${eol}`;
+						break;
+					
+					case 'throw':
+						tsd += `THROW;${eol}${tab}function THROW (error :Error) :never;${eol}`;
+						break;
+					case 'throw.Error':
+					case 'throw.EvalError':
+					case 'throw.RangeError':
+					case 'throw.ReferenceError':
+					case 'throw.SyntaxError':
+					case 'throw.TypeError':
+					case 'throw.URIError':
+						tsd += `${chain.replace('.', '')};${eol}${tab}function ${chain.replace('.', '')} (message? :string) :never;${eol}`;
+						break;
+						
+					case 'Object':
+						tsd += trim`Object;${eol}
 							${tab}const Object :{
 							${tab}${tab}<T extends object> (value :T) :T;${eol}
 							${tab}${tab}(value? :undefined | null) :object;${eol}
@@ -1124,119 +1197,126 @@ class Globals extends Set {
 							${tab}${tab}new (value :symbol) :Symbol & object;${eol}
 							${tab}${tab}new (value :bigint) :BigInt & object;${eol}
 							${tab}};${eol}`;
-                        break;
-                    //case 'Object.create':
-                    //	tsd += id==='Object.create?='
-                    //		? `create;${eol}${tab}function create (o :object | null, properties? :undefined) :any;${eol}`
-                    //		: `${chain}; `;
-                    //	break;
-                    case 'Object.fromEntries':
-                        tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<{ readonly 0: K, readonly 1: V }>) :{ [k in K] :V };${eol}`;
-                        break;
-                    case 'Object.entries':
-                        tsd += `entries;${eol}${tab}function entries<T extends object> (object :T) :[Extract<string, keyof T>, T[Extract<string, keyof T>]][];${eol}`;
-                        break;
-                    case 'Object.values':
-                        tsd += `values;${eol}${tab}function values<T extends object> (object :T) :T[Extract<string, keyof T>][];${eol}`;
-                        break;
-                    case 'Object.keys':
-                        tsd += `keys;${eol}${tab}function keys<T extends object> (object :T) :Extract<string, keyof T>[];${eol}`;
-                        break;
-                    case 'Object.getOwnPropertyNames':
-                        tsd += `getOwnPropertyNames;${eol}${tab}function getOwnPropertyNames<T extends object> (object :T) :Extract<string, keyof T>[];${eol}`;
-                        break;
-                    case 'Object.getOwnPropertySymbols':
-                        tsd += `getOwnPropertySymbols;${eol}${tab}function getOwnPropertySymbols<T extends object> (object :T) :Extract<symbol, keyof T>[];${eol}`;
-                        break;
-                    case 'Reflect.ownKeys':
-                        tsd += `ownKeys;${eol}${tab}function ownKeys<T extends object> (object :T) :Extract<string | symbol, keyof T>[];${eol}`;
-                        break;
-                    case 'Array.isArray':
-                        tsd += `isArray;${eol}${tab}function isArray (value :any) :value is any[] | readonly any[];${eol}`;
-                        break;
-                    case 'native':
-                    case 'class':
-                        tsd += `_; const _ :never; `;
-                        break;
-                    default:
-                        tsd += `${chain}; `;
-                }
-            }
-            tsd += `}${eol}`;
-        }
-        return (bom ? '\uFEFF' : '') + tsd;
-    }
-    shakingMap() {
-        const map = new Map;
-        const all = collectAll(this);
-        for (const fallback of all) {
-            const index = fallback.indexOf('?');
-            if (index >= 0) {
-                const origin = fallback.slice(0, index);
-                all.has(origin) && map.set(fallback, origin);
-            }
-        }
-        return map;
-    }
+						break;
+					//case 'Object.create':
+					//	tsd += id==='Object.create?='
+					//		? `create;${eol}${tab}function create (o :object | null, properties? :undefined) :any;${eol}`
+					//		: `${chain}; `;
+					//	break;
+					case 'Object.fromEntries':
+						tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<{ readonly 0: K, readonly 1: V }>) :{ [k in K] :V };${eol}`;
+						break;
+					case 'Object.entries':
+						tsd += `entries;${eol}${tab}function entries<T extends object> (object :T) :[Extract<string, keyof T>, T[Extract<string, keyof T>]][];${eol}`;
+						break;
+					case 'Object.values':
+						tsd += `values;${eol}${tab}function values<T extends object> (object :T) :T[Extract<string, keyof T>][];${eol}`;
+						break;
+					case 'Object.keys':
+						tsd += `keys;${eol}${tab}function keys<T extends object> (object :T) :Extract<string, keyof T>[];${eol}`;
+						break;
+					case 'Object.getOwnPropertyNames':
+						tsd += `getOwnPropertyNames;${eol}${tab}function getOwnPropertyNames<T extends object> (object :T) :Extract<string, keyof T>[];${eol}`;
+						break;
+					case 'Object.getOwnPropertySymbols':
+						tsd += `getOwnPropertySymbols;${eol}${tab}function getOwnPropertySymbols<T extends object> (object :T) :Extract<symbol, keyof T>[];${eol}`;
+						break;
+					case 'Reflect.ownKeys':
+						tsd += `ownKeys;${eol}${tab}function ownKeys<T extends object> (object :T) :Extract<string | symbol, keyof T>[];${eol}`;
+						break;
+						
+					case 'Array.isArray':
+						tsd += `isArray;${eol}${tab}function isArray (value :any) :value is any[] | readonly any[];${eol}`;
+						break;
+						
+					case 'native':
+					case 'class':
+						tsd += `_; const _ :never; `;
+						break;
+						
+					default:
+						tsd += `${chain}; `;
+						
+				}
+			}
+			tsd += `}${eol}`;
+		}
+		return ( bom ? '\uFEFF' : '' )+tsd;
+	}
+	
+	shakingMap (             )                      {
+		const map                      = new Map;
+		const all              = collectAll(this);
+		for ( const fallback of all ) {
+			const index         = fallback.indexOf('?');
+			if ( index>=0 ) {
+				const origin         = fallback.slice(0, index);
+				all.has(origin) && map.set(fallback, origin);
+			}
+		}
+		return map;
+	}
+	
+	//static default = Globals;
+	
 }
-Globals.version = version;
-Globals.Globals = Globals;
-Globals.get = get;
-Globals.default = Globals;
-function collectAll(globals) {
-    const collection = new Set;
-    for (const id of globals) {
-        collection.add(id);
-        const [chain, multi] = fetchChain(id);
-        if (multi) {
-            collection.add(chain);
-            for (const node of MULTI_EXPORT[chain]) {
-                collection.add(`${chain}.${node}`);
-            }
-        }
-    }
-    return collection;
-}
-function fetchChain(id) {
-    const index = id.indexOf('?');
-    const chain_ = index < 0 ? id : id.slice(0, index);
-    return chain_.endsWith('.')
-        ? [chain_.slice(0, -1), '.']
-        : [chain_, ''];
-}
-function fetchFirst(chain) {
-    const index = chain.indexOf('.');
-    return index < 0 ? chain : chain.slice(0, index);
-}
-function trim(template, ...values) {
-    let value = template[0];
-    if (value.startsWith('\n')) {
-        throw Error('EOL');
-    }
-    let tab;
-    for (const chunk of template) {
-        const $ = TAB.exec(chunk);
-        if ($) {
-            tab = $[0];
-            break;
-        }
-    }
-    if (!tab) {
-        throw Error('TAB');
-    }
-    value = template[0].split(tab).join('').split('\n').join('');
-    const length = values.length;
-    for (let index = 0; index < length;) {
-        value +=
-            values[index] +
-                template[++index].split(tab).join('').split('\n').join('');
-    }
-    if (template[length].endsWith(tab.slice(0, -1))) {
-        throw Error('EOF');
-    }
-    return value;
+const _default = Default$1(Globals, {
+	version,
+	Globals,
+	get,
+});
+
+function collectAll (globals         )              {
+	const collection              = new Set;
+	for ( const id of globals ) {
+		collection.add(id);
+		const [ chain, multi ]              = fetchChain(id);
+		if ( multi ) {
+			collection.add(chain);
+			for ( const node of MULTI_EXPORT[chain] ) { collection.add(`${chain}.${node}`); }
+		}
+	}
+	return collection;
 }
 
-module.exports = Globals;
+                                      
+
+function fetchChain (id        )              {
+	const index         = id.indexOf('?');
+	const chain_         = index<0 ? id : id.slice(0, index);
+	return chain_.endsWith('.')
+		? [ chain_.slice(0, -1), '.' ]
+		: [ chain_, '' ];
+}
+
+function fetchFirst (chain        )         {
+	const index         = chain.indexOf('.');
+	return index<0 ? chain : chain.slice(0, index);
+}
+
+function trim (template                      , ...values          )         {
+	let value         = template[0];
+	if ( value.startsWith('\n') ) { throw Error('EOL'); }
+	let tab                    ;
+	for ( const chunk of template ) {
+		const $                         = TAB.exec(chunk);
+		if ( $ ) {
+			tab = $[0];
+			break;
+		}
+	}
+	if ( !tab ) { throw Error('TAB'); }
+	value = template[0].split(tab).join('').split('\n').join('');
+	const length         = values.length;
+	for ( let index         = 0; index<length; ) {
+		value +=
+			values[index]+
+			template[++index].split(tab).join('').split('\n').join('');
+	}
+	if ( template[length].endsWith(tab.slice(0, -1)) ) { throw Error('EOF'); }
+	return value;
+}
+
+module.exports = _default;
 
 //# sourceMappingURL=index.js.map

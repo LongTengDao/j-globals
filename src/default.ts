@@ -11,15 +11,15 @@ import get from './get';
 
 const TAB = /(?<=^\n*)\n\t+/;
 
-export default class Globals extends Set<string> {
+class Globals extends Set<string> {
 	
-	static version = version;
+	//static version = version;
 	
-	static Globals = Globals;
+	//static Globals = Globals;
 	
 	constructor () { super(); }
 	
-	static get = get;
+	//static get = get;
 	
 	get (this :Globals, id :string, options :OPTIONS = OPTIONS) :string {
 		const got :string = get(id, options);
@@ -276,9 +276,16 @@ export default class Globals extends Set<string> {
 		return map;
 	}
 	
-	static default = Globals;
+	//static default = Globals;
 	
 }
+
+import Default from '.default';
+export default Default(Globals, {
+	version,
+	Globals,
+	get,
+});
 
 function collectAll (globals :Globals) :Set<string> {
 	const collection :Set<string> = new Set;
