@@ -2,11 +2,43 @@
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
+const create = Object.create;
+
+const assign = Object.assign;
+
+const toStringTag = typeof Symbol!=='undefined' ? Symbol.toStringTag : undefined;
+
+const defineProperty = Object.defineProperty;
+
+const freeze = Object.freeze;
+
+const seal = Object.seal;
+
+const Default = (
+	/*! j-globals: default (internal) */
+	function Default (exports, addOnOrigin) {
+		return /*#__PURE__*/ function Module (exports, addOnOrigin) {
+			if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(null); }
+			if ( assign ) { assign(exports, addOnOrigin); }
+			else { for ( var key in addOnOrigin ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } } }
+			exports['default'] = exports;
+			typeof exports==='function' && exports.prototype && seal(exports.prototype);
+			if ( toStringTag ) {
+				var descriptor = create(null);
+				descriptor.value = 'Module';
+				defineProperty(exports, toStringTag, descriptor);
+			}
+			return freeze(exports);
+		}(exports, addOnOrigin);
+	}
+	/*¡ j-globals: default (internal) */
+);
+
 /*!
  * 模块名称：ES
  * 模块功能：ECMAScript 语法相关共享实用程序。从属于“简计划”。
    　　　　　ECMAScript syntax util. Belong to "Plan J".
- * 模块版本：0.7.0
+ * 模块版本：0.8.0
  * 许可条款：LGPL-3.0
  * 所属作者：龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)
  * 问题反馈：https://GitHub.com/LongTengDao/j-es/issues
@@ -87,11 +119,7 @@ function PropertyAccessors (keys          , ES         )         {
 
 /*¡ ES */
 
-const version = '5.1.0';
-
-const assign = Object.assign;
-
-const create = Object.create;
+const version = '5.2.0';
 
 const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
 	
@@ -475,7 +503,7 @@ const OPTIONS          =
 		sur: '',
 	});
 
-const Default = 'import create from \'.Object.create\';\nimport assign from \'.Object.assign\';\nimport hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nimport toStringTag from \'.Symbol.toStringTag?\';\nimport defineProperty from \'.Object.defineProperty\';\nimport freeze from \'.Object.freeze\';\nimport seal from \'.Object.seal\';\nexport default (\n	/*! j-globals: default (internal) */\n	function Default (exports, addOnOrigin) {\n		return /*#__PURE__*/ function Module (exports, addOnOrigin) {\n			if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(null); }\n			if ( assign ) { assign(exports, addOnOrigin); }\n			else { for ( var key in addOnOrigin ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } } }\n			exports[\'default\'] = exports;\n			typeof exports===\'function\' && exports.prototype && seal(exports.prototype);\n			if ( toStringTag ) {\n				var descriptor = create(null);\n				descriptor.value = \'Module\';\n				defineProperty(exports, toStringTag, descriptor);\n			}\n			return freeze(exports);\n		}(exports, addOnOrigin);\n	}\n	/*¡ j-globals: default (internal) */\n);';
+const Default$1 = 'import create from \'.Object.create\';\nimport assign from \'.Object.assign\';\nimport hasOwnProperty from \'.Object.prototype.hasOwnProperty\';\nimport toStringTag from \'.Symbol.toStringTag?\';\nimport defineProperty from \'.Object.defineProperty\';\nimport freeze from \'.Object.freeze\';\nimport seal from \'.Object.seal\';\nexport default (\n	/*! j-globals: default (internal) */\n	function Default (exports, addOnOrigin) {\n		return /*#__PURE__*/ function Module (exports, addOnOrigin) {\n			if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(null); }\n			if ( assign ) { assign(exports, addOnOrigin); }\n			else { for ( var key in addOnOrigin ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } } }\n			exports[\'default\'] = exports;\n			typeof exports===\'function\' && exports.prototype && seal(exports.prototype);\n			if ( toStringTag ) {\n				var descriptor = create(null);\n				descriptor.value = \'Module\';\n				defineProperty(exports, toStringTag, descriptor);\n			}\n			return freeze(exports);\n		}(exports, addOnOrigin);\n	}\n	/*¡ j-globals: default (internal) */\n);';
 
 const Private = 'import create from \'.Object.create\';\nimport defineProperty from \'.Object.defineProperty\';\nimport RETURN from \'.return\';\nexport default (\n	/*! j-globals: private (internal) */\n	typeof WeakMap===\'function\'\n		? /*#__PURE__*/ function () {\n			var Weak = WeakMap;\n			var GET = create(null);\n			GET.value = Weak.prototype.get;\n			var SET = create(null);\n			SET.value = Weak.prototype.set;\n			function add (weak, THIS) {\n				var _THIS = create(null);\n				weak.set(THIS, _THIS);\n				return _THIS;\n			}\n			return function Private () {\n				var weak = /*#__PURE__*/ defineProperty(/*#__PURE__*/ defineProperty(/*#__PURE__*/ new Weak, \'get\', GET), \'set\', SET);\n				return function _ (THIS) {\n					return /*#__PURE__*/ weak.get(THIS) || /*#__PURE__*/ add(weak, THIS);\n				};\n			};\n		}()\n		: function Private () { return RETURN; }\n	/*¡ j-globals: private (internal) */\n);';
 
@@ -555,7 +583,7 @@ const INTERNAL = /*#__PURE__*/ assign(create(null), {
 	
 	'native': NATIVE,
 	
-	'default': Default,
+	'default': Default$1,
 	'private': Private,
 	'for.of': of,
 	
@@ -962,41 +990,9 @@ function Nodes (chain        )        {
 	throw SyntaxError('暂不支持解析非纯 ASCII 点号获取法');
 }
 
-const toStringTag = typeof Symbol!=='undefined' ? Symbol.toStringTag : undefined;
-
-const defineProperty = Object.defineProperty;
-
-const freeze = Object.freeze;
-
-const seal = Object.seal;
-
-const Default$1 = (
-	/*! j-globals: default (internal) */
-	function Default (exports, addOnOrigin) {
-		return /*#__PURE__*/ function Module (exports, addOnOrigin) {
-			if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(null); }
-			if ( assign ) { assign(exports, addOnOrigin); }
-			else { for ( var key in addOnOrigin ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } } }
-			exports['default'] = exports;
-			typeof exports==='function' && exports.prototype && seal(exports.prototype);
-			if ( toStringTag ) {
-				var descriptor = create(null);
-				descriptor.value = 'Module';
-				defineProperty(exports, toStringTag, descriptor);
-			}
-			return freeze(exports);
-		}(exports, addOnOrigin);
-	}
-	/*¡ j-globals: default (internal) */
-);
-
 const TAB = /(?<=^\n*)\n\t+/;
 
 class Globals extends Set         {
-	
-	//static version = version;
-	
-	//static Globals = Globals;
 	
 	constructor () { super(); }
 	
@@ -1257,10 +1253,8 @@ class Globals extends Set         {
 		return map;
 	}
 	
-	//static default = Globals;
-	
 }
-const _default = Default$1(Globals, {
+const _default = Default(Globals, {
 	version,
 	Globals,
 	get,

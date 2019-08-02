@@ -13,10 +13,6 @@ const TAB = /(?<=^\n*)\n\t+/;
 
 class Globals extends Set<string> {
 	
-	//static version = version;
-	
-	//static Globals = Globals;
-	
 	constructor () { super(); }
 	
 	//static get = get;
@@ -275,8 +271,6 @@ class Globals extends Set<string> {
 		}
 		return map;
 	}
-	
-	//static default = Globals;
 	
 }
 
