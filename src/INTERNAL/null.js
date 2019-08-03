@@ -1,5 +1,4 @@
-import Object_assign from '.Object.assign';
-import hasOwnProperty from ".Object.prototype.hasOwnProperty";
+import hasOwnProperty from '.Object.prototype.hasOwnProperty';
 import Object_create from '.Object.create';
 import Object_freeze from '.Object.freeze';
 import Object_getOwnPropertyDescriptor from '.Object.getOwnPropertyDescriptor';
@@ -8,7 +7,7 @@ export default (
 	/*! j-globals: null (internal) */
 	/*#__PURE__*/ function () {
 		'use strict';
-		var assign = Object_assign || function assign (target, source) {
+		var assign = Object.assign || function assign (target, source) {
 			for ( var key in source ) {
 				if ( hasOwnProperty.call(source, key) ) { target[key] = source[key]; }
 			}
