@@ -13,7 +13,7 @@ require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful }) =>
 		},
 		LICENSE_: true,
 		locate: {
-			'@ltd/j-es': ful('../../LongTengDao/j-es/dist/ESM/.j-es'),
+			'@ltd/j-es': ful('../../LongTengDao/j-es/dist/ESM/.j-es.js'),
 		},
 	});
 });
