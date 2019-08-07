@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const version = '7.0.1';
+const version = '7.1.0';
 
 const assign = Object.assign;
 
@@ -1026,6 +1026,7 @@ function toTSD (all                              , { bom = false, tab = '\t', eo
 							${tab}${tab}(instance :object) :void${eol}
 							${tab}${tab}<Private extends object, Public extends object> (instance :Public) :Private${eol}
 							${tab}};${eol}
+							${tab}function Private<_ extends (instance :any) => object> () :_;${eol}
 							${tab}function Private<Private extends object, Public extends object> () :{${eol}
 							${tab}${tab}(instance :Public) :Private${eol}
 							${tab}};${eol}`;

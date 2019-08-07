@@ -41,6 +41,7 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 							${tab}${tab}(instance :object) :void${eol}
 							${tab}${tab}<Private extends object, Public extends object> (instance :Public) :Private${eol}
 							${tab}};${eol}
+							${tab}function Private<_ extends (instance :any) => object> () :_;${eol}
 							${tab}function Private<Private extends object, Public extends object> () :{${eol}
 							${tab}${tab}(instance :Public) :Private${eol}
 							${tab}};${eol}`;
