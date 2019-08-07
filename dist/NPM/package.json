@@ -1,7 +1,7 @@
 {
 	"name": "@ltd/j-globals",
 	"description": "Module style global properties sharing loading plan. Belong to \"Plan J\".／模块化全局属性共享获取方案。从属于“简计划”。",
-	"version": "6.0.1",
+	"version": "7.0.0",
 	"license": "LGPL-3.0",
 	"author": "龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)",
 	"bugs": "https://GitHub.com/LongTengDao/j-globals/issues",

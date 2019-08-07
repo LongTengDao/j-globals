@@ -36,7 +36,9 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 							${tab}type Newable = { new (...args :any[]) :any };${eol}`;
 						break;
 					case 'private':
-						tsd += `Private;${eol}${tab}function Private () :<T extends {}> (THIS :T) => T;${eol}`;
+						tsd += trim`Private;${eol}
+							${tab}function Private () :<Private extends object, Public extends object> (instance :Public) => Private;${eol}
+							${tab}function Private<Private extends object, Public extends object> () :(instance :Public) => Private;${eol}`;
 						break;
 					case 'for.of':
 						tsd += `of;${eol}${tab}function of<V extends any, T extends any> (arrayLike_iterable :Iterable<V>, callbackfn :(this :T, value :V) => void | boolean, thisArg? :T) :void;${eol}`;

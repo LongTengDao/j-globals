@@ -12,7 +12,7 @@ export default (
 				if ( hasOwnProperty.call(source, key) ) { target[key] = source[key]; }
 			}
 			return target;
-		}
+		};
 		var DESCRIPTOR = Object_create(null);
 		DESCRIPTOR.enumerable = true;
 		DESCRIPTOR.configurable = true;
