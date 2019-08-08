@@ -121,7 +121,7 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 							${tab}function defineProperty<O extends object, K extends string | symbol, D extends PropertyDescriptor> (object :O, key :K, descriptor :D, useReflect :true) :boolean;${eol}`;
 						break;
 					case 'null.fromEntries':
-						tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<{ readonly 0: K, readonly 1: V }>) :{ [k in K] :V };${eol}`;
+						tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<Readonly<{ 0 :K, 1 :V }>>) :{ [k in K] :V };${eol}`;
 						break;
 					case 'null.getOwnPropertyDescriptor':
 						tsd += `getOwnPropertyDescriptor;${eol}${tab}function getOwnPropertyDescriptor<O extends {}, K extends Extract<keyof O, string | symbol>> (object :O, key :K) :TypedPropertyDescriptor<O[K]>;${eol}`;
@@ -208,7 +208,7 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 					//		: `${chain}; `;
 					//	break;
 					case 'Object.fromEntries':
-						tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<{ readonly 0: K, readonly 1: V }>) :{ [k in K] :V };${eol}`;
+						tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<Readonly<{ 0 :K, 1 :V }>>) :{ [k in K] :V };${eol}`;
 						break;
 					case 'Object.entries':
 						tsd += `entries;${eol}${tab}function entries<T extends object> (object :T) :[Extract<string, keyof T>, T[Extract<string, keyof T>]][];${eol}`;
@@ -233,6 +233,31 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 						tsd += `isArray;${eol}${tab}function isArray (value :any) :value is any[] | readonly any[];${eol}`;
 						break;
 					
+					case 'Map':
+						tsd += trim`constructor;${eol}
+							${tab}class constructor<K, V> extends Map<K, V> {${eol}
+							${tab}${tab}constructor (entries :Iterable<Readonly<{ 0 :K, 1 :V }>>)${eol}
+							${tab}}${eol}`;
+						break;
+					case 'WeakMap':
+						tsd += trim`constructor;${eol}
+							${tab}class constructor<K extends object, V> extends WeakMap<K, V> {${eol}
+							${tab}${tab}constructor (entries :Iterable<Readonly<{ 0 :K, 1 :V }>>)${eol}
+							${tab}}${eol}`;
+						break;
+					case 'Set':
+						tsd += trim`constructor;${eol}
+							${tab}class constructor<V> extends Set<V> {${eol}
+							${tab}${tab}constructor (values :Iterable<V>)${eol}
+							${tab}}${eol}`;
+						break;
+					case 'WeakSet':
+						tsd += trim`constructor;${eol}
+							${tab}class constructor<V extends object> extends WeakSet<V> {${eol}
+							${tab}${tab}constructor (values :Iterable<V>)${eol}
+							${tab}}${eol}`;
+						break;
+						
 					case 'native':
 					case 'class':
 						tsd += `_; const _ :never; `;
