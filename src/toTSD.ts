@@ -236,25 +236,25 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 					case 'Map':
 						tsd += trim`constructor;${eol}
 							${tab}class constructor<K, V> extends Map<K, V> {${eol}
-							${tab}${tab}constructor (entries :Iterable<Readonly<{ 0 :K, 1 :V }>>)${eol}
+							${tab}${tab}constructor (entries? :Iterable<Readonly<{ 0 :K, 1 :V }>>)${eol}
 							${tab}}${eol}`;
 						break;
 					case 'WeakMap':
 						tsd += trim`constructor;${eol}
 							${tab}class constructor<K extends object, V> extends WeakMap<K, V> {${eol}
-							${tab}${tab}constructor (entries :Iterable<Readonly<{ 0 :K, 1 :V }>>)${eol}
+							${tab}${tab}constructor (entries? :Iterable<Readonly<{ 0 :K, 1 :V }>>)${eol}
 							${tab}}${eol}`;
 						break;
 					case 'Set':
 						tsd += trim`constructor;${eol}
 							${tab}class constructor<V> extends Set<V> {${eol}
-							${tab}${tab}constructor (values :Iterable<V>)${eol}
+							${tab}${tab}constructor (values? :Iterable<V>)${eol}
 							${tab}}${eol}`;
 						break;
 					case 'WeakSet':
 						tsd += trim`constructor;${eol}
 							${tab}class constructor<V extends object> extends WeakSet<V> {${eol}
-							${tab}${tab}constructor (values :Iterable<V>)${eol}
+							${tab}${tab}constructor (values? :Iterable<V>)${eol}
 							${tab}}${eol}`;
 						break;
 						

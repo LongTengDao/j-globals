@@ -1,7 +1,11 @@
 
 declare module '.Error' { export default Error; }
 
-declare module '.Map' { export default Map; }
+declare module '.Map' { export default constructor;
+	class constructor<K, V> extends Map<K, V> {
+		constructor (entries :Iterable<Readonly<{ 0 :K, 1 :V }>>)
+	}
+}
 
 declare module '.Object.assign' { export default Object.assign; }
 declare module '.Object.create' { export default Object.create; }
@@ -11,7 +15,11 @@ declare module '.Object.freeze' { export default Object.freeze; }
 declare module '.Object.prototype.hasOwnProperty' { export default Object.prototype.hasOwnProperty; }
 declare module '.Object.seal' { export default Object.seal; }
 
-declare module '.Set' { export default Set; }
+declare module '.Set' { export default constructor;
+	class constructor<V> extends Set<V> {
+		constructor (values :Iterable<V>)
+	}
+}
 
 declare module '.Symbol.toStringTag?' { export default Symbol.toStringTag; }
 
