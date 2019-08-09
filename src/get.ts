@@ -9,10 +9,10 @@ import FALLBACK from './FALLBACK';
 import POLYFILL from './POLYFILL';
 import OPTIONS from './OPTIONS';
 
-const NON_GLOBAL = /^\s*(?:eval|exports|module|require|this|__(?:dir|file)name)\s*(?![^.[])/;
 const MODULE_ID = /(?<=^import [a-zA-Z_$][\w$]* from ')\.(.+)(?=';$)/mg;
 const IN_GLOBAL = /^\s*globalThis\s*[.[]/;
 const ASCII_DOTS = /^[a-z_$][\w$]*(?:\.[\w$]*)*$/i;
+const NOT_VARIABLE = /[`~!@#%^&*()\-=+[{\]};:'",<.>/?]/;
 
 export default function get (id :string, { bom = false, tab = '\t', eol = '\n', pre = '.', sur = '' } :OPTIONS = OPTIONS) :string {
 	let code :string = '';
@@ -22,13 +22,11 @@ export default function get (id :string, { bom = false, tab = '\t', eol = '\n', 
 
 function * Chunk ([ chain, multi, fallback, polyfill, exp, along ] :chain_multi_fallback_polyfill_exp_along, bom :boolean, tab :string, eol :string, pre :string, sur :string) :IterableIterator<string> {
 	
-	if ( NON_GLOBAL.test(chain) ) { throw Error(`${chain} 不是全局变量`); }
-	
 	if ( bom ) { yield '\uFEFF'; }
 	
 	if ( !fallback ) {
 		if ( multi ) {
-			yield `export default ${chain};${eol}${eol}`;
+			yield `export default ${wrap(chain)};${eol}${eol}`;
 			const identifiers :string[] = [];
 			for ( const node of MULTI_EXPORT[chain] ) {
 				if ( isReservedWord(node) ) {
@@ -78,7 +76,7 @@ function * Chunk ([ chain, multi, fallback, polyfill, exp, along ] :chain_multi_
 			yield `export default ${along} ? ${ES3Chain(chain)} : undefined;`;
 		}
 		else {
-			yield `export default ${ES3Chain(chain)}`;
+			yield `export default ${wrap(ES3Chain(chain))}`;
 		}
 	}
 	
@@ -86,7 +84,7 @@ function * Chunk ([ chain, multi, fallback, polyfill, exp, along ] :chain_multi_
 		if ( multi ) {
 			yield chain in POLYFILL
 				? `export { default } from '${pre}${chain}?=${sur}';${eol}${eol}`
-				: `export default ${chain};${eol}${eol}`;
+				: `export default ${wrap(chain)};${eol}${eol}`;
 			const identifiers :string[] = [];
 			for ( const node of MULTI_EXPORT[chain] ) {
 				let id :string = `${chain}.${node}`;
@@ -188,6 +186,10 @@ function ES3Chain (chain :string) :string {
 function Nodes (chain :string) :Nodes {
 	if ( ASCII_DOTS.test(chain) ) { return chain.split('.') as Nodes; }
 	throw SyntaxError('暂不支持解析非纯 ASCII 点号获取法');
+}
+
+function wrap (chain :string) :string {
+	return NOT_VARIABLE.test(chain) ? chain : `(${chain})`;
 }
 
 type Nodes = { shift () :string } & string[];

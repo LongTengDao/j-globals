@@ -27,7 +27,7 @@ export { isArrayIndex as isIndex };
 
 export function ToObject (argument, _message) { return Object(/*#__PURE__*/ RequireObjectCoercible(argument, _message)); }
 export function ToString (argument) { return ''+argument; }
-export function ToNumber (argument) { return +argument; }// Number(): bigint?
+export function ToNumber (argument) { return +argument; }// !Number(): throw bigint
 export function ToInteger (argument) {
 	argument = ToNumber(argument);
 	if ( argument!==argument ) { return 0; }
