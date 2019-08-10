@@ -1,6 +1,12 @@
 # http://editorconfig.org
 
-[*.js]
+[*]
+indent_size = 4
+
+[.*]
+indent_size = 4
+
+[/src/**/*.js]
 charset = utf-8
 indent_style = tab
 end_of_line = lf
