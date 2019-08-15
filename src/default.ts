@@ -13,7 +13,7 @@ class Globals extends Set<string> {
 	
 	//static get = get;
 	
-	get (this :Globals, id :string, options :OPTIONS = OPTIONS) :string {
+	get (this :Globals, id :string, options? :OPTIONS) :string {
 		const got :string = get(id, options);
 		this.add(id);
 		return got;
@@ -21,7 +21,7 @@ class Globals extends Set<string> {
 	
 	//add
 	
-	toTSD (this :Globals, options :OPTIONS = OPTIONS) :string {
+	toTSD (this :Globals, options? :OPTIONS) :string {
 		return toTSD([ ...collectAll(this) ].sort().map(fetchChain), options);
 	}
 	

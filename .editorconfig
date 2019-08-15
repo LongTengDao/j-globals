@@ -6,6 +6,9 @@ indent_size = 4
 [.*]
 indent_size = 4
 
+[/docs/*.md]
+indent_style = space
+
 [/src/**/*.js]
 charset = utf-8
 indent_style = tab

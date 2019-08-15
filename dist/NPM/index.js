@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const version = '8.0.1';
+const version = '8.1.0';
 
 const assign = Object.assign;
 
@@ -1304,7 +1304,7 @@ class Globals extends Set         {
 	
 	//static get = get;
 	
-	get (               id        , options          = OPTIONS)         {
+	get (               id        , options          )         {
 		const got         = get(id, options);
 		this.add(id);
 		return got;
@@ -1312,7 +1312,7 @@ class Globals extends Set         {
 	
 	//add
 	
-	toTSD (               options          = OPTIONS)         {
+	toTSD (               options          )         {
 		return toTSD([ ...collectAll(this) ].sort().map(fetchChain), options);
 	}
 	
