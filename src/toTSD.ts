@@ -202,11 +202,21 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 							${tab}${tab}new (value :bigint) :BigInt & object;${eol}
 							${tab}};${eol}`;
 						break;
-					//case 'Object.create':
-					//	tsd += id==='Object.create?='
-					//		? `create;${eol}${tab}function create (o :object | null, properties? :undefined) :any;${eol}`
-					//		: `${chain}; `;
-					//	break;
+					case 'Object.create':
+						if ( id==='Object.create?=' ) {
+							tsd += trim`create;${eol}
+								${tab}function create (proto :null) :object;${eol}
+								${tab}function create<T extends object> (proto :T) :object & { [K in keyof P] :P[K] };${eol}`;
+						}
+						else {
+							tsd += trim`create;${eol}
+								${tab}function create                                                                 (proto :null                  ) :object                                                                                           ;${eol}
+								${tab}function create<                  D extends TypedPropertyDescriptorMap<object>> (proto :null, descriptorMap :D) :object & ( D extends TypedPropertyDescriptorMap<infer O> ? O : never )                           ;${eol}
+								${tab}function create<P extends object                                              > (proto :P                     ) :object &                                                                 { [K in keyof P] :P[K] };${eol}
+								${tab}function create<P extends object, D extends TypedPropertyDescriptorMap<object>> (proto :P,    descriptorMap :D) :object & ( D extends TypedPropertyDescriptorMap<infer O> ? O : never ) & { [K in keyof P] :P[K] };${eol}
+								${tab}type TypedPropertyDescriptorMap<O> = { [K in keyof O] :TypedPropertyDescriptor<O[K]> };${eol}`;
+						}
+						break;
 					case 'Object.fromEntries':
 						tsd += `fromEntries;${eol}${tab}function fromEntries<K extends string | symbol, V extends any> (entries :Iterable<Readonly<{ 0 :K, 1 :V }>>) :{ [k in K] :V };${eol}`;
 						break;
@@ -230,7 +240,7 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 						break;
 					
 					case 'Array.isArray':
-						tsd += `isArray;${eol}${tab}function isArray (value :any) :value is any[] | readonly any[];${eol}`;
+						tsd += `isArray;${eol}${tab}function isArray (value :any) :value is any[] | readonly any[] | Readonly<any[]>;${eol}`;
 						break;
 					
 					case 'Map':
