@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const version = '8.2.0';
+const version = '8.2.1';
 
 const assign = Object.assign;
 
@@ -1228,10 +1228,10 @@ function toTSD (all                              , { bom = false, tab = '\t', eo
 						tsd += `ownKeys;${eol}${tab}function ownKeys<T extends object> (object :T) :Extract<string | symbol, keyof T>[];${eol}`;
 						break;
 					case 'Reflect.apply':
-						tsd += `apply;${eol}${tab}function apply<Target extends (this :any, ...args :any[] | readonly any[]) => any, This extends any, Args extends any[] | readonly any[]> (target :Target, thisArg :This, args :Args) :Target extends (this :This, ...args :Args) => infer R ? R : never;${eol}`;
+						tsd += `apply;${eol}${tab}function apply<Target extends (this :any, ...args :any) => any, This extends any, Args extends any[]> (target :Target, thisArg :This, args :Readonly<Args>) :Target extends (this :This, ...args :Args) => infer R ? R : never;${eol}`;
 						break;
 					case 'Reflect.construct':
-						tsd += `construct;${eol}${tab}function construct<Target extends new (...args :any[] | readonly any[]) => any, Args extends any[] | readonly any[], NewTarget extends new (...args :any[] | readonly any[]) => any> (target :Target, args :Args, newTarget? :NewTarget) :Target extends new (...args :Args) => infer R ? R : never;${eol}`;
+						tsd += `construct;${eol}${tab}function construct<Target extends new (...args :any) => any, Args extends any[], NewTarget extends new (...args :any) => any> (target :Target, args :Readonly<Args>, newTarget? :NewTarget) :Target extends new (...args :Args) => infer R ? R : never;${eol}`;
 						break;
 					
 					case 'Array.isArray':
