@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const version = '8.2.1';
+const version = '8.2.2';
 
 const assign = Object.assign;
 
@@ -1020,8 +1020,8 @@ function toTSD (all                              , { bom = false, tab = '\t', eo
 							${tab}function Default<Statics extends Readonly<{ [key :string] :any, default? :ModuleFunction<Statics, Main> }>, Main extends Callable | Newable | Callable & Newable> (main :Main, statics :Statics) :ModuleFunction<Statics, Main>;${eol}
 							${tab}type Module<Exports> = Readonly<Exports & { default :Module<Exports> }>;${eol}
 							${tab}type ModuleFunction<Statics, Main> = Readonly<Statics & { default :ModuleFunction<Statics, Main> }> & Main;${eol}
-							${tab}type Callable = (...args :any[]) => any;${eol}
-							${tab}type Newable = { new (...args :any[]) :any };${eol}`;
+							${tab}type Callable = (...args :any) => any;${eol}
+							${tab}type Newable = { new (...args :any) :any };${eol}`;
 						break;
 					case 'private':
 						tsd += trim`Private;${eol}${eol}
@@ -1048,7 +1048,7 @@ function toTSD (all                              , { bom = false, tab = '\t', eo
 							${tab}${tab}typeof value extends bigint ? 'bigint' :${eol}
 							${tab}${tab}typeof value extends symbol ? 'symbol' :${eol}
 							${tab}${tab}typeof value extends string ? 'string' :${eol}
-							${tab}${tab}typeof value extends ( (...args :any[]) => any ) | { new (...args :any[]) :any } ? 'function' | 'object' : // IE6~8: typeof alert...DOM/BOM.host method==='object', alert.call===undefined${eol}
+							${tab}${tab}typeof value extends ( (...args :any) => any ) | { new (...args :any) :any } ? 'function' | 'object' : // IE6~8: typeof alert...DOM/BOM.host method==='object', alert.call===undefined${eol}
 							${tab}${tab}//typeof value extends object ? 'object' | 'function' | 'undefined' : // typeof document.all==='undefined' // Chrome1~23, Safari?: typeof /RegExp/==='function' // Safari?: typeof .childNodes/children==='function'${eol}
 							${tab}${tab}Exclude<string, 'boolean' | 'number' | 'string'/* | 'undefined' | 'function' | 'symbol' | 'bigint' | 'null'*/>;// typeof ( /* xhr: */ new ActiveXObject("Msxml2.XMLHTTP") ).abort==='unknown'...'date'${eol}`;
 						break;
@@ -1228,14 +1228,14 @@ function toTSD (all                              , { bom = false, tab = '\t', eo
 						tsd += `ownKeys;${eol}${tab}function ownKeys<T extends object> (object :T) :Extract<string | symbol, keyof T>[];${eol}`;
 						break;
 					case 'Reflect.apply':
-						tsd += `apply;${eol}${tab}function apply<Target extends (this :any, ...args :any) => any, This extends any, Args extends any[]> (target :Target, thisArg :This, args :Readonly<Args>) :Target extends (this :This, ...args :Args) => infer R ? R : never;${eol}`;
+						tsd += `apply;${eol}${tab}function apply<This extends any, Args extends { length :number, [index :number] :any }, Target extends (this :This, ...args :Args & any[]) => any> (target :Target, thisArg :This, args :Readonly<Args>) :Target extends (this :This, ...args :Args & any[]) => infer R ? R : never;${eol}`;
 						break;
 					case 'Reflect.construct':
-						tsd += `construct;${eol}${tab}function construct<Target extends new (...args :any) => any, Args extends any[], NewTarget extends new (...args :any) => any> (target :Target, args :Readonly<Args>, newTarget? :NewTarget) :Target extends new (...args :Args) => infer R ? R : never;${eol}`;
+						tsd += `construct;${eol}${tab}function construct<Args extends { length :number, [index :number] :any }, Target extends new (...args :Args & any[]) => any, NewTarget extends new (...args :any) => any> (target :Target, args :Readonly<Args>, newTarget? :NewTarget) :Target extends new (...args :Args & any[]) => infer R ? R : never;${eol}`;
 						break;
 					
 					case 'Array.isArray':
-						tsd += `isArray;${eol}${tab}function isArray (value :any) :value is any[] | readonly any[] | Readonly<any[]>;${eol}`;
+						tsd += `isArray;${eol}${tab}function isArray (value :any) :value is any[] | Readonly<any[]>;${eol}`;
 						break;
 					
 					case 'Map':
