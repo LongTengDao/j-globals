@@ -9,7 +9,7 @@ declare class exports extends Set<string> {
 }
 
 declare namespace exports {
-	export const version :'8.2.2';
+	export const version :'8.2.3';
 	export class Globals extends Set<string> {
 		constructor ();
 		static get (id :string, options? :{ bom? :boolean, tab? :string, eol? :string, pre? :string, sur? :string }) :string;

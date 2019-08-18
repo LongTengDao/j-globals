@@ -17,7 +17,7 @@ declare module '.Object.create' { export default create;
 }
 declare module '.Object.create?=' { export default create;
 	function create (proto :null) :object;
-	function create<T extends object> (proto :T) :object & { [K in keyof P] :P[K] };
+	function create<P extends object> (proto :P) :object & { [K in keyof P] :P[K] };
 }
 declare module '.Object.defineProperty' { export default Object.defineProperty; }
 declare module '.Object.freeze' { export default Object.freeze; }

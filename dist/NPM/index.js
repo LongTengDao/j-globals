@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const version = '8.2.2';
+const version = '8.2.3';
 
 const assign = Object.assign;
 
@@ -1194,7 +1194,7 @@ function toTSD (all                              , { bom = false, tab = '\t', eo
 						if ( id==='Object.create?=' ) {
 							tsd += trim`create;${eol}
 								${tab}function create (proto :null) :object;${eol}
-								${tab}function create<T extends object> (proto :T) :object & { [K in keyof P] :P[K] };${eol}`;
+								${tab}function create<P extends object> (proto :P) :object & { [K in keyof P] :P[K] };${eol}`;
 						}
 						else {
 							tsd += trim`create;${eol}
