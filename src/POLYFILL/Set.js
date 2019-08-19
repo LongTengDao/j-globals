@@ -2,10 +2,10 @@ import Symbol_iterator from '.Symbol.iterator?';
 import undefined from '.undefined';
 import TypeError from '.TypeError';
 import defineProperty from '.null.defineProperty';
-import Object_defineProperty from '.Object.defineProperty';
 import of from '.for.of';
 import PropertyDescriptor from '.null.PropertyDescriptor';
 import { defineIndexValue, createBound } from '.native';
+var Object_defineProperty = Object.defineProperty;
 export default (
 	/*! j-globals: Set (polyfill) */
 	typeof Set==='function' && Set.prototype && /*#__PURE__*/ function () {

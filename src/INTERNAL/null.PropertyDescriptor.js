@@ -1,4 +1,4 @@
-import create from '.Object.create';
+var create = Object.create;
 export default (
 	/*! j-globals: null.PropertyDescriptor (internal) */
 	function () {

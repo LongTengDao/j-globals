@@ -1,10 +1,10 @@
 import create from '.Object.create?=';
-import assign from '.Object.assign';
 import hasOwnProperty from '.Object.prototype.hasOwnProperty';
 import toStringTag from '.Symbol.toStringTag?';
-import defineProperty from '.Object.defineProperty';
-import freeze from '.Object.freeze';
-import seal from '.Object.seal';
+var assign = Object.assign;
+var defineProperty = Object.defineProperty;
+var freeze = Object.freeze;
+var seal = Object.seal;
 export default (
 	/*! j-globals: default (internal) */
 	function Default (exports, addOnOrigin) {

@@ -1,6 +1,6 @@
-import Object_defineProperty from '.Object.defineProperty';
-import create from '.Object.create';
 import hasOwnProperty from '.Object.prototype.hasOwnProperty';
+var create = Object.create;
+var Object_defineProperty = Object.defineProperty;
 export default (
 	/*! j-globals: null.defineProperty (internal) */
 	function () {

@@ -1,8 +1,8 @@
-import Object_fromEntries from '.Object.fromEntries';
 import TypeError from '.TypeError';
 import create from '.Object.create?=';
 import of from '.for.of';
-import assign from '.Object.assign';
+var Object_fromEntries = Object.fromEntries;
+var assign = Object.assign;
 export default (
 	/*! j-globals: null.fromEntries (polyfill) */
 	Object_fromEntries

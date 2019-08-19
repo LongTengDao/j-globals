@@ -48,7 +48,6 @@ import _Buffer_allocUnsafe from './POLYFILL/Buffer.allocUnsafe?text';
 import _Buffer_allocUnsafeSlow from './POLYFILL/Buffer.allocUnsafeSlow?text';
 
 import _NULL_assign from './POLYFILL/null.assign?text';
-import _NULL_create from './POLYFILL/null.create?text';
 import _NULL_fromEntries from './POLYFILL/null.fromEntries?text';
 import _NULL from './POLYFILL/null?text';
 
@@ -70,7 +69,6 @@ const POLYFILL = /*#__PURE__*/ assign(create(null), {
 	'String.prototype.codePointAt': _String_prototype_codePointAt,
 	
 	'null.assign': _NULL_assign,
-	'null.create': _NULL_create,
 	'null.fromEntries': _NULL_fromEntries,
 	'null': _NULL,
 	

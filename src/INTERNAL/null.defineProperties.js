@@ -1,9 +1,9 @@
-import getOwnPropertySymbols from '.Object.getOwnPropertySymbols';
-import keys from '.Object.keys';
 import propertyIsEnumerable from '.Object.prototype.propertyIsEnumerable';
-import create from '.Object.create';
 import hasOwnProperty from '.Object.prototype.hasOwnProperty';
-import Object_defineProperties from '.Object.defineProperties';
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var keys = Object.keys;
+var create = Object.create;
+var Object_defineProperties = Object.defineProperties;
 export default (
 	/*! j-globals: null.defineProperties (internal) */
 	function () {
