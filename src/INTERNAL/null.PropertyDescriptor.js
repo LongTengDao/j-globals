@@ -4,13 +4,9 @@ export default (
 	function () {
 		function __PURE__ (value_get, set_writable, enumerable, configurable) {
 			var propertyDescriptor = create(null);
-			if ( set_writable===true ) {
+			if ( set_writable===true || set_writable===false ) {
 				propertyDescriptor.value = value_get;
-				propertyDescriptor.writable = true;
-			}
-			else if ( set_writable===false ) {
-				propertyDescriptor.value = value_get;
-				propertyDescriptor.writable = false;
+				propertyDescriptor.writable = set_writable;
 			}
 			else {
 				propertyDescriptor.get = value_get;

@@ -346,6 +346,7 @@ export default /*#__PURE__*/ assign(create(null), {
 		'getOwnPropertyDescriptor',
 		'getOwnPropertyDescriptors',
 		'PropertyDescriptor',
+		'readonly',
 	],
 	
 	'throw': [

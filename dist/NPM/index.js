@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const version = '8.2.4';
+const version = '8.3.0';
 
 const assign = Object.assign;
 
@@ -351,6 +351,7 @@ const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
 		'getOwnPropertyDescriptor',
 		'getOwnPropertyDescriptors',
 		'PropertyDescriptor',
+		'readonly',
 	],
 	
 	'throw': [
@@ -552,7 +553,9 @@ const NULL_getOwnPropertyDescriptor = 'import Object_getOwnPropertyDescriptor fr
 
 const NULL_getOwnPropertyDescriptors = 'import create from \'.Object.create\';\nimport getOwnPropertyDescriptor from \'.null.getOwnPropertyDescriptor\';\nvar ownKeys = typeof Reflect===\'object\' ? Reflect.ownKeys : Object.getOwnPropertyNames;\nexport default (\n	/*! j-globals: null.getOwnPropertyDescriptors (internal) */\n	function getOwnPropertyDescriptors (object) {\n		var descriptorMap = /*#__PURE__*/ create(null);\n		for ( var keys = /*#__PURE__*/ ownKeys(object), length = keys.length, index = 0; index<length; ++index ) {\n			var key = keys[index];\n			descriptorMap[key] = /*#__PURE__*/ getOwnPropertyDescriptor(object, key);\n		}\n		return descriptorMap;\n	}\n	/*¡ j-globals: null.getOwnPropertyDescriptors (internal) */\n);';
 
-const NULL_PropertyDescriptor = 'var create = Object.create;\nexport default (\n	/*! j-globals: null.PropertyDescriptor (internal) */\n	function () {\n		function __PURE__ (value_get, set_writable, enumerable, configurable) {\n			var propertyDescriptor = create(null);\n			if ( set_writable===true ) {\n				propertyDescriptor.value = value_get;\n				propertyDescriptor.writable = true;\n			}\n			else if ( set_writable===false ) {\n				propertyDescriptor.value = value_get;\n				propertyDescriptor.writable = false;\n			}\n			else {\n				propertyDescriptor.get = value_get;\n				propertyDescriptor.set = set_writable;\n			}\n			propertyDescriptor.enumerable = enumerable;\n			propertyDescriptor.configurable = configurable;\n			return propertyDescriptor;\n		}\n		return function PropertyDescriptor (value_get, set_writable, enumerable, configurable) {\n			return /*#__PURE__*/ __PURE__(value_get, set_writable, enumerable, configurable);\n		};\n	}()\n	/*¡ j-globals: null.PropertyDescriptor (internal) */\n);';
+const NULL_PropertyDescriptor = 'var create = Object.create;\nexport default (\n	/*! j-globals: null.PropertyDescriptor (internal) */\n	function () {\n		function __PURE__ (value_get, set_writable, enumerable, configurable) {\n			var propertyDescriptor = create(null);\n			if ( set_writable===true || set_writable===false ) {\n				propertyDescriptor.value = value_get;\n				propertyDescriptor.writable = set_writable;\n			}\n			else {\n				propertyDescriptor.get = value_get;\n				propertyDescriptor.set = set_writable;\n			}\n			propertyDescriptor.enumerable = enumerable;\n			propertyDescriptor.configurable = configurable;\n			return propertyDescriptor;\n		}\n		return function PropertyDescriptor (value_get, set_writable, enumerable, configurable) {\n			return /*#__PURE__*/ __PURE__(value_get, set_writable, enumerable, configurable);\n		};\n	}()\n	/*¡ j-globals: null.PropertyDescriptor (internal) */\n);';
+
+const NULL_readonly = 'var create = Object.create;\nexport default (\n	/*! j-globals: null.readonly (internal) */\n	function () {\n		function __PURE__ (value) {\n			var propertyDescriptor = create(null);\n			propertyDescriptor.value = value;\n			propertyDescriptor.writable = false;\n			propertyDescriptor.enumerable = true;\n			propertyDescriptor.configurable = false;\n			return propertyDescriptor;\n		}\n		return function readonly (value) {\n			return /*#__PURE__*/ __PURE__(value);\n		};\n	}()\n	/*¡ j-globals: null.readonly (internal) */\n);';
 
 const RETURN = 'export default (\n	/*! j-globals: return (internal) */\n	function RETURN (value) {\n		return value;\n	}\n	/*¡ j-globals: return (internal) */\n);';
 
@@ -612,6 +615,7 @@ const INTERNAL = /*#__PURE__*/ assign(create(null), {
 	'null.getOwnPropertyDescriptors': NULL_getOwnPropertyDescriptors,
 	'null.fromEntries': NULL_fromEntries,
 	'null.PropertyDescriptor': NULL_PropertyDescriptor,
+	'null.readonly': NULL_readonly,
 	
 	'return': RETURN,
 	'return.true': return_true,
@@ -1118,6 +1122,10 @@ function toTSD (all                              , { bom = false, tab = '\t', eo
 						tsd += trim`PropertyDescriptor;${eol}
 							${tab}function PropertyDescriptor<V extends any, W extends boolean, E extends boolean, C extends boolean> (value :V, writable :W, enumerable :E, configurable :C) :{ value :V, writable :W, enumerable :E, configurable :C };${eol}
 							${tab}function PropertyDescriptor<G extends ( () => any ) | undefined, S extends ( (value :any) => void ) | undefined, E extends boolean, C extends boolean> (get :G, set :S, enumerable :E, configurable :C) :{ get :G, set :S, enumerable :E, configurable :C };${eol}`;
+						break;
+					case 'null.readonly':
+						tsd += trim`readonly;${eol}
+							${tab}function readonly<V extends any> (value :V) :{ value :V, writable :false, enumerable :true, configurable :false };${eol}`;
 						break;
 					case 'null':
 						tsd += trim`NULL;${eol}

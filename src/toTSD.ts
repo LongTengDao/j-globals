@@ -134,6 +134,10 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 							${tab}function PropertyDescriptor<V extends any, W extends boolean, E extends boolean, C extends boolean> (value :V, writable :W, enumerable :E, configurable :C) :{ value :V, writable :W, enumerable :E, configurable :C };${eol}
 							${tab}function PropertyDescriptor<G extends ( () => any ) | undefined, S extends ( (value :any) => void ) | undefined, E extends boolean, C extends boolean> (get :G, set :S, enumerable :E, configurable :C) :{ get :G, set :S, enumerable :E, configurable :C };${eol}`;
 						break;
+					case 'null.readonly':
+						tsd += trim`readonly;${eol}
+							${tab}function readonly<V extends any> (value :V) :{ value :V, writable :false, enumerable :true, configurable :false };${eol}`;
+						break;
 					case 'null':
 						tsd += trim`NULL;${eol}
 							${tab}const NULL :{${eol}
