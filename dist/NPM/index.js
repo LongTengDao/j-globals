@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const version = '9.0.1';
+const version = '10.0.0';
 
 const assign = Object.assign;
 
@@ -351,7 +351,7 @@ const MULTI_EXPORT = /*#__PURE__*/ assign(create(null), {
 		'getOwnPropertyDescriptor',
 		'getOwnPropertyDescriptors',
 		'PropertyDescriptor',
-		'readonly',
+		'Readonly',
 	],
 	
 	'throw': [
@@ -555,7 +555,7 @@ const NULL_getOwnPropertyDescriptors = 'import create from \'.Object.create\';\n
 
 const NULL_PropertyDescriptor = 'var create = Object.create;\nexport default (\n	/*! j-globals: null.PropertyDescriptor (internal) */\n	function () {\n		function __PURE__ (value_get, set_writable, enumerable, configurable) {\n			var propertyDescriptor = create(null);\n			if ( set_writable===true || set_writable===false ) {\n				propertyDescriptor.value = value_get;\n				propertyDescriptor.writable = set_writable;\n			}\n			else {\n				propertyDescriptor.get = value_get;\n				propertyDescriptor.set = set_writable;\n			}\n			propertyDescriptor.enumerable = enumerable;\n			propertyDescriptor.configurable = configurable;\n			return propertyDescriptor;\n		}\n		return function PropertyDescriptor (value_get, set_writable, enumerable, configurable) {\n			return /*#__PURE__*/ __PURE__(value_get, set_writable, enumerable, configurable);\n		};\n	}()\n	/*¡ j-globals: null.PropertyDescriptor (internal) */\n);';
 
-const NULL_readonly = 'var create = Object.create;\nexport default (\n	/*! j-globals: null.readonly (internal) */\n	function () {\n		function __PURE__ (value) {\n			var propertyDescriptor = create(null);\n			propertyDescriptor.value = value;\n			propertyDescriptor.writable = false;\n			propertyDescriptor.enumerable = true;\n			propertyDescriptor.configurable = false;\n			return propertyDescriptor;\n		}\n		return function readonly (value) {\n			return /*#__PURE__*/ __PURE__(value);\n		};\n	}()\n	/*¡ j-globals: null.readonly (internal) */\n);';
+const NULL_Readonly = 'import push from \'.Array.prototype.push\';\nexport default (\n	/*! j-globals: null.Readonly (internal) */\n	function () {\n		var create = Object.create;\n		var getOwnPropertyNames = Object.getOwnPropertyNames;\n		var getOwnPropertySymbols = Object.getOwnPropertySymbols;\n		function __PURE__ (source, deep) {\n			var descriptorMap = create(null);\n			var keys = getOwnPropertyNames(source);\n			if ( getOwnPropertySymbols ) { push.apply(keys, getOwnPropertySymbols(source)); }\n			for ( var index = 0, length = keys.length; index<length; ++index ) {\n				var key = keys[index];\n				var value = source[key];\n				var descriptor = create(null);\n				descriptor.value = deep && typeof value===\'object\' && value ? __PURE__(value, deep) : value;\n				descriptor.writable = false;\n				descriptor.enumerable = true;\n				descriptor.configurable = false;\n				descriptorMap[key] = descriptor;\n			}\n			return create(null, descriptorMap);\n		}\n		return function Readonly (object, deep) {\n			return /*#__PURE__*/ __PURE__(object, deep);\n		};\n	}()\n	/*¡ j-globals: null.Readonly (internal) */\n);';
 
 const RETURN = 'export default (\n	/*! j-globals: return (internal) */\n	function RETURN (value) {\n		return value;\n	}\n	/*¡ j-globals: return (internal) */\n);';
 
@@ -615,7 +615,7 @@ const INTERNAL = /*#__PURE__*/ assign(create(null), {
 	'null.getOwnPropertyDescriptors': NULL_getOwnPropertyDescriptors,
 	'null.fromEntries': NULL_fromEntries,
 	'null.PropertyDescriptor': NULL_PropertyDescriptor,
-	'null.readonly': NULL_readonly,
+	'null.Readonly': NULL_Readonly,
 	
 	'return': RETURN,
 	'return.true': return_true,
@@ -1123,9 +1123,11 @@ function toTSD (all                              , { bom = false, tab = '\t', eo
 							${tab}function PropertyDescriptor<V extends any, W extends boolean, E extends boolean, C extends boolean> (value :V, writable :W, enumerable :E, configurable :C) :{ value :V, writable :W, enumerable :E, configurable :C };${eol}
 							${tab}function PropertyDescriptor<G extends ( () => any ) | undefined, S extends ( (value :any) => void ) | undefined, E extends boolean, C extends boolean> (get :G, set :S, enumerable :E, configurable :C) :{ get :G, set :S, enumerable :E, configurable :C };${eol}`;
 						break;
-					case 'null.readonly':
-						tsd += trim`readonly;${eol}
-							${tab}function readonly<V extends any> (value :V) :{ value :V, writable :false, enumerable :true, configurable :false };${eol}`;
+					case 'null.Readonly':
+						tsd += trim`Readonly;${eol}
+							${tab}function Readonly<T extends object> (source :T, deep? :false) :Readonly<T>;${eol}
+							${tab}function Readonly<T extends object> (source :T, deep :true) :ReadonlyDeep<T>;${eol}
+							${tab}type ReadonlyDeep<T> = { [K in T] :T[K] extends object ? ReadonlyDeep<T[K]> :T[K] };`;
 						break;
 					case 'null':
 						tsd += trim`NULL;${eol}

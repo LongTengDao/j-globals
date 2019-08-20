@@ -29,7 +29,7 @@ import NULL_fromEntries from './INTERNAL/null.fromEntries?text';
 import NULL_getOwnPropertyDescriptor from './INTERNAL/null.getOwnPropertyDescriptor?text';
 import NULL_getOwnPropertyDescriptors from './INTERNAL/null.getOwnPropertyDescriptors?text';
 import NULL_PropertyDescriptor from './INTERNAL/null.PropertyDescriptor?text';
-import NULL_readonly from './INTERNAL/null.readonly?text';
+import NULL_Readonly from './INTERNAL/null.Readonly?text';
 
 import RETURN from './INTERNAL/return?text';
 import return_true from './INTERNAL/return.true?text';
@@ -79,7 +79,7 @@ const INTERNAL = /*#__PURE__*/ assign(create(null), {
 	'null.getOwnPropertyDescriptors': NULL_getOwnPropertyDescriptors,
 	'null.fromEntries': NULL_fromEntries,
 	'null.PropertyDescriptor': NULL_PropertyDescriptor,
-	'null.readonly': NULL_readonly,
+	'null.Readonly': NULL_Readonly,
 	
 	'return': RETURN,
 	'return.true': return_true,
