@@ -1,11 +1,10 @@
 import Object_create from '.Object.create?=';
 import hasOwnProperty from '.Object.prototype.hasOwnProperty';
-import throwError from '.throw.Error';
 export default (
 	/*! j-globals: null (polyfill) */
 	/*#__PURE__*/ function () {
 		'use strict';
-		function assign (target, source) {
+		var assign = Object.assign || function assign (target, source) {
 			for ( var key in source ) {
 				if ( hasOwnProperty.call(source, key) ) { target[key] = source[key]; }
 			}
@@ -18,11 +17,9 @@ export default (
 			if ( hasOwnProperty.call(source, 'constructor') ) { target.constructor = source.constructor; }
 			return target;
 		}
-		var NULL = function (object, define) {
+		var NULL = function (object) {
 			if ( object ) {
-				return define
-					? /*#__PURE__*/ throwError('null?= can not define')
-					: /*#__PURE__*/ assign(/*#__PURE__*/ Object_create(null), object);
+				return /*#__PURE__*/ assign(/*#__PURE__*/ Object_create(null), object);
 			}
 		};
 		delete NULL.name;
