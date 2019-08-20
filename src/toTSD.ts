@@ -141,10 +141,10 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 					case 'null':
 						tsd += trim`NULL;${eol}
 							${tab}const NULL :{${eol}
-							${tab}${tab}new<ValueType extends any> () :NULL<ValueType>,${eol}
+							${tab}${tab}new<ValueType> () :NULL<ValueType>,${eol}
 							${tab}${tab}new () :object,${eol}
-							${tab}${tab}<_ extends never, Object extends object> (object :Object, define? :boolean) :Object,${eol}
-							${tab}${tab}<ValueType> (object :object, define? :boolean) :NULL<ValueType>,${eol}
+							${tab}${tab}<_ extends never, ObjectType extends object> (object :ObjectType) :ObjectType,${eol}
+							${tab}${tab}<ValueType> (object :object) :NULL<ValueType>,${eol}
 							${tab}};${eol}
 							${tab}type NULL<ValueType> = {${eol}
 							${tab}${tab}[key :string] :undefined | ValueType,${eol}
@@ -188,8 +188,9 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 						break;
 					
 					case 'Object':
-						tsd += trim`Object;${eol}
-							${tab}const Object :{
+						tsd += trim`O;${eol}
+							${tab}type O = Object;${eol}
+							${tab}const O :typeof Object & {${eol}
 							${tab}${tab}<T extends object> (value :T) :T;${eol}
 							${tab}${tab}(value? :undefined | null) :object;${eol}
 							${tab}${tab}(value :boolean) :Boolean & object;${eol}

@@ -1,11 +1,10 @@
 import Symbol_iterator from '.Symbol.iterator?';
 import undefined from '.undefined';
 import TypeError from '.TypeError';
-import defineProperty from '.null.defineProperty';
 import of from '.for.of';
 import PropertyDescriptor from '.null.PropertyDescriptor';
 import { defineIndexValue, createBound } from '.native';
-var Object_defineProperty = Object.defineProperty;
+import NaN from '.NaN';
 export default (
 	/*! j-globals: Map (polyfill) */
 	typeof Map==='function' && Map.prototype && /*#__PURE__*/ function () {
@@ -137,35 +136,70 @@ export default (
 		
 		function values () { return new MapIterator(this, 'values'); }
 		
-		if ( Object_defineProperty ) {
-			defineProperty(Map, 'prototype', { configurable: false, enumerable: false, writable: false, value: Map.prototype });
-			defineProperty(Map.prototype, 'constructor', { configurable: true, enumerable: false, writable: true, value: Map });
-			defineProperty(Map.prototype, 'get', { configurable: true, enumerable: false, writable: true, value: get });
-			defineProperty(Map.prototype, 'set', { configurable: true, enumerable: false, writable: true, value: set });
-			defineProperty(Map.prototype, 'has', { configurable: true, enumerable: false, writable: true, value: has });
-			defineProperty(Map.prototype, 'delete', { configurable: true, enumerable: false, writable: true, value: delete$ });
-			defineProperty(Map.prototype, 'clear', { configurable: true, enumerable: false, writable: true, value: clear });
-			defineProperty(Map.prototype, 'entries', { configurable: true, enumerable: false, writable: true, value: entries });
-			defineProperty(Map.prototype, 'forEach', { configurable: true, enumerable: false, writable: true, value: forEach });
-			defineProperty(Map.prototype, 'keys', { configurable: true, enumerable: false, writable: true, value: keys });
+		function MapIterator (set, kind) {
+			this._index = 0;
+			this._kind = kind;
+			this._keys = set._keys;
+			this._values = set._values;
+		}
+		
+		function next () {
+			var _index = this._index;
+			var _keys = this._keys;
+			var length = _keys.length;
+			if ( _index<length ) {
+				do {
+					var key = _keys[_index];
+					if ( key===DELETED ) { continue; }
+					this._index = _index+1;
+					return {
+						value:
+							this._kind==='entries' ? [key, this._values[_index]] :
+								this._kind==='values' ? this._values[_index] :
+									key,
+						done: false
+					};
+				}
+				while ( ++_index<length );
+				this._index = _index;
+			}
+			return { value: undefined, done: true };
+		}
+		
+		if ( Object.create ) {
+			var Object_defineProperty = Object.defineProperty;
+			
+			var prototype = Map.prototype;
+			Object_defineProperty(Map, 'prototype', PropertyDescriptor(prototype, false, false, false));
+			//Object_defineProperty(prototype, 'constructor', PropertyDescriptor(Map, true, false, true));
+			Object_defineProperty(prototype, 'get', PropertyDescriptor(get, true, false, true));
+			Object_defineProperty(prototype, 'set', PropertyDescriptor(set, true, false, true));
+			Object_defineProperty(prototype, 'has', PropertyDescriptor(has, true, false, true));
+			Object_defineProperty(prototype, 'delete', PropertyDescriptor(delete$, true, false, true));
+			Object_defineProperty(prototype, 'clear', PropertyDescriptor(clear, true, false, true));
+			Object_defineProperty(prototype, 'entries', PropertyDescriptor(entries, true, false, true));
+			Object_defineProperty(prototype, 'forEach', PropertyDescriptor(forEach, true, false, true));
+			Object_defineProperty(prototype, 'keys', PropertyDescriptor(keys, true, false, true));
 			var SIZE = PropertyDescriptor(0, true, false, false);
-			defineProperty(Map.prototype, 'size', { configurable: true, enumerable: false, get: size, set: function size (value) { Object_defineProperty(this, 'size', SIZE); } });
-			defineProperty(Map.prototype, 'values', { configurable: true, enumerable: false, writable: true, value: values });
-			defineProperty(Map.prototype, 'toString', { configurable: true, enumerable: false, writable: true, value: function toString () { return '[object Map]'; } });
-			defineProperty(Map.prototype, '_keys', {
-				configurable: false, enumerable: false, get: undefined,
-				set: function _keys (value) { Object_defineProperty(this, '_keys', PropertyDescriptor(value, false, false, false)); }
-			});
-			defineProperty(Map.prototype, '_values', {
-				configurable: false, enumerable: false, get: undefined,
-				set: function _values (value) { Object_defineProperty(this, '_values', PropertyDescriptor(value, false, false, false)); }
-			});
+			Object_defineProperty(prototype, 'size', PropertyDescriptor(size, function size (value) { Object_defineProperty(this, 'size', SIZE); }, false, true));
+			Object_defineProperty(prototype, 'values', PropertyDescriptor(values, true, false, true));
+			Object_defineProperty(prototype, 'toString', PropertyDescriptor(function () { return '[object Map]'; }, true, false, true));
+			Object_defineProperty(prototype, '_keys', PropertyDescriptor(undefined, function _keys (value) { Object_defineProperty(this, '_keys', PropertyDescriptor(value, false, false, false)); }, false, false));
+			Object_defineProperty(prototype, '_values', PropertyDescriptor(undefined, function _values (value) { Object_defineProperty(this, '_values', PropertyDescriptor(value, false, false, false)); }, false, false));
+			
+			prototype = MapIterator.prototype;
+			Object_defineProperty(MapIterator, 'prototype', PropertyDescriptor(prototype, false, false, false));
+			//Object_defineProperty(prototype, 'constructor', PropertyDescriptor(MapIterator, true, false, true));
+			Object_defineProperty(prototype, 'next', PropertyDescriptor(next, true, false, true));
+			Object_defineProperty(prototype, 'toString', PropertyDescriptor(function () { return '[object Map]'; }, true, false, true));
+			
 			if ( Symbol_iterator!==undefined ) {
-				defineProperty(Map.prototype, Symbol_iterator, { configurable: true, enumerable: false, writable: true, value: entries });
+				Object_defineProperty(Map.prototype, Symbol_iterator, PropertyDescriptor(entries, true, false, true));
+				Object_defineProperty(prototype, Symbol_iterator, PropertyDescriptor(function () { return this; }, true, false, true));
 			}
 		}
 		else {
-			var Size = Object(0/0);
+			var Size = Object(NaN);
 			Size.valueOf = Size.toString = size;
 			Map.prototype = {
 				constructor: Map,
@@ -179,53 +213,21 @@ export default (
 				keys: keys,
 				size: Size,
 				values: values,
-				toString: function toString () { return '[object Map]'; },
+				toString: function () { return '[object Map]'; },
 				_keys: [],
 				_values: []
 			};
-			if ( Symbol_iterator!==undefined ) { Map.prototype[Symbol_iterator] = entries; }
-		}
-		
-		function MapIterator (set, kind) {
-			this._index = 0;
-			this._kind = kind;
-			this._keys = set._keys;
-			this._values = set._values;
-		}
-		
-		MapIterator.prototype = {
 			
-			constructor: MapIterator,
+			MapIterator.prototype = {
+				constructor: MapIterator,
+				next: next,
+				toString: function () { return '[object Map Iterator]'; }
+			};
 			
-			next: function next () {
-				var _index = this._index;
-				var _keys = this._keys;
-				var length = _keys.length;
-				if ( _index<length ) {
-					do {
-						var key = _keys[_index];
-						if ( key===DELETED ) { continue; }
-						this._index = _index+1;
-						return {
-							value:
-								this._kind==='entries' ? [key, this._values[_index]] :
-									this._kind==='values' ? this._values[_index] :
-										key,
-							done: false
-						};
-					}
-					while ( ++_index<length );
-					this._index = _index;
-				}
-				return { value: undefined, done: true };
-			},
-			
-			toString: function toString () { return '[object Map Iterator]'; }
-			
-		};
-		
-		if ( Symbol_iterator!==undefined ) {
-			MapIterator.prototype[Symbol_iterator] = function iterator () { return this; };
+			if ( Symbol_iterator!==undefined ) {
+				Map.prototype[Symbol_iterator] = entries;
+				MapIterator.prototype[Symbol_iterator] = function () { return this; };
+			}
 		}
 		
 		return Map;

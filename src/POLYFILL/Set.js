@@ -1,11 +1,10 @@
 import Symbol_iterator from '.Symbol.iterator?';
 import undefined from '.undefined';
 import TypeError from '.TypeError';
-import defineProperty from '.null.defineProperty';
 import of from '.for.of';
 import PropertyDescriptor from '.null.PropertyDescriptor';
 import { defineIndexValue, createBound } from '.native';
-var Object_defineProperty = Object.defineProperty;
+import NaN from '.NaN';
 export default (
 	/*! j-globals: Set (polyfill) */
 	typeof Set==='function' && Set.prototype && /*#__PURE__*/ function () {
@@ -119,31 +118,67 @@ export default (
 		
 		function keys () { return new SetIterator(this, 'keys'); }
 		
-		if ( defineProperty ) {
-			defineProperty(Set, 'prototype', { configurable: false, enumerable: false, writable: false, value: Set.prototype });
-			defineProperty(Set.prototype, 'constructor', { configurable: true, enumerable: false, writable: true, value: Set });
-			defineProperty(Set.prototype, 'has', { configurable: true, enumerable: false, writable: true, value: has });
-			defineProperty(Set.prototype, 'add', { configurable: true, enumerable: false, writable: true, value: add });
-			defineProperty(Set.prototype, 'delete', { configurable: true, enumerable: false, writable: true, value: delete$ });
-			defineProperty(Set.prototype, 'clear', { configurable: true, enumerable: false, writable: true, value: clear });
-			defineProperty(Set.prototype, 'entries', { configurable: true, enumerable: false, writable: true, value: entries });
-			defineProperty(Set.prototype, 'forEach', { configurable: true, enumerable: false, writable: true, value: forEach });
-			var SIZE = PropertyDescriptor(0, true, false, false);
-			defineProperty(Set.prototype, 'size', { configurable: true, enumerable: false, get: size, set: function size (value) { Object_defineProperty(this, 'size', SIZE); } });
-			defineProperty(Set.prototype, 'values', { configurable: true, enumerable: false, writable: true, value: values });
-			defineProperty(Set.prototype, 'keys', { configurable: true, enumerable: false, writable: true, value: keys });
-			defineProperty(Set.prototype, 'toString', { configurable: true, enumerable: false, writable: true, value: function toString () { return '[object Set]'; } });
-			defineProperty(Set.prototype, '_values', {
-				configurable: false, enumerable: false, get: undefined,
-				set: function _values (value) { Object_defineProperty(this, '_values', PropertyDescriptor(value, false, false, false)); }
-			});
-			if ( Symbol_iterator!==undefined ) {
-				defineProperty(Set.prototype, Symbol_iterator, { configurable: true, enumerable: false, writable: true, value: values });
-			}
+		function SetIterator (set, kind) {
+			this._index = 0;
+			this._kind = kind;
+			this._values = set._values;
 		}
 		
+		function next () {
+			var _index = this._index;
+			var _values = this._values;
+			var length = _values.length;
+			if ( _index<length ) {
+				do {
+					var value = _values[_index++];
+					if ( value===DELETED ) { continue; }
+					this._index = _index;
+					return {
+						value:
+							this._kind==='entries'
+								? [value, value]
+								: value,
+						done: false
+					};
+				}
+				while ( _index<length );
+				this._index = _index;
+			}
+			return { value: undefined, done: true };
+		}
+		
+		if ( Object.create ) {
+			var Object_defineProperty = Object.defineProperty;
+			
+			var prototype = Set.prototype;
+			Object_defineProperty(Set, 'prototype', PropertyDescriptor(prototype, false, false, false));
+			//Object_defineProperty(prototype, 'constructor', PropertyDescriptor(Set, true, false, true));
+			Object_defineProperty(prototype, 'has', PropertyDescriptor(has, true, false, true));
+			Object_defineProperty(prototype, 'add', PropertyDescriptor(add, true, false, true));
+			Object_defineProperty(prototype, 'delete', PropertyDescriptor(delete$, true, false, true));
+			Object_defineProperty(prototype, 'clear', PropertyDescriptor(clear, true, false, true));
+			Object_defineProperty(prototype, 'entries', PropertyDescriptor(entries, true, false, true));
+			Object_defineProperty(prototype, 'forEach', PropertyDescriptor(forEach, true, false, true));
+			var SIZE = PropertyDescriptor(0, true, false, false);
+			Object_defineProperty(prototype, 'size', PropertyDescriptor(size, function size (value) { Object_defineProperty(this, 'size', SIZE); }, false, true));
+			Object_defineProperty(prototype, 'values', PropertyDescriptor(values, true, false, true));
+			Object_defineProperty(prototype, 'keys', PropertyDescriptor(keys, true, false, true));
+			Object_defineProperty(prototype, 'toString', PropertyDescriptor(function () { return '[object Set]'; }, true, false, true));
+			Object_defineProperty(prototype, '_values', PropertyDescriptor(undefined, function _values (value) { Object_defineProperty(this, '_values', PropertyDescriptor(value, false, false, false)); }, false, false));
+			
+			prototype = SetIterator.prototype;
+			Object_defineProperty(SetIterator, 'prototype', PropertyDescriptor(prototype, false, false, false));
+			//Object_defineProperty(prototype, 'constructor', PropertyDescriptor(SetIterator, true, false, true));
+			Object_defineProperty(prototype, 'next', PropertyDescriptor(next, true, false, true));
+			Object_defineProperty(prototype, 'toString', PropertyDescriptor(function () { return '[object Set Iterator]'; }, true, false, true));
+			
+			if ( Symbol_iterator!==undefined ) {
+				Object_defineProperty(Set.prototype, Symbol_iterator, PropertyDescriptor(values, true, false, true));
+				Object_defineProperty(prototype, Symbol_iterator, PropertyDescriptor(function () { return this; }, true, false, true));
+			}
+		}
 		else {
-			var Size = Object(0/0);
+			var Size = Object(NaN);
 			Size.valueOf = Size.toString = size;
 			Set.prototype = {
 				constructor: Set,
@@ -156,51 +191,20 @@ export default (
 				size: Size,
 				values: values,
 				keys: keys,
-				toString: function toString () { return '[object Set]'; },
+				toString: function () { return '[object Set]'; },
 				_values: []
 			};
-			if ( Symbol_iterator!==undefined ) { Set.prototype[Symbol_iterator] = values; }
-		}
-		
-		function SetIterator (set, kind) {
-			this._index = 0;
-			this._kind = kind;
-			this._values = set._values;
-		}
-		
-		SetIterator.prototype = {
 			
-			constructor: SetIterator,
+			SetIterator.prototype = {
+				constructor: SetIterator,
+				next: next,
+				toString: function () { return '[object Set Iterator]'; }
+			};
 			
-			next: function next () {
-				var _index = this._index;
-				var _values = this._values;
-				var length = _values.length;
-				if ( _index<length ) {
-					do {
-						var value = _values[_index++];
-						if ( value===DELETED ) { continue; }
-						this._index = _index;
-						return {
-							value:
-								this._kind==='entries'
-									? [value, value]
-									: value,
-							done: false
-						};
-					}
-					while ( _index<length );
-					this._index = _index;
-				}
-				return { value: undefined, done: true };
-			},
-			
-			toString: function toString () { return '[object Set Iterator]'; }
-			
-		};
-		
-		if ( Symbol_iterator!==undefined ) {
-			SetIterator.prototype[Symbol_iterator] = function iterator () { return this; };
+			if ( Symbol_iterator!==undefined ) {
+				Set.prototype[Symbol_iterator] = values;
+				SetIterator.prototype[Symbol_iterator] = function () { return this; };
+			}
 		}
 		
 		return Set;

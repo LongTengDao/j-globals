@@ -1,9 +1,9 @@
 import propertyIsEnumerable from '.Object.prototype.propertyIsEnumerable';
 import hasOwnProperty from '.Object.prototype.hasOwnProperty';
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var keys = Object.keys;
-var create = Object.create;
-var Object_defineProperties = Object.defineProperties;
+import create from '.Object.create';
+import keys from '.Object.keys';
+import getOwnPropertySymbols from '.Object.getOwnPropertySymbols';
+import Object_defineProperties from '.Object.defineProperties';
 export default (
 	/*! j-globals: null.defineProperties (internal) */
 	function () {
@@ -24,12 +24,10 @@ export default (
 				var name = names[index];
 				created[name] = Descriptor(descriptorMap[name]);
 			}
-			if ( getOwnPropertySymbols ) {
-				var symbols = getOwnPropertySymbols(descriptorMap);
-				for ( length = symbols.length, index = 0; index<length; ++index ) {
-					var symbol = symbols[index];
-					if ( propertyIsEnumerable.call(descriptorMap, symbol) ) { created[symbol] = Descriptor(descriptorMap[symbol]); }
-				}
+			var symbols = getOwnPropertySymbols(descriptorMap);
+			for ( length = symbols.length, index = 0; index<length; ++index ) {
+				var symbol = symbols[index];
+				if ( propertyIsEnumerable.call(descriptorMap, symbol) ) { created[symbol] = Descriptor(descriptorMap[symbol]); }
 			}
 			return Object_defineProperties(object, created);
 		};
