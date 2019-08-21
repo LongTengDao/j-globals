@@ -1,5 +1,5 @@
 export default (
 	/*! j-globals: return.sideeffects (internal) */
-	/*#__PURE__*/ Function('return function SideEffects (value) { return value; }')()
+	/*#__PURE__*/ Function('"use strict";return function(_){return _}')()
 	/*¡ j-globals: return.sideeffects (internal) */
 );

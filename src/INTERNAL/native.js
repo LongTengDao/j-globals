@@ -9,6 +9,8 @@ import Array_prototype from '.Array.prototype';
 import fromCharCode from '.String.fromCharCode';
 import ArrayCreate from '.Array';
 
+export var throwOverflow = /*#__PURE__*/ Function('return function(){}')();
+
 //                 18446744073709551615 // 0xFFFFFFFFFFFFFFFF //                                                         // 0b1777777777777777777777 // 2**64-1
 //                  9223372036854775807 // 0x7FFFFFFFFFFFFFFF //                                                         // 0b0777777777777777777777 // 2**63-1
 var MAX_SAFE_INTEGER = 9007199254740991;// 0x001FFFFFFFFFFFFF // 0b11111111111111111111111111111111111111111111111111111 // 0o0000377777777777777777 // 2**53-1
