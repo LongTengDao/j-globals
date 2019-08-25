@@ -1,6 +1,7 @@
 import hasOwnProperty from '.Object.prototype.hasOwnProperty';
 import create from '.Object.create';
 import Object_defineProperty from '.Object.defineProperty';
+import NULL from '.null.prototype';
 export default (
 	/*! j-globals: null.defineProperty (internal) */
 	function () {
@@ -10,7 +11,7 @@ export default (
 			return true;
 		};
 		function Descriptor (source) {
-			var target = create(null);
+			var target = create(NULL);
 			if ( hasOwnProperty.call(source, 'value') ) { target.value = source.value; }
 			if ( hasOwnProperty.call(source, 'writable') ) { target.writable = source.writable; }
 			if ( hasOwnProperty.call(source, 'get') ) { target.get = source.get; }

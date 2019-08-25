@@ -1,9 +1,10 @@
 import Object_getOwnPropertyDescriptor from '.Object.getOwnPropertyDescriptor';
+import NULL from '.null.prototype';
 export default (
 	/*! j-globals: null.getOwnPropertyDescriptor (internal) */
 	function () {
 		function __PURE__ (descriptor) {
-			var propertyDescriptor = create(null);
+			var propertyDescriptor = create(NULL);
 			if ( descriptor.hasOwnProperty('value') ) {
 				propertyDescriptor.value = descriptor.value;
 				propertyDescriptor.writable = descriptor.writable;

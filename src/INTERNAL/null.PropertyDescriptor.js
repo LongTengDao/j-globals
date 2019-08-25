@@ -1,9 +1,10 @@
+import NULL from '.null.prototype';
 var create = Object.create;
 export default (
 	/*! j-globals: null.PropertyDescriptor (internal) */
 	function () {
 		function __PURE__ (value_get, set_writable, enumerable, configurable) {
-			var propertyDescriptor = create(null);
+			var propertyDescriptor = create(NULL);
 			if ( set_writable===true || set_writable===false ) {
 				propertyDescriptor.value = value_get;
 				propertyDescriptor.writable = set_writable;

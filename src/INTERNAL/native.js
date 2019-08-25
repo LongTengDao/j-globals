@@ -8,6 +8,7 @@ import Object_prototype from '.Object.prototype';
 import Array_prototype from '.Array.prototype';
 import fromCharCode from '.String.fromCharCode';
 import ArrayCreate from '.Array';
+import NULL from '.null.prototype';
 
 export var throwOverflow = /*#__PURE__*/ Function('return function(){}')();
 
@@ -110,7 +111,7 @@ export function ArraySpeciesCreate (originalArray, length) {
 }
 
 var descriptor = Object.create && /*#__PURE__*/ function () {
-	var descriptor = Object.create(null);
+	var descriptor = Object.create(NULL);
 	descriptor.value = undefined;
 	descriptor.writable = true;
 	descriptor.enumerable = true;

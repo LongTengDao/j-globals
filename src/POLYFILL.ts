@@ -1,6 +1,8 @@
 import assign from '.Object.assign';
 import create from '.Object.create';
 
+import NULL from './NULL';
+
 import _Default from './POLYFILL/default?text';
 
 import _Reflect_ownKeys from './POLYFILL/Reflect.ownKeys?text';
@@ -60,7 +62,7 @@ import _String_prototype_codePointAt from './POLYFILL/String.prototype.codePoint
 
 import _document_head from './POLYFILL/document.head?text';
 
-const POLYFILL = /*#__PURE__*/ assign(create(null), {
+const POLYFILL = /*#__PURE__*/ assign(create(NULL), {
 	
 	'default': _Default,
 	

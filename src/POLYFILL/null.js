@@ -1,5 +1,6 @@
 import Object_create from '.Object.create?=';
 import hasOwnProperty from '.Object.prototype.hasOwnProperty';
+import _NULL from '.null.prototype';
 export default (
 	/*! j-globals: null (polyfill) */
 	/*#__PURE__*/ function () {
@@ -19,7 +20,7 @@ export default (
 		}
 		var NULL = function (object) {
 			if ( object ) {
-				return /*#__PURE__*/ assign(/*#__PURE__*/ Object_create(null), object);
+				return /*#__PURE__*/ assign(/*#__PURE__*/ Object_create(_NULL), object);
 			}
 		};
 		delete NULL.name;

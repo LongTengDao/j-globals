@@ -1,7 +1,9 @@
 import assign from '.Object.assign';
 import create from '.Object.create';
 
-export default /*#__PURE__*/ assign(create(null), {
+import NULL from './NULL';
+
+export default /*#__PURE__*/ assign(create(NULL), {
 	
 	'Array': [ 'prototype', 'from', 'isArray', 'of' ],
 	'Array.prototype': [
@@ -338,6 +340,7 @@ export default /*#__PURE__*/ assign(create(null), {
 	*/
 	
 	'null': [
+		'prototype',
 		'assign',
 		'create',
 		'defineProperties',

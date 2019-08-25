@@ -1,6 +1,8 @@
 import assign from '.Object.assign';
 import create from '.Object.create';
 
+import NULL from './NULL';
+
 import Default from './INTERNAL/default?text';
 import Private from './INTERNAL/private?text';
 import of from './INTERNAL/for.of?text';
@@ -20,7 +22,8 @@ import class_isPromise from './INTERNAL/class.isPromise?text';
 import class_isSymbol from './INTERNAL/class.isSymbol?text';
 import class_isBigInt from './INTERNAL/class.isBigInt?text';
 
-import NULL from './INTERNAL/null?text';
+import NULL_prototype from './INTERNAL/null.prototype?text';
+import NULL_ from './INTERNAL/null?text';
 import NULL_assign from './INTERNAL/null.assign?text';
 import NULL_create from './INTERNAL/null.create?text';
 import NULL_defineProperties from './INTERNAL/null.defineProperties?text';
@@ -46,7 +49,7 @@ import throwURIError from './INTERNAL/throw.URIError?text';
 
 import NATIVE from './INTERNAL/native?text';
 
-const INTERNAL = /*#__PURE__*/ assign(create(null), {
+const INTERNAL = /*#__PURE__*/ assign(create(NULL), {
 	
 	'native': NATIVE,
 	
@@ -69,7 +72,8 @@ const INTERNAL = /*#__PURE__*/ assign(create(null), {
 	'class.isSymbol': class_isSymbol,
 	'class.isBigInt': class_isBigInt,
 	
-	'null': NULL,
+	'null.prototype': NULL_prototype,
+	'null': NULL_,
 	'null.assign': NULL_assign,
 	'null.create': NULL_create,
 	'null.defineProperties': NULL_defineProperties,

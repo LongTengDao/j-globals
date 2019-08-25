@@ -1,17 +1,18 @@
 import create from '.Object.create';
 import defineProperty from '.Object.defineProperty';
 import RETURN from '.return';
+import NULL from '.null.prototype';
 export default (
 	/*! j-globals: private (internal) */
 	typeof WeakMap==='function'
 		? /*#__PURE__*/ function () {
 			var Weak = WeakMap;
-			var GET = create(null);
+			var GET = create(NULL);
 			GET.value = Weak.prototype.get;
-			var SET = create(null);
+			var SET = create(NULL);
 			SET.value = Weak.prototype.set;
 			function add (weak, THIS) {
-				var _THIS = create(null);
+				var _THIS = create(NULL);
 				weak.set(THIS, _THIS);
 				return _THIS;
 			}

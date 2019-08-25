@@ -2,13 +2,14 @@ import undefined from '.undefined';
 import propertyIsEnumerable from '.Object.prototype.propertyIsEnumerable';
 import hasOwnProperty from '.Object.prototype.hasOwnProperty';
 import Object_create from '.Object.create';
+import NULL from '.null.prototype';
 export default (
 	/*! j-globals: null.create (internal) */
 	function () {
 		var keys = Object.keys;
 		var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 		function Descriptor (source) {
-			var target = Object_create(null);
+			var target = Object_create(NULL);
 			if ( hasOwnProperty.call(source, 'value') ) { target.value = source.value; }
 			if ( hasOwnProperty.call(source, 'writable') ) { target.writable = source.writable; }
 			if ( hasOwnProperty.call(source, 'get') ) { target.get = source.get; }
@@ -18,7 +19,7 @@ export default (
 			return target;
 		}
 		function __PURE__ (proto, descriptorMap) {
-			var created = Object_create(null);
+			var created = Object_create(NULL);
 			var names = keys(descriptorMap);
 			for ( var length = names.length, index = 0; index<length; ++index ) {
 				var name = names[index];

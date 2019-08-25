@@ -4,11 +4,12 @@ import create from '.Object.create';
 import keys from '.Object.keys';
 import getOwnPropertySymbols from '.Object.getOwnPropertySymbols';
 import Object_defineProperties from '.Object.defineProperties';
+import NULL from '.null.prototype';
 export default (
 	/*! j-globals: null.defineProperties (internal) */
 	function () {
 		function Descriptor (source) {
-			var target = create(null);
+			var target = create(NULL);
 			if ( hasOwnProperty.call(source, 'value') ) { target.value = source.value; }
 			if ( hasOwnProperty.call(source, 'writable') ) { target.writable = source.writable; }
 			if ( hasOwnProperty.call(source, 'get') ) { target.get = source.get; }
@@ -18,7 +19,7 @@ export default (
 			return target;
 		}
 		return function defineProperties (object, descriptorMap) {
-			var created = create(null);
+			var created = create(NULL);
 			var names = keys(descriptorMap);
 			for ( var length = names.length, index = 0; index<length; ++index ) {
 				var name = names[index];

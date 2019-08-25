@@ -23,7 +23,7 @@ export default (
 			if ( !( __global_this_access_key__ in {} ) ) {
 				try { __\u5168\u5C40_\u5BF9\u8C61_\u8BBF\u95EE_\u952E\u540D__; }
 				catch (error) {
-					var d = Object.create(null);
+					var d = Object.create(import NULL from '.null.prototype');
 					d.get = function () { return this; };
 					d.configurable = true;
 					try {

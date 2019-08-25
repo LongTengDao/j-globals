@@ -81,16 +81,16 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 						tsd += `isRegExp;${eol}${tab}function isRegExp (value :any) :value is RegExp;${eol}`;
 						break;
 					case 'class.isMap':
-						tsd += `isMap;${eol}${tab}function isMap (value :any) :value is Map;${eol}`;
+						tsd += `isMap;${eol}${tab}function isMap (value :any) :value is Map<any, any>;${eol}`;
 						break;
 					case 'class.isSet':
-						tsd += `isSet;${eol}${tab}function isSet (value :any) :value is Set;${eol}`;
+						tsd += `isSet;${eol}${tab}function isSet (value :any) :value is Set<any>;${eol}`;
 						break;
 					case 'class.isWeakMap':
-						tsd += `isWeakMap;${eol}${tab}function isWeakMap (value :any) :value is WeakMap;${eol}`;
+						tsd += `isWeakMap;${eol}${tab}function isWeakMap (value :any) :value is WeakMap<any, any>;${eol}`;
 						break;
 					case 'class.isWeakSet':
-						tsd += `isWeakSet;${eol}${tab}function isWeakSet (value :any) :value is WeakSet;${eol}`;
+						tsd += `isWeakSet;${eol}${tab}function isWeakSet (value :any) :value is WeakSet<any>;${eol}`;
 						break;
 					case 'class.isPromise':
 						tsd += `isPromise;${eol}${tab}function isPromise (value :any) :value is Promise<any>;${eol}`;
@@ -157,6 +157,9 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 							${tab}${tab}__proto__? :ValueType,${eol}
 							${tab}${tab}constructor? :ValueType,${eol}
 							${tab}};${eol}`;
+						break;
+					case 'null.prototype':
+						tsd += `NULL;${eol}${tab}const NULL :object | null;${eol}`;
 						break;
 					
 					case 'return':
