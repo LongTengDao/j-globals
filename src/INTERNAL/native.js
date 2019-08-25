@@ -15,7 +15,7 @@ export var throwOverflow = /*#__PURE__*/ Function('return function(){}')();
 //                 18446744073709551615 // 0xFFFFFFFFFFFFFFFF //                                                         // 0b1777777777777777777777 // 2**64-1
 //                  9223372036854775807 // 0x7FFFFFFFFFFFFFFF //                                                         // 0b0777777777777777777777 // 2**63-1
 var MAX_SAFE_INTEGER = 9007199254740991;// 0x001FFFFFFFFFFFFF // 0b11111111111111111111111111111111111111111111111111111 // 0o0000377777777777777777 // 2**53-1
-var MAX_ARRAY_LENGTH =       4294967295;// 0x00000000FFFFFFFF // 0b00000000000000000000011111111111111111111111111111111 // 0o0000000000037777777777 // 2**32-1
+var MAX_ARRAY_LENGTH = /*  */4294967295;// 0x00000000FFFFFFFF // 0b00000000000000000000011111111111111111111111111111111 // 0o0000000000037777777777 // 2**32-1
 //                                      // 0x000000003FFFFFFF // 0b00000000000000000000000111111111111111111111111111111 // 0o0000000000007777777777 // 2**30-1
 //var MAX_STRING_LENGTH =    1073741799;// 0x000000003FFFFFE7 // 0b00000000000000000000000111111111111111111111111100111 // 0o0000000000007777777747 // 2**30-1-24
 var LIKE_SAFE_INTEGER = /^(?:0|[1-9]\d{0,15})$/;
@@ -34,7 +34,7 @@ export function ToNumber (argument) { return +argument; }// !Number(): throw big
 export function ToInteger (argument) {
 	argument = ToNumber(argument);
 	if ( argument!==argument ) { return 0; }
-	if ( argument===0 || argument===Infinity || argument===-Infinity ) { return argument; }
+	if ( argument===0 || argument===Infinity || argument=== -Infinity ) { return argument; }
 	return argument>0 ? floor(argument) : -floor(-argument);
 }
 export function RequireObjectCoercible (argument, _message) {
@@ -129,11 +129,20 @@ export var defineIndexValue = Object.create
 	};
 export var defineKeyValue = Object.create
 	? typeof Symbol==='function'
-		? function CreateDataProperty (object, key, value) {
-			if ( typeof key!=='symbol' ) { key = ''+key; }
-			key in Object_prototype && defineProperty(object, key, descriptor);
-			object[key] = value;
-		}
+		? typeof Proxy==='function'
+			? function () {
+				var PropertyKey = /*#__PURE__*/ new Proxy({}, { get: function (target, key) { return key; } });
+				return function CreateDataProperty (object, key, value) {
+					key = PropertyKey[key];
+					key in Object_prototype && defineProperty(object, key, descriptor);
+					object[key] = value;
+				};
+			}()
+			: function CreateDataProperty (object, key, value) {
+				descriptor.value = value;
+				try {defineProperty(object, key, descriptor);}
+				finally { descriptor.value = undefined; }
+			}
 		: function CreateDataProperty (object, key, value) {
 			key = ''+key;
 			key in Object_prototype && defineProperty(object, key, descriptor);
@@ -143,15 +152,18 @@ export var defineKeyValue = Object.create
 		object[key] = value;
 	};
 
-export var createBound = function () { 'use strict'; return this===undefined; }()
+export var createBound = function () {
+	'use strict';
+	return this;
+}()
 	? function createBound (fn, thisArg) {
-		if ( thisArg==null ) { throw TypeError('undefined or null cannot become this in ES3'); }
-		return function bound () {
+		return thisArg===undefined ? fn : function bound () {
 			return apply.call(fn, thisArg, arguments);
 		};
 	}
 	: function createBound (fn, thisArg) {
-		return thisArg===undefined ? fn : function bound () {
+		if ( thisArg==null ) { throw TypeError('undefined or null cannot become this in ES3'); }
+		return function bound () {
 			return apply.call(fn, thisArg, arguments);
 		};
 	};

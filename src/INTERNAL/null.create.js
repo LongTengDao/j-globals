@@ -36,7 +36,7 @@ export default (
 		}
 		return function create (proto, descriptorMap) {
 			return descriptorMap===undefined
-				? /*#__PURE__*/ Object_create(proto===undefined ? null : proto)
+				? /*#__PURE__*/ Object_create(proto===undefined ? NULL : proto)
 				: /*#__PURE__*/ __PURE__(proto, descriptorMap);
 		};
 	}()
