@@ -209,15 +209,11 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 					case 'Object.create':
 						if ( id==='Object.create?=' ) {
 							tsd += trim`create;${eol}
-								${tab}function create (proto :null) :object;${eol}
-								${tab}function create<P extends object> (proto :P) :object & { [K in keyof P] :P[K] };${eol}`;
+								${tab}function create<P extends object | null> (proto :P) :P extends object ? object & { [K in keyof P] :P[K] } : object;${eol}`;
 						}
 						else {
 							tsd += trim`create;${eol}
-								${tab}function create                                                                 (proto :null                  ) :object                                                                                           ;${eol}
-								${tab}function create<                  D extends TypedPropertyDescriptorMap<object>> (proto :null, descriptorMap :D) :object & ( D extends TypedPropertyDescriptorMap<infer O> ? O : never )                           ;${eol}
-								${tab}function create<P extends object                                              > (proto :P                     ) :object &                                                                 { [K in keyof P] :P[K] };${eol}
-								${tab}function create<P extends object, D extends TypedPropertyDescriptorMap<object>> (proto :P,    descriptorMap :D) :object & ( D extends TypedPropertyDescriptorMap<infer O> ? O : never ) & { [K in keyof P] :P[K] };${eol}
+								${tab}function create<P extends object | null, D extends TypedPropertyDescriptorMap<object> | void> (proto :P,    descriptorMap? :D) :object & ( D extends TypedPropertyDescriptorMap<infer O> ? O : object ) & ( P extends object ? { [K in keyof P] :P[K] } : object );${eol}
 								${tab}type TypedPropertyDescriptorMap<O> = { [K in keyof O] :TypedPropertyDescriptor<O[K]> };${eol}`;
 						}
 						break;
