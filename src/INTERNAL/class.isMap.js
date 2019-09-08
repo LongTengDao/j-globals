@@ -1,11 +1,11 @@
 import has from '.Map.prototype.has?';
-import { throwOverflow } from '.native';
+import throwStackOverflowErrorEarly from '.void.KEEP';
 export default (
 	/*! j-globals: class.isMap (internal) */
 	has
 		? function () {
 			function __PURE__ (value) {
-				throwOverflow();
+				throwStackOverflowErrorEarly();
 				try { has.call(value); }
 				catch (error) { return false; }
 				return true;

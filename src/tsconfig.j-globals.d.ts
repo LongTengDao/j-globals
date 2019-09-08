@@ -1,9 +1,7 @@
 
-declare module '.Array' { export default Array; }
 declare module '.Array.isArray?=' { export default isArray;
-	function isArray (value :any) :value is any[] | Readonly<any[]>;
+	function isArray (value :any) :value is readonly any[];
 }
-declare module '.Array.prototype' { export default Array.prototype; }
 
 declare module '.Date.prototype.valueOf' { export default Date.prototype.valueOf; }
 
@@ -19,11 +17,9 @@ declare module '.Map' { export default constructor;
 }
 declare module '.Map.prototype.has?' { export default Map.prototype.has; }
 
-declare module '.Math.floor' { export default Math.floor; }
-
 declare module '.Object' { export default O;
 	type O = Object;
-	const O :typeof Object & {
+	const O :{
 		<T extends object> (value :T) :T;
 		(value? :undefined | null) :object;
 		(value :boolean) :Boolean & object;
@@ -38,23 +34,20 @@ declare module '.Object' { export default O;
 		new (value :string) :String & object;
 		new (value :symbol) :Symbol & object;
 		new (value :bigint) :BigInt & object;
+	} & {
+		readonly [Method in keyof typeof Object] :typeof Object[Method];
 	};
 }
 declare module '.Object.assign' { export default Object.assign; }
 declare module '.Object.create' { export default create;
-	function create                                                                 (proto :null                  ) :object                                                                                           ;
-	function create<                  D extends TypedPropertyDescriptorMap<object>> (proto :null, descriptorMap :D) :object & ( D extends TypedPropertyDescriptorMap<infer O> ? O : never )                           ;
-	function create<P extends object                                              > (proto :P                     ) :object &                                                                 { [K in keyof P] :P[K] };
-	function create<P extends object, D extends TypedPropertyDescriptorMap<object>> (proto :P,    descriptorMap :D) :object & ( D extends TypedPropertyDescriptorMap<infer O> ? O : never ) & { [K in keyof P] :P[K] };
+	function create<P extends object | null, D extends TypedPropertyDescriptorMap<object> | void> (proto :P,    descriptorMap? :D) :object & ( D extends TypedPropertyDescriptorMap<infer O> ? O : object ) & ( P extends object ? { [K in keyof P] :P[K] } : object );
 	type TypedPropertyDescriptorMap<O> = { [K in keyof O] :TypedPropertyDescriptor<O[K]> };
 }
 declare module '.Object.create?=' { export default create;
-	function create (proto :null) :object;
-	function create<P extends object> (proto :P) :object & { [K in keyof P] :P[K] };
+	function create<P extends object | null> (proto :P) :P extends object ? object & { [K in keyof P] :P[K] } : object;
 }
 declare module '.Object.defineProperty' { export default Object.defineProperty; }
 declare module '.Object.freeze' { export default Object.freeze; }
-declare module '.Object.prototype' { export default Object.prototype; }
 declare module '.Object.prototype.hasOwnProperty' { export default Object.prototype.hasOwnProperty; }
 declare module '.Object.prototype.toString' { export default Object.prototype.toString; }
 declare module '.Object.seal' { export default Object.seal; }
@@ -69,9 +62,6 @@ declare module '.Set' { export default constructor;
 }
 declare module '.Set.prototype.has?' { export default Set.prototype.has; }
 
-declare module '.String.fromCharCode' { export default String.fromCharCode; }
-
-declare module '.Symbol.species?' { export default Symbol.species; }
 declare module '.Symbol.toStringTag?' { export default Symbol.toStringTag; }
 
 declare module '.SyntaxError' { export default SyntaxError; }
@@ -106,8 +96,6 @@ declare module '.default?=' { export default Default;
 	type Newable = { new (...args :any) :any };
 }
 
-declare module '.native' { export default _; const _ :never; }
-
 declare module '.null.prototype' { export default NULL;
 	const NULL :object | null;
 }
@@ -117,3 +105,7 @@ declare module '.throw.Error' { export default throwError;
 }
 
 declare module '.undefined' { export default undefined; }
+
+declare module '.void.KEEP' { export default KEEP;
+	function KEEP (...args :any[]) :void;
+}

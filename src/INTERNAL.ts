@@ -7,6 +7,8 @@ import Default from './INTERNAL/default?text';
 import Private from './INTERNAL/private?text';
 import of from './INTERNAL/for.of?text';
 
+import For from './INTERNAL/Symbol.For?text';
+
 import TYPEOF from './INTERNAL/typeof?text';
 
 import class_isBoolean from './INTERNAL/class.isBoolean?text';
@@ -21,6 +23,7 @@ import class_isWeakSet from './INTERNAL/class.isWeakSet?text';
 import class_isPromise from './INTERNAL/class.isPromise?text';
 import class_isSymbol from './INTERNAL/class.isSymbol?text';
 import class_isBigInt from './INTERNAL/class.isBigInt?text';
+import class_isPrimitive from './INTERNAL/class.isPrimitive?text';
 
 import NULL_prototype from './INTERNAL/null.prototype?text';
 import NULL_ from './INTERNAL/null?text';
@@ -36,7 +39,9 @@ import NULL_PropertyDescriptor from './INTERNAL/null.PropertyDescriptor?text';
 import RETURN from './INTERNAL/return?text';
 import return_true from './INTERNAL/return.true?text';
 import return_false from './INTERNAL/return.false?text';
-import return_sideeffects from './INTERNAL/return.sideeffects?text';
+import return_KEEP from './INTERNAL/return.KEEP?text';
+
+import void_KEEP from './INTERNAL/void.KEEP?text';
 
 import throwError from './INTERNAL/throw.Error?text';
 import throwEvalError from './INTERNAL/throw.EvalError?text';
@@ -57,6 +62,8 @@ const INTERNAL = /*#__PURE__*/ assign(create(NULL), {
 	'private': Private,
 	'for.of': of,
 	
+	'Symbol.For': For,
+	
 	'typeof': TYPEOF,
 	
 	'class.isBoolean': class_isBoolean,
@@ -71,6 +78,7 @@ const INTERNAL = /*#__PURE__*/ assign(create(NULL), {
 	'class.isPromise': class_isPromise,
 	'class.isSymbol': class_isSymbol,
 	'class.isBigInt': class_isBigInt,
+	'class.isPrimitive': class_isPrimitive,
 	
 	'null.prototype': NULL_prototype,
 	'null': NULL_,
@@ -86,7 +94,9 @@ const INTERNAL = /*#__PURE__*/ assign(create(NULL), {
 	'return': RETURN,
 	'return.true': return_true,
 	'return.false': return_false,
-	'return.sideeffects': return_sideeffects,
+	'return.KEEP': return_KEEP,
+	
+	'void.KEEP': void_KEEP,
 	
 	'throw.Error': throwError,
 	'throw.EvalError': throwEvalError,

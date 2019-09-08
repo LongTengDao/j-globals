@@ -1,11 +1,11 @@
 import has from '.WeakMap.prototype.has?';
-import { throwOverflow } from '.native';
+import throwStackOverflowErrorEarly from '.void.KEEP';
 export default (
 	/*! j-globals: class.isWeakMap (internal) */
 	has
 		? function () {
 			function __PURE__ (value) {
-				throwOverflow();
+				throwStackOverflowErrorEarly();
 				try { has.call(value, has); }
 				catch (error) { return false; }
 				return true;

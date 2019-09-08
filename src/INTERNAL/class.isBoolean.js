@@ -1,10 +1,10 @@
 import valueOf from '.Boolean.prototype.valueOf';
-import { throwOverflow } from '.native';
+import throwStackOverflowErrorEarly from '.void.KEEP';
 export default (
 	/*! j-globals: class.isBoolean (internal) */
 	function () {
 		function __PURE__ (value) {
-			throwOverflow();
+			throwStackOverflowErrorEarly();
 			try { valueOf.call(value); }
 			catch (error) { return false; }
 			return true;

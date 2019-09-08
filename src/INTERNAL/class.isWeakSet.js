@@ -1,11 +1,11 @@
 import has from '.WeakSet.prototype.has?';
-import { throwOverflow } from '.native';
+import throwStackOverflowErrorEarly from '.void.KEEP';
 export default (
 	/*! j-globals: class.isWeakSet (internal) */
 	has
 		? function () {
 			function __PURE__ (value) {
-				throwOverflow();
+				throwStackOverflowErrorEarly();
 				try { has.call(value, has); }
 				catch (error) { return false; }
 				return true;

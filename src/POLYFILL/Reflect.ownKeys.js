@@ -1,6 +1,6 @@
 import getOwnPropertyNames from '.Object.getOwnPropertyNames?=';
 import push from '.Array.prototype.push';
-import { Type, TheObjectType } from '.native';
+import isPrimitive from '.class.isPrimitive';
 export default typeof Reflect==='object' ? Reflect.ownKeys : (
 	/*! j-globals: Reflect.ownKeys (polyfill) */
 	/*#__PURE__*/ function () {
@@ -28,13 +28,13 @@ export default typeof Reflect==='object' ? Reflect.ownKeys : (
 		if ( !__PURE__ ) {
 			__PURE__ = Object_getOwnPropertySymbols
 				? function ownKeys (object) {
-					if ( Type(object)!==TheObjectType ) { throw TypeError('Reflect.ownKeys called on non-object'); }
+					if ( isPrimitive(object) ) { throw TypeError('Reflect.ownKeys called on non-object'); }
 					var keys = Object_getOwnPropertyNames(object);
 					push.apply(keys, Object_getOwnPropertySymbols);
 					return keys;
 				}
 				: function ownKeys (object) {
-					if ( Type(object)!==TheObjectType ) { throw TypeError('Reflect.ownKeys called on non-object'); }
+					if ( isPrimitive(object) ) { throw TypeError('Reflect.ownKeys called on non-object'); }
 					return Object_getOwnPropertyNames(object);
 				};
 		}

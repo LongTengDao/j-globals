@@ -36,7 +36,7 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 							${tab}type Newable = { new (...args :any) :any };${eol}`;
 						break;
 					case 'private':
-						tsd += trim`Private;${eol}${eol}
+						tsd += trim`Private;${eol}
 							${tab}function Private () :{${eol}
 							${tab}${tab}(instance :object) :void${eol}
 							${tab}${tab}<Private extends object, Public extends object> (instance :Public) :Private${eol}
@@ -48,6 +48,14 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 						break;
 					case 'for.of':
 						tsd += `of;${eol}${tab}function of<V extends any, T extends any> (arrayLike_iterable :Iterable<V>, callbackfn :(this :T, value :V) => void | boolean, thisArg? :T) :void;${eol}`;
+						break;
+						
+					case 'Symbol.For':
+						tsd += trim`For;${eol}
+						${tab}function For () :{${eol}
+						${tab}${tab}(name :string) :symbol${eol}
+						${tab}${tab}[name :string] :symbol${eol}
+						${tab}};${eol}`;
 						break;
 					
 					case 'typeof':
@@ -100,6 +108,9 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 						break;
 					case 'class.isBigInt':
 						tsd += `isBigInt;${eol}${tab}function isBigInt (value :any) :value is BigInt;${eol}`;
+						break;
+					case 'class.toPrimitive':
+						tsd += `isPrimitive;${eol}${tab}function isPrimitive (value :any) :value is undefined | null | boolean | string | symbol | number | bigint;${eol}`;
 						break;
 					
 					case 'null.assign':
@@ -163,7 +174,6 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 						break;
 					
 					case 'return':
-					case 'return.sideeffects':
 						tsd += `RETURN;${eol}${tab}function RETURN<T extends any> (value :T) :T;${eol}`;
 						break;
 					case 'return.false':
@@ -171,6 +181,13 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 						break;
 					case 'return.true':
 						tsd += `return_true;${eol}${tab}function return_true () :true;${eol}`;
+						break;
+					case 'return.KEEP':
+						tsd += `KEEP;${eol}${tab}function KEEP<T extends any> (value :T) :T;${eol}`;
+						break;
+					
+					case 'void.KEEP':
+						tsd += `KEEP;${eol}${tab}function KEEP (...args :any[]) :void;${eol}`;
 						break;
 					
 					case 'throw':
@@ -189,7 +206,7 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 					case 'Object':
 						tsd += trim`O;${eol}
 							${tab}type O = Object;${eol}
-							${tab}const O :typeof Object & {${eol}
+							${tab}const O :{${eol}
 							${tab}${tab}<T extends object> (value :T) :T;${eol}
 							${tab}${tab}(value? :undefined | null) :object;${eol}
 							${tab}${tab}(value :boolean) :Boolean & object;${eol}
@@ -204,6 +221,8 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 							${tab}${tab}new (value :string) :String & object;${eol}
 							${tab}${tab}new (value :symbol) :Symbol & object;${eol}
 							${tab}${tab}new (value :bigint) :BigInt & object;${eol}
+							${tab}} & {${eol}
+							${tab}${tab}readonly [Method in keyof typeof Object] :typeof Object[Method];${eol}
 							${tab}};${eol}`;
 						break;
 					case 'Object.create':
@@ -247,7 +266,7 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 						break;
 					
 					case 'Array.isArray':
-						tsd += `isArray;${eol}${tab}function isArray (value :any) :value is any[] | Readonly<any[]>;${eol}`;
+						tsd += `isArray;${eol}${tab}function isArray (value :any) :value is readonly any[];${eol}`;
 						break;
 					
 					case 'Map':

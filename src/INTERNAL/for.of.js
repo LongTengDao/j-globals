@@ -4,7 +4,8 @@ import toString from '.Object.prototype.toString';
 import charAt from '.String.prototype.charAt';
 import return_false from '.return.false';
 import String_prototype from 'String.prototype';
-import { createBound, Type, TheObjectType } from '.native';
+import { createBound } from '.native';
+import isPrimitive from '.class.isPrimitive';
 export default (
 	/*! j-globals: for.of (internal) */
 	/*#__PURE__*/ function () { 'use strict';
@@ -35,10 +36,10 @@ export default (
 			var length, index;
 			if ( isIterable(arrayLike_iterable) ) {
 				arrayLike_iterable = arrayLike_iterable[Symbol_iterator]();
-				if ( Type(arrayLike_iterable)!==TheObjectType ) { throw TypeError('Result of the Symbol.iterator method is not an object'); }
+				if ( isPrimitive(arrayLike_iterable) ) { throw TypeError('Result of the Symbol.iterator method is not an object'); }
 				for ( index = 0; ; ++index ) {
 					var step = arrayLike_iterable.next();
-					if ( Type(step)!==TheObjectType ) { throw TypeError('Iterator result '+step+' is not an object'); }
+					if ( isPrimitive(step) ) { throw TypeError('Iterator result '+step+' is not an object'); }
 					if ( step.done ) { break; }
 					if ( tryFnValue_tryReturn_throw(callbackfn, step.value, arrayLike_iterable) ) {
 						tryReturn(arrayLike_iterable);

@@ -366,12 +366,17 @@ export default /*#__PURE__*/ assign(create(NULL), {
 		'isMap', 'isSet', 'isWeakMap', 'isWeakSet',
 		'isPromise', 'isSymbol',
 		'isBigInt',
+		'isPrimitive',
 	],
 	
 	'return': [
 		'true',
 		'false',
-		'sideeffects',
+		'KEEP',
+	],
+	
+	'void': [
+		'KEEP',
 	],
 	
 }) as { [chain :string] :string[] };

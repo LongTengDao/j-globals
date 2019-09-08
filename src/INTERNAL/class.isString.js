@@ -1,10 +1,10 @@
 import valueOf from '.String.prototype.valueOf';
-import { throwOverflow } from '.native';
+import throwStackOverflowErrorEarly from '.void.KEEP';
 export default (
 	/*! j-globals: class.isString (internal) */
 	function () {
 		function __PURE__ (value) {
-			throwOverflow();
+			throwStackOverflowErrorEarly();
 			try { valueOf.call(value); }
 			catch (error) { return false; }
 			return true;

@@ -9,8 +9,7 @@ import Array_prototype from '.Array.prototype';
 import fromCharCode from '.String.fromCharCode';
 import ArrayCreate from '.Array';
 import NULL from '.null.prototype';
-
-export var throwOverflow = /*#__PURE__*/ Function('return function(){}')();
+import isPrimitive from '.class.isPrimitive';
 
 //                 18446744073709551615 // 0xFFFFFFFFFFFFFFFF //                                                         // 0b1777777777777777777777 // 2**64-1
 //                  9223372036854775807 // 0x7FFFFFFFFFFFFFFF //                                                         // 0b0777777777777777777777 // 2**63-1
@@ -63,7 +62,7 @@ export function ToUint32 (argument) {// ES 5
 	//return int32bit<0 ? int32bit+4294967296 : int32bit;
 }
 
-function IsConstructor (argument) { return typeof argument==='function'; }
+function IsConstructor (argument) { return typeof argument==='function'; }// alert regexp ...
 //function notThisRealm_and_isBuiltInArrayConstructorOfItsRealm (originalArray_constructor) { }
 export var TheUndefinedType = 1;
 export var TheNullType = 2;
@@ -72,15 +71,14 @@ export var TheStringType = 4;
 export var TheSymbolType = 5;
 export var TheNumberType = 6;
 export var TheObjectType = 7;
-export var TheBigIntType = 0;
+export var TheBigIntType = -1;
 export function Type (argument) {
+	if ( Object(argument)===argument ) { return TheObjectType; }// document.all unknown date ...
 	switch ( typeof argument ) {
-		case 'function':
-			return TheObjectType;
 		case 'object':
-			return argument ? TheObjectType : TheNullType;// null
+			return TheNullType;
 		case 'undefined':
-			return argument===undefined ? TheUndefinedType : TheObjectType;// document.all
+			return TheUndefinedType;
 		case 'boolean':
 			return TheBooleanType;
 		case 'string':
@@ -91,16 +89,15 @@ export function Type (argument) {
 			return TheNumberType;
 		case 'bigint':
 			return TheBigIntType;
-		default:
-			return TheObjectType;// unknown date ...
 	}
+	return 0;
 }
 export function ArraySpeciesCreate (originalArray, length) {
 	var C;
 	if ( IsArray(originalArray) ) {
 		C = originalArray.constructor;
 		//if ( IsConstructor(C) && notThisRealm_and_isBuiltInArrayConstructorOfItsRealm(C) ) { C = undefined; }
-		if ( Type(C)===TheObjectType ) {
+		if ( isPrimitive(C) ) {
 			C = Symbol_species===undefined ? undefined : C[Symbol_species];
 			if ( C===null ) { C = undefined; }
 		}

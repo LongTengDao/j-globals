@@ -1,11 +1,11 @@
 import valueOf from '.BigInt.prototype.valueOf?';
-import { throwOverflow } from '.native';
+import throwStackOverflowErrorEarly from '.void.KEEP';
 export default (
 	/*! j-globals: class.isBigInt (internal) */
 	valueOf
 		? function () {
 			function __PURE__ (value) {
-				throwOverflow();
+				throwStackOverflowErrorEarly();
 				try { valueOf.call(value); }
 				catch (error) { return false; }
 				return true;
