@@ -1,5 +1,5 @@
-import create from '.Object.create';
 import getOwnPropertyDescriptor from '.null.getOwnPropertyDescriptor';
+import { create } from '.native';
 import NULL from '.null.prototype';
 var ownKeys = typeof Reflect==='object' ? Reflect.ownKeys : Object.getOwnPropertyNames;
 export default (

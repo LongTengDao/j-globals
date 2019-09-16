@@ -1,6 +1,6 @@
 import hasOwnProperty from '.Object.prototype.hasOwnProperty';
-import Object_create from '.Object.create';
 import Object_freeze from '.Object.freeze';
+import { create as Object_create } from '.native';
 import _NULL from '.null.prototype';
 export default (
 	/*! j-globals: null.constructor (internal) */

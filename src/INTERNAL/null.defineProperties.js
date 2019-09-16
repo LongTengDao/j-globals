@@ -1,23 +1,12 @@
 import propertyIsEnumerable from '.Object.prototype.propertyIsEnumerable';
-import hasOwnProperty from '.Object.prototype.hasOwnProperty';
-import create from '.Object.create';
 import keys from '.Object.keys';
 import getOwnPropertySymbols from '.Object.getOwnPropertySymbols';
 import Object_defineProperties from '.Object.defineProperties';
+import { Descriptor, create } from '.native';
 import NULL from '.null.prototype';
 export default (
 	/*! j-globals: null.defineProperties (internal) */
 	function () {
-		function Descriptor (source) {
-			var target = create(NULL);
-			if ( hasOwnProperty.call(source, 'value') ) { target.value = source.value; }
-			if ( hasOwnProperty.call(source, 'writable') ) { target.writable = source.writable; }
-			if ( hasOwnProperty.call(source, 'get') ) { target.get = source.get; }
-			if ( hasOwnProperty.call(source, 'set') ) { target.set = source.set; }
-			if ( hasOwnProperty.call(source, 'enumerable') ) { target.enumerable = source.enumerable; }
-			if ( hasOwnProperty.call(source, 'configurable') ) { target.configurable = source.configurable; }
-			return target;
-		}
 		return function defineProperties (object, descriptorMap) {
 			var created = create(NULL);
 			var names = keys(descriptorMap);

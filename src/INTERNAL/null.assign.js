@@ -1,5 +1,5 @@
 import Object_assign from '.Object.assign';
-import create from '.Object.create';
+import { create } from '.native';
 import NULL from '.null.prototype';
 export default (
 	/*! j-globals: null.assign (internal) */

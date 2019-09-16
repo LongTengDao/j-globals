@@ -1,4 +1,5 @@
 import Object_getOwnPropertyDescriptor from '.Object.getOwnPropertyDescriptor';
+import { create } from '.native';
 import NULL from '.null.prototype';
 export default (
 	/*! j-globals: null.getOwnPropertyDescriptor (internal) */

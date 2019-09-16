@@ -1,5 +1,5 @@
+import { create } from '.native';
 import NULL from '.null.prototype';
-var create = Object.create;
 export default (
 	/*! j-globals: null.PropertyDescriptor (internal) */
 	function () {

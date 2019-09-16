@@ -1,6 +1,6 @@
 import assign from '.Object.assign';
-import create from '.Object.create';
 import Object_fromEntries from '.Object.fromEntries';
+import { create } from '.native';
 import NULL from '.null.prototype';
 export default (
 	/*! j-globals: null.fromEntries (internal) */

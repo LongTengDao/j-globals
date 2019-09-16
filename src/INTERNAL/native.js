@@ -8,8 +8,21 @@ import Object_prototype from '.Object.prototype';
 import Array_prototype from '.Array.prototype';
 import fromCharCode from '.String.fromCharCode';
 import ArrayCreate from '.Array';
+import hasOwnProperty from '.Object.prototype.hasOwnProperty';
 import NULL from '.null.prototype';
 import isPrimitive from '.class.isPrimitive';
+
+export var create = Object.create;
+export function Descriptor (source) {
+	var target = create(NULL);
+	if ( hasOwnProperty.call(source, 'value') ) { target.value = source.value; }
+	if ( hasOwnProperty.call(source, 'writable') ) { target.writable = source.writable; }
+	if ( hasOwnProperty.call(source, 'get') ) { target.get = source.get; }
+	if ( hasOwnProperty.call(source, 'set') ) { target.set = source.set; }
+	if ( hasOwnProperty.call(source, 'enumerable') ) { target.enumerable = source.enumerable; }
+	if ( hasOwnProperty.call(source, 'configurable') ) { target.configurable = source.configurable; }
+	return target;
+}
 
 //                 18446744073709551615 // 0xFFFFFFFFFFFFFFFF //                                                         // 0b1777777777777777777777 // 2**64-1
 //                  9223372036854775807 // 0x7FFFFFFFFFFFFFFF //                                                         // 0b0777777777777777777777 // 2**63-1
@@ -107,8 +120,8 @@ export function ArraySpeciesCreate (originalArray, length) {
 	return new C(length);
 }
 
-var descriptor = Object.create && /*#__PURE__*/ function () {
-	var descriptor = Object.create(NULL);
+var descriptor = create && /*#__PURE__*/ function () {
+	var descriptor = create(NULL);
 	descriptor.value = undefined;
 	descriptor.writable = true;
 	descriptor.enumerable = true;
@@ -116,7 +129,7 @@ var descriptor = Object.create && /*#__PURE__*/ function () {
 	return descriptor;
 }();
 var defineProperty = Object.defineProperty;
-export var defineIndexValue = Object.create
+export var defineIndexValue = create
 	? function CreateDataProperty (array, index, value) {
 		index in Array_prototype && defineProperty(array, index, descriptor);
 		array[index] = value;
@@ -124,7 +137,7 @@ export var defineIndexValue = Object.create
 	: function CreateDataProperty (array, index, value) {
 		array[index] = value;
 	};
-export var defineKeyValue = Object.create
+export var defineKeyValue = create
 	? typeof Symbol==='function'
 		? typeof Proxy==='function'
 			? function () {
