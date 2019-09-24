@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const version = '13.1.2';
+const version = '13.1.3';
 
 const assign = Object.assign;
 
@@ -1053,9 +1053,7 @@ function toTSD (all                              , { bom = false, tab = '\t', eo
 					case 'private':
 						tsd += trim`Private;${eol}
 							${tab}function Private<_ extends (this :void, instance :any) => object> (Private? :{ new ($ :object) :ReturnType<_> } | { new () :ReturnType<_> } | { (this :void, $ :object) :ReturnType<_> } | { (this :void) :ReturnType<_> } | ReturnType<_>) :_;${eol}
-							${tab}function Private<Public extends object, PrivateConstructor extends { new ($ :Public) :object } | { new () :object }> (Private :PrivateConstructor) :(this :void, instance :Public) => InstanceType<PrivateConstructor>;${eol}
-							${tab}function Private<Public extends object, PrivateApplier extends { ($ :Public) :object } | { () :object }> (Private :PrivateApplier) :(this :void, instance :Public) => ReturnType<PrivateApplier>;${eol}
-							${tab}function Private<Public extends object, Private extends object> (PRIVATE? :Private) :(this :void, instance :Public) => Private;${eol}`;
+							${tab}function Private<Public extends object, Private extends object> (Private? :{ new ($ :Public) :Private } | { new () :Private } | { ($ :Public) :Private } | { () :Private } | Private) :(this :void, instance :Public) => Private;${eol}`;
 						break;
 					case 'for.of':
 						tsd += `of;${eol}${tab}function of<V extends any, T extends any> (arrayLike_iterable :Iterable<V>, callbackfn :(this :T, value :V) => void | boolean, thisArg? :T) :void;${eol}`;
