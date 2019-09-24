@@ -105,7 +105,7 @@ export default function toTSD (all :[ string, string, string ][], { bom = false,
 					case 'class.isBigInt':
 						tsd += `isBigInt;${eol}${tab}function isBigInt (value :any) :value is BigInt;${eol}`;
 						break;
-					case 'class.toPrimitive':
+					case 'class.isPrimitive':
 						tsd += `isPrimitive;${eol}${tab}function isPrimitive (value :any) :value is undefined | null | boolean | string | symbol | number | bigint;${eol}`;
 						break;
 					
